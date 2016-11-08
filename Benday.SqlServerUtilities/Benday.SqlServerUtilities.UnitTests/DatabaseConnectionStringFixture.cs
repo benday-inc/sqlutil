@@ -8,7 +8,7 @@ namespace Benday.SqlServerUtilities.UnitTests
     public class DatabaseConnectionStringFixture
     {
         private string _ValidConnectionStringUseIntegratedSecurity = "Server=the_server; Database=the_database_name; Integrated Security=true;";
-        private string _ValidConnectionStringUserNamePassword = "Server=(local); Database=the_database_name; User Id=the_username; Password=the_password";
+        private string _ValidConnectionStringUserNamePassword = "Server=the_server; Database=the_database_name; User Id=the_username; Password=the_password";
         private string _ExpectedUsername = "the_username";
         private string _ExpectedPassword = "the_password";
         private string _ExpectedServer = "the_server";
