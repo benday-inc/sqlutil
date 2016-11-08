@@ -57,14 +57,41 @@ namespace Benday.SqlServerUtilities.Core
             }
         }
 
-        public bool Contains(string str)
+        public bool Contains(string tokenName)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(tokenName))
+                throw new ArgumentException($"{nameof(tokenName)} is null or empty.", nameof(tokenName));
+
+            var actualTokenName = FindCaseSensitiveTokenName(tokenName);
+
+            if (actualTokenName == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
-        public string GetValue(string str)
+
+        public string GetValue(string tokenName)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(tokenName))
+                throw new ArgumentException($"{nameof(tokenName)} is null or empty.", 
+                    nameof(tokenName));
+
+            var actualTokenName = FindCaseSensitiveTokenName(tokenName);
+
+            if (actualTokenName == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _Values[actualTokenName];
+            }
         }
+
         public List<string> Tokens
         {
             get

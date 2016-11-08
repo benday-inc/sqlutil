@@ -92,7 +92,7 @@ namespace Benday.SqlServerUtilities.UnitTests
         {
             InitializeWithSampleString();
 
-            Assert.IsTrue(SystemUnderTest.Contains("Token 4"));
+            Assert.IsTrue(SystemUnderTest.Contains("Token4"));
         }
 
         [TestMethod]
