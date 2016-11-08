@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benday.SqlServerUtilities.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benday.SqlServerUtilities.UnitTests", "Benday.SqlServerUtilities.UnitTests\Benday.SqlServerUtilities.UnitTests.csproj", "{A22BC089-D5BB-4D8D-A639-414FB4206B19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benday.Presentation", "Benday.Presentation\Benday.Presentation.csproj", "{629771C1-6434-47A8-B704-7055F3C03D00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benday.Presentation.UnitTests", "Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj", "{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{A22BC089-D5BB-4D8D-A639-414FB4206B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A22BC089-D5BB-4D8D-A639-414FB4206B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A22BC089-D5BB-4D8D-A639-414FB4206B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629771C1-6434-47A8-B704-7055F3C03D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629771C1-6434-47A8-B704-7055F3C03D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629771C1-6434-47A8-B704-7055F3C03D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629771C1-6434-47A8-B704-7055F3C03D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
