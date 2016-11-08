@@ -124,7 +124,37 @@ namespace Benday.SqlServerUtilities.Core
                 _UseIntegratedSecurity = value;
             }
         }
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                AddToken(builder, "Server", Server);
+                AddToken(builder, "Database", Database);
+
+                if (UseIntegratedSecurity == true)
+                {
+                    AddToken(builder, "Integrated Security", true.ToString());
+                }
+                else
+                {
+                    AddToken(builder, "User Id", Username);
+                    AddToken(builder, "Password", Password);
+                }
+
+                return builder.ToString().Trim();             
+            }
+        }
+        private void AddToken(StringBuilder builder, 
+            string name, string value)
+        {
+            builder.Append(name);
+            builder.Append("=");
+            builder.Append(value);
+            builder.Append("; ");
+        }
+
         private string NullToEmptyString(string value)
         {
             if (value == null)
