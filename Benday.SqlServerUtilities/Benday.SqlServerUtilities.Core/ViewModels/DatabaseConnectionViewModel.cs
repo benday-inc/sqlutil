@@ -15,7 +15,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             Name = String.Empty;
             Server = String.Empty;
             Database = String.Empty;
-            UseTrustedConnection = true;
+            UseIntegratedSecurity = true;
             Username = String.Empty;
             Password = String.Empty;
         }
@@ -84,19 +84,19 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
-        private const string UseTrustedConnectionPropertyName = "UseTrustedConnection";
+        private const string UseIntegratedSecurityPropertyName = "UseIntegratedSecurity";
 
-        private bool _UseTrustedConnection;
-        public bool UseTrustedConnection
+        private bool _UseIntegratedSecurity;
+        public bool UseIntegratedSecurity
         {
             get
             {
-                return _UseTrustedConnection;
+                return _UseIntegratedSecurity;
             }
             set
             {
-                _UseTrustedConnection = value;
-                RaisePropertyChanged(UseTrustedConnectionPropertyName);
+                _UseIntegratedSecurity = value;
+                RaisePropertyChanged(UseIntegratedSecurityPropertyName);
             }
         }
 
@@ -130,6 +130,39 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 _Password = value;
                 RaisePropertyChanged(PasswordPropertyName);
             }
+        }
+
+        private DatabaseConnectionString _OriginalConnectionString;
+        private string _OriginalConnectionName;
+
+        public void Initialize(
+            string databaseConnectionId, string originalName, 
+            DatabaseConnectionString connection)
+        {
+            if (string.IsNullOrEmpty(databaseConnectionId))
+                throw new ArgumentException($"{nameof(databaseConnectionId)} is null or empty.", nameof(databaseConnectionId));
+            if (string.IsNullOrEmpty(originalName))
+                throw new ArgumentException($"{nameof(originalName)} is null or empty.", nameof(originalName));
+            if (connection == null)
+                throw new ArgumentNullException(nameof(connection), $"{nameof(connection)} is null.");
+
+            _OriginalConnectionString = connection;
+            Id = databaseConnectionId;
+            Name = originalName;
+            _OriginalConnectionName = originalName;
+
+            PopulateFromConnection(connection);
+        }
+
+        private void PopulateFromConnection(DatabaseConnectionString fromValue)
+        {
+            var toValue = this;
+
+            toValue.Database = fromValue.Database;
+            toValue.Username = fromValue.Username;
+            toValue.UseIntegratedSecurity = fromValue.UseIntegratedSecurity;
+            toValue.Password = fromValue.Password;
+            toValue.Server = fromValue.Server;
         }
     }
 }
