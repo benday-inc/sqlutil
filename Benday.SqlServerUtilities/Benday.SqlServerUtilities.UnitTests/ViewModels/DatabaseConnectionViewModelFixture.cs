@@ -95,8 +95,22 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
                 DatabaseConnectionStringInstance);
         }
 
+        private void InitializeUseUsernameAndPassword()
+        {
+            DatabaseConnectionStringInstance.Server = "the_server";
+            DatabaseConnectionStringInstance.Database = "the_database";
+            DatabaseConnectionStringInstance.UseIntegratedSecurity = false;
+            DatabaseConnectionStringInstance.Username = "the_username";
+            DatabaseConnectionStringInstance.Password = "the_password";
+
+            SystemUnderTest.Initialize(
+                DatabaseConnectionId,
+                OriginalName,
+                DatabaseConnectionStringInstance);
+        }
+
         [TestMethod]
-        public void InitializeLoadsFields()
+        public void InitializeLoadsFieldsIntegratedSecurity()
         {
             InitializeUseIntegratedSecurity();
 
@@ -105,6 +119,20 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
             Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username, "Username should be empty.");
             Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password, "Password should be empty.");
+            Assert.AreEqual<string>("the_server", SystemUnderTest.Server, "Server");
+            Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
+        }
+
+        [TestMethod]
+        public void InitializeLoadsFieldsUsernamePassword()
+        {
+            InitializeUseUsernameAndPassword();
+
+            Assert.AreEqual<string>(DatabaseConnectionId, SystemUnderTest.Id, "Id");
+            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name, "Id");
+            Assert.IsFalse(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
+            Assert.AreEqual<string>("the_username", SystemUnderTest.Username, "Username should be empty.");
+            Assert.AreEqual<string>("the_password", SystemUnderTest.Password, "Password should be empty.");
             Assert.AreEqual<string>("the_server", SystemUnderTest.Server, "Server");
             Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
         }
