@@ -1,4 +1,5 @@
-﻿using Benday.SqlServerUtilities.Core;
+﻿using Benday.Presentation.UnitTests;
+using Benday.SqlServerUtilities.Core;
 using Benday.SqlServerUtilities.Core.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -160,7 +161,74 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
         }
 
+        [TestMethod]
+        public void ConnectionStringIsPopulatedWhenInitialized()
+        {
+            InitializeUseUsernameAndPassword();
 
+            var expected = _DatabaseConnectionStringInstance.ConnectionString;
 
+            var actual = SystemUnderTest.ConnectionString;
+
+            Assert.AreEqual<string>(expected, actual, "ConnectionString was wrong.");
+        }
+
+        [TestMethod]
+        public void ConnectionStringRaisesNotifyPropertyChangedWhenUseIntegratedSecurityChanges()
+        {
+            var tester = new NotifyPropertyChangedTester(SystemUnderTest);
+
+            SystemUnderTest.UseIntegratedSecurity = !SystemUnderTest.UseIntegratedSecurity;
+
+            tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
+        }
+
+        [TestMethod]
+        public void ConnectionStringRaisesNotifyPropertyChangedWhenUsernameChanges()
+        {
+            var tester = new NotifyPropertyChangedTester(SystemUnderTest);
+
+            SystemUnderTest.Username = "asdf";
+
+            tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
+        }
+
+        [TestMethod]
+        public void ConnectionStringRaisesNotifyPropertyChangedWhenPasswordChanges()
+        {
+            var tester = new NotifyPropertyChangedTester(SystemUnderTest);
+
+            SystemUnderTest.Password = "asdf";
+
+            tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
+        }
+
+        [TestMethod]
+        public void ConnectionStringRaisesNotifyPropertyChangedWhenServerChanges()
+        {
+            var tester = new NotifyPropertyChangedTester(SystemUnderTest);
+
+            SystemUnderTest.Server = "asdf";
+
+            tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
+        }
+
+        [TestMethod]
+        public void ConnectionStringRaisesNotifyPropertyChangedWhenDatabaseChanges()
+        {
+            var tester = new NotifyPropertyChangedTester(SystemUnderTest);
+
+            SystemUnderTest.Database = "asdf";
+
+            tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
+        }
+
+        [TestMethod]
+        public void SaveCommandThrowsOnSaveRequestedEvent()
+        {
+            Assert.Inconclusive();
+
+            
+        }
     }
 }

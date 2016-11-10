@@ -67,6 +67,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Server = value;
                 RaisePropertyChanged(ServerPropertyName);
+                RaisePropertyChanged(ConnectionStringPropertyName);
             }
         }
 
@@ -83,6 +84,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Database = value;
                 RaisePropertyChanged(DatabasePropertyName);
+                RaisePropertyChanged(ConnectionStringPropertyName);
             }
         }
 
@@ -99,6 +101,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _UseIntegratedSecurity = value;
                 RaisePropertyChanged(UseIntegratedSecurityPropertyName);
+                RaisePropertyChanged(ConnectionStringPropertyName);
             }
         }
 
@@ -115,6 +118,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Username = value;
                 RaisePropertyChanged(UsernamePropertyName);
+                RaisePropertyChanged(ConnectionStringPropertyName);
             }
         }
 
@@ -131,6 +135,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Password = value;
                 RaisePropertyChanged(PasswordPropertyName);
+                RaisePropertyChanged(ConnectionStringPropertyName);
             }
         }
 
@@ -180,10 +185,56 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 return _CancelCommand;
             }
         }
+
         private void Cancel()
         {
             Name = _OriginalConnectionName;
             PopulateFromConnection(_OriginalConnectionString);
+        }
+
+        private ICommand _SaveCommand;
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_SaveCommand == null)
+                {
+                    _SaveCommand = new RelayCommand(Save);
+                }
+
+                return _SaveCommand;
+            }
+        }
+        private void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public const string ConnectionStringPropertyName = "ConnectionString";
+
+        public string ConnectionString
+        {
+            get
+            {
+                return GetConnectionString();
+            }
+            private set
+            {
+                RaisePropertyChanged(ConnectionStringPropertyName);
+            }
+        }
+
+        private string GetConnectionString()
+        {
+            var temp = new DatabaseConnectionString();
+
+            temp.UseIntegratedSecurity = UseIntegratedSecurity;
+            temp.Database = Database;
+            temp.Password = Password;
+            temp.Server = Server;
+            temp.Username = Username;
+
+            return temp.ConnectionString;
         }
     }
 }

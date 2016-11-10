@@ -77,6 +77,10 @@
     <Compile Include="ViewModels\DatabaseConnectionViewModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj">
+      <Project>{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}</Project>
+      <Name>Benday.Presentation.UnitTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Benday.SqlServerUtilities.Core\Benday.SqlServerUtilities.Core.csproj">
       <Project>{910e2daf-355e-4fc0-9e92-4fb409617574}</Project>
       <Name>Benday.SqlServerUtilities.Core</Name>
