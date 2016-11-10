@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Benday.SqlServerUtilities.Core.ViewModels
 {
@@ -29,7 +31,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 return _Id;
             }
-            set
+            private set
             {
                 _Id = value;
                 RaisePropertyChanged(IdPropertyName);
@@ -151,7 +153,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             Name = originalName;
             _OriginalConnectionName = originalName;
 
-            PopulateFromConnection(connection);
+            PopulateFromConnection(_OriginalConnectionString);
         }
 
         private void PopulateFromConnection(DatabaseConnectionString fromValue)
@@ -163,6 +165,25 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             toValue.UseIntegratedSecurity = fromValue.UseIntegratedSecurity;
             toValue.Password = fromValue.Password;
             toValue.Server = fromValue.Server;
+        }
+
+        private ICommand _CancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                if (_CancelCommand == null)
+                {
+                    _CancelCommand = new RelayCommand(Cancel);
+                }
+
+                return _CancelCommand;
+            }
+        }
+        private void Cancel()
+        {
+            Name = _OriginalConnectionName;
+            PopulateFromConnection(_OriginalConnectionString);
         }
     }
 }
