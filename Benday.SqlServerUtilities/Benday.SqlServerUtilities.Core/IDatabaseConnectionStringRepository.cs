@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Benday.SqlServerUtilities.Core.ViewModels
+namespace Benday.SqlServerUtilities.Core
 {
     public interface IDatabaseConnectionStringRepository
     {
