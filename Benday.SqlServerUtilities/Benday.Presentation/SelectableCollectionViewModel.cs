@@ -12,7 +12,8 @@ namespace Benday.Presentation
     {
         public SelectableCollectionViewModel()
         {
-
+            AllowMultipleSelections = false;
+            Items = new ObservableCollection<T>();
         }
 
         public event EventHandler OnItemSelected;
@@ -112,14 +113,9 @@ namespace Benday.Presentation
         {
             get
             {
-                if (_Items == null)
-                {
-                    _Items = new ObservableCollection<T>();
-                }
-
                 return _Items;
             }
-            set
+            protected set
             {
                 _Items = value;
 
@@ -170,7 +166,19 @@ namespace Benday.Presentation
 
                 if (senderAsISelectableItem.IsSelected == true)
                 {
-                    this.SelectedItem = senderAsISelectableItem;
+                    if (AllowMultipleSelections == false)
+                    {
+                        foreach (var item in Items)
+                        {
+                            if (item != senderAsISelectableItem &&
+                                item.IsSelected == true)
+                            {
+                                item.IsSelected = false;
+                            }
+                        }
+                    }
+
+                    this.SelectedItem = GetFirstSelectedItem(Items);                    
                 }
             }
         }
@@ -207,7 +215,10 @@ namespace Benday.Presentation
             {
                 if (_SelectedItem != value)
                 {
-                    DeselectCurrentItem();
+                    if (AllowMultipleSelections == false)
+                    {
+                        DeselectCurrentItem();
+                    }
 
                     _SelectedItem = value;
 
@@ -223,6 +234,14 @@ namespace Benday.Presentation
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                return Items.Count;
+            } 
+        }
+
         private void DeselectCurrentItem()
         {
             var currentSelected = GetFirstSelectedItem(Items);
@@ -230,6 +249,22 @@ namespace Benday.Presentation
             if (currentSelected != null)
             {
                 currentSelected.IsSelected = false;
+            }
+        }
+        
+        private const string AllowMultipleSelectionsPropertyName = "AllowMultipleSelections";
+
+        private bool _AllowMultipleSelections;
+        public bool AllowMultipleSelections
+        {
+            get
+            {
+                return _AllowMultipleSelections;
+            }
+            set
+            {
+                _AllowMultipleSelections = value;
+                RaisePropertyChanged(AllowMultipleSelectionsPropertyName);
             }
         }
     }

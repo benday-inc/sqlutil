@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Benday.Presentation;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace Benday.SqlServerUtilities.Core.ViewModels
 {
-    public class DatabaseConnectionViewModel : ViewModelBase
+    public class DatabaseConnectionViewModel : ViewModelBase, ISelectableItem
     {
         public DatabaseConnectionViewModel()
         {
@@ -224,6 +225,61 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             private set
             {
                 RaisePropertyChanged(ConnectionStringPropertyName);
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Value
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        int ISelectableItem.Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private const string IsSelectedPropertyName = "IsSelected";
+
+        private bool _IsSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return _IsSelected;
+            }
+            set
+            {
+                _IsSelected = value;
+                RaisePropertyChanged(IsSelectedPropertyName);
             }
         }
 

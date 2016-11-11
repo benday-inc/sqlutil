@@ -76,6 +76,7 @@
     <Compile Include="MultiSelectListViewModelFixture.cs" />
     <Compile Include="NotifyPropertyChangedTester.cs" />
     <Compile Include="ProgressBarViewModelTester.cs" />
+    <Compile Include="SelectableCollectionViewModelFixture.cs" />
     <Compile Include="SingleSelectListViewModelFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NavigatableListFixture.cs" />

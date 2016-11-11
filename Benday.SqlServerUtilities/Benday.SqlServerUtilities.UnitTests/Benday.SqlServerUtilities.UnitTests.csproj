@@ -65,7 +65,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -75,11 +77,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestUtility.cs" />
     <Compile Include="ViewModels\DatabaseConnectionViewModelFixture.cs" />
+    <Compile Include="ViewModels\DatabaseConnectionsViewModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj">
       <Project>{FB3044B4-1CB1-4BDB-A76E-2E10871D662A}</Project>
       <Name>Benday.Presentation.UnitTests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Benday.Presentation\Benday.Presentation.csproj">
+      <Project>{629771c1-6434-47a8-b704-7055f3c03d00}</Project>
+      <Name>Benday.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Benday.SqlServerUtilities.Core\Benday.SqlServerUtilities.Core.csproj">
       <Project>{910e2daf-355e-4fc0-9e92-4fb409617574}</Project>

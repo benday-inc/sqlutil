@@ -63,12 +63,18 @@
     <Compile Include="ConnectionStringTokenParser.cs" />
     <Compile Include="DatabaseConnectionString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DatabaseConnectionsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseConnectionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Benday.Presentation\Benday.Presentation.csproj">
+      <Project>{629771c1-6434-47a8-b704-7055f3c03d00}</Project>
+      <Name>Benday.Presentation</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
