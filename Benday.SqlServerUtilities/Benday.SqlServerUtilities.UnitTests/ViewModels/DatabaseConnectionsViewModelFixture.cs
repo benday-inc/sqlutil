@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Benday.SqlServerUtilities.Core.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 {
@@ -11,6 +13,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         public void OnTestInitialize()
         {
             _SystemUnderTest = null;
+            _DatabaseConnectionStringRepositoryInstance = null;
         }
 
         private DatabaseConnectionsViewModel _SystemUnderTest;
@@ -20,12 +23,29 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             {
                 if (_SystemUnderTest == null)
                 {
-                    _SystemUnderTest = new DatabaseConnectionsViewModel();
+                    _SystemUnderTest = 
+                        new DatabaseConnectionsViewModel(
+                            DatabaseConnectionStringRepositoryInstance);
                 }
 
                 return _SystemUnderTest;
             }
         }
+
+        private MockDatabaseConnectionStringRepository _DatabaseConnectionStringRepositoryInstance;
+        public MockDatabaseConnectionStringRepository DatabaseConnectionStringRepositoryInstance
+        {
+            get
+            {
+                if (_DatabaseConnectionStringRepositoryInstance == null)
+                {
+                    _DatabaseConnectionStringRepositoryInstance = 
+                        new MockDatabaseConnectionStringRepository();
+                }
+                return _DatabaseConnectionStringRepositoryInstance;
+            }
+        }
+        
 
         [TestMethod]
         public void WhenInitializedConnectionsPropertyIsNotNull()
@@ -78,25 +98,49 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public void ChangingSelectedConnectionIsBlockedWhenConnectionHasChanges()
+        public void WhenSaveIsCalledOnANewConnectionThenItIsWrittenToRepository()
         {
-            Assert.Inconclusive();
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+
+            var actual = SystemUnderTest.Connections.SelectedItem;
+
+            actual.SaveCommand.Execute(null);
+
+            Assert.AreEqual<int>(1, DatabaseConnectionStringRepositoryInstance.Items.Count);
         }
 
         [TestMethod]
-        public void WhenConnectionThrowsSaveRequestConnectionsAreWrittenToConfig()
+        public void DeleteCommandCallsRepositoryForDelete()
         {
-            Assert.Inconclusive();
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+
+            var actual = SystemUnderTest.Connections.SelectedItem;
+
+            actual.SaveCommand.Execute(null);
+
+            SystemUnderTest.DeleteConnectionCommand.Execute(null);
+
+            Assert.AreEqual<int>(0, DatabaseConnectionStringRepositoryInstance.Items.Count);
         }
+
+        private string _ValidConnectionStringUseIntegratedSecurity = "Server=the_server; Database=the_database_name; Integrated Security=True;";
+        private string _ValidConnectionStringUserNamePassword = "Server=the_server; Database=the_database_name; User Id=the_username; Password=the_password;";
 
         [TestMethod]
-        public void WhenInitializedFromConfigConnectionsArePopulated()
+        public void WhenInitializedFromRepositoryWithConnectionsThenConnectionsArePopulated()
         {
-            Assert.Inconclusive();
+            DatabaseConnectionStringRepositoryInstance.Add(
+                Guid.NewGuid().ToString(), "connection 1",
+                _ValidConnectionStringUseIntegratedSecurity);
+            DatabaseConnectionStringRepositoryInstance.Add(
+                Guid.NewGuid().ToString(), "connection 2",
+                _ValidConnectionStringUserNamePassword);
+
+            // reset the system under test to make it 
+            // pick up the new populated repository
+            _SystemUnderTest = null;
+
+            Assert.AreEqual<int>(2, SystemUnderTest.Connections.Count, "Connection count was wrong.");
         }
-
-
-
-
     }
 }

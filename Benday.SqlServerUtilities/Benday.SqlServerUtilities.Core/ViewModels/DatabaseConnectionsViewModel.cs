@@ -12,9 +12,24 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 {
     public class DatabaseConnectionsViewModel : ViewModelBase
     {
-        public DatabaseConnectionsViewModel()
+        private DatabaseConnectionsViewModel()
         {
             _Connections = new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
+        }
+
+        private IDatabaseConnectionStringRepository _Repository;
+
+        public DatabaseConnectionsViewModel(
+            IDatabaseConnectionStringRepository repository) : this()
+        {
+            if (repository == null)
+                throw new ArgumentNullException(nameof(repository), $"{nameof(repository)} is null.");
+
+            _Repository = repository;
+
+            var storedConnections = _Repository.GetAll();
+
+            Initialize(storedConnections);
         }
 
         private const string ConnectionsPropertyName = "Connections";
@@ -47,9 +62,26 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
+        private void SubscribeToEvents(DatabaseConnectionViewModel item)
+        {
+            item.OnSaveRequested += Item_OnSaveRequested;
+        }
+
+        private void Item_OnSaveRequested(object sender, EventArgs e)
+        {
+            if (sender != null && sender is IStoredDatabaseConnectionString)
+            {
+                var saveThis = sender as IStoredDatabaseConnectionString;
+
+                _Repository.Save(saveThis);
+            }
+        }
+
         private void AddConnection()
         {
             var temp = new DatabaseConnectionViewModel();
+
+            SubscribeToEvents(temp);
 
             Connections.Add(temp);
 
@@ -57,6 +89,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         }
 
         private ICommand _DeleteConnectionCommand;
+
         public ICommand DeleteConnectionCommand
         {
             get
@@ -76,7 +109,27 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
             if (removeThis != null)
             {
+                _Repository.Delete(removeThis);
                 Connections.Items.Remove(removeThis);
+            }
+        }
+
+        private void Initialize(
+            IList<IStoredDatabaseConnectionString> storedConnections)
+        {
+            foreach (var item in storedConnections)
+            {
+                var temp = new DatabaseConnectionViewModel();
+
+                var connString = new DatabaseConnectionString();
+
+                connString.Load(temp.ConnectionString);
+
+                temp.Initialize(item.Id, item.Name, connString);
+
+                SubscribeToEvents(temp);
+
+                Connections.Add(temp);
             }
         }
     }

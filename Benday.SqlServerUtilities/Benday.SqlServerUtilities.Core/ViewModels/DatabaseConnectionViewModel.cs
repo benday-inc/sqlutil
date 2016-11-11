@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Benday.SqlServerUtilities.Core.ViewModels
 {
-    public class DatabaseConnectionViewModel : ViewModelBase, ISelectableItem
+    public class DatabaseConnectionViewModel : ViewModelBase, ISelectableItem, IStoredDatabaseConnectionString
     {
         public DatabaseConnectionViewModel()
         {
