@@ -205,10 +205,13 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 return _SaveCommand;
             }
         }
+
         private void Save()
         {
-            throw new NotImplementedException();
+            OnSaveRequested?.Invoke(this, new EventArgs());
         }
+
+        public event EventHandler OnSaveRequested;
 
         public const string ConnectionStringPropertyName = "ConnectionString";
 

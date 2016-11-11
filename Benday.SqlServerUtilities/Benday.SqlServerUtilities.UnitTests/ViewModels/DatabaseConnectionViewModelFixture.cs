@@ -226,9 +226,18 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         [TestMethod]
         public void SaveCommandThrowsOnSaveRequestedEvent()
         {
-            Assert.Inconclusive();
+            bool gotOnSaveRequestedEventCall = false;
+            object sender = null;
 
-            
+            SystemUnderTest.OnSaveRequested += (s, e) => {
+                gotOnSaveRequestedEventCall = true;
+                sender = s;
+            };
+
+            SystemUnderTest.SaveCommand.Execute(null);
+
+            Assert.IsTrue(gotOnSaveRequestedEventCall, "Did not receive the call.");
+            Assert.AreSame(SystemUnderTest, sender, "Sender on event was not SystemUnderTest."); 
         }
     }
 }
