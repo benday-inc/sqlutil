@@ -64,7 +64,17 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         [TestMethod]
         public void DeleteCommandRemoveSelectedConnection()
         {
-            Assert.Inconclusive();
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+
+            var removeThis = SystemUnderTest.Connections.Items[0];
+
+            removeThis.IsSelected = true;
+
+            SystemUnderTest.DeleteConnectionCommand.Execute(null);
+
+            Assert.IsFalse(SystemUnderTest.Connections.Items.Contains(removeThis), 
+                "Removed item should not be in collection.");
         }
 
         [TestMethod]

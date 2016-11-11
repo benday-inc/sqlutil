@@ -55,5 +55,29 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
             temp.IsSelected = true;
         }
+
+        private ICommand _DeleteConnectionCommand;
+        public ICommand DeleteConnectionCommand
+        {
+            get
+            {
+                if (_DeleteConnectionCommand == null)
+                {
+                    _DeleteConnectionCommand = new RelayCommand(DeleteConnection);
+                }
+
+                return _DeleteConnectionCommand;
+            }
+        }
+
+        private void DeleteConnection()
+        {
+            var removeThis = Connections.SelectedItem;
+
+            if (removeThis != null)
+            {
+                Connections.Items.Remove(removeThis);
+            }
+        }
     }
 }
