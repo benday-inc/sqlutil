@@ -81,6 +81,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             var temp = new DatabaseConnectionViewModel();
 
+            temp.Name = "(new connection)";
+
             SubscribeToEvents(temp);
 
             Connections.Add(temp);

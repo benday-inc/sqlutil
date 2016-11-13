@@ -66,6 +66,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 
             Assert.AreEqual<int>(1, SystemUnderTest.Connections.Count, "Count was wrong.");
             Assert.IsTrue(SystemUnderTest.Connections.Items[0].IsSelected, "New item should be selected.");
+            Assert.AreEqual<string>("(new connection)", SystemUnderTest.Connections.Items[0].Name, "Name was wrong.");
         }
 
         [TestMethod]
