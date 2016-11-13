@@ -24,5 +24,10 @@ namespace Benday.SqlServerUtilities.WpfUi
         {
             InitializeComponent();
         }
+
+        private void _CurrentControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _CurrentControl.Content = new DatabaseConnectionsEditor();
+        }
     }
 }

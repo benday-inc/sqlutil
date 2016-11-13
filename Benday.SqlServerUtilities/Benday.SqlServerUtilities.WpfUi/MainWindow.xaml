@@ -26,7 +26,7 @@
 
         <ContentControl 
             x:Name="_CurrentControl" 
-            Grid.Column="1" />
+            Grid.Column="1" Loaded="_CurrentControl_Loaded" />
 
     </Grid>
 </Window>
