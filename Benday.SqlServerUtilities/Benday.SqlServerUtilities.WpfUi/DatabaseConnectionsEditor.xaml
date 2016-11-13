@@ -31,16 +31,18 @@
             </Grid.RowDefinitions>
 
             <Label Content="Connections" Grid.Row="0" />
-            <ListView Grid.Row="1">
+            <ListView Grid.Row="1" ItemsSource="{Binding Connections.Items, Mode=OneWay}" 
+                      SelectedItem="{Binding Connections.SelectedItem}">
 
             </ListView>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Content="Add" Command="{Binding Main.AddConnectionCommand, Mode=OneWay}" />
-                <Button Content="Remove" Command="{Binding Main.DeleteConnectionCommand, Mode=OneWay}" />
+                <Button x:Name="_ButtonAdd" Content="Add" 
+                        Command="{Binding AddConnectionCommand}"  />
+                <Button Content="Remove" Command="{Binding DeleteConnectionCommand, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1" DataContext="{Binding Main.Connections.SelectedItem}" >
+        <Grid Grid.Column="1" DataContext="{Binding Connections.SelectedItem}" >
             <StackPanel Orientation="Vertical">
                 <Label Content="Connection Name" />
                 <TextBox Text="{Binding Name}" />
@@ -66,6 +68,9 @@
                             Command="{Binding SaveCommand, Mode=OneWay}"  />
                     <Button Content="Cancel" 
                             Command="{Binding Mode=OneWay}"/>
+
+                    <Button x:Name="_ButtonDebug" Content="DEBUG" Click="_ButtonDebug_Click" 
+                            />
                 </StackPanel>
             </StackPanel>
         </Grid>

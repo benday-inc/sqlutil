@@ -24,5 +24,15 @@ namespace Benday.SqlServerUtilities.WpfUi
         {
             InitializeComponent();
         }
+
+        private void _ButtonDebug_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine();
+        }
+
+        private void _ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine();
+        }
     }
 }
