@@ -28,7 +28,31 @@
                 <Button Content="Remove" Width="100" />
             </StackPanel>
         </Grid>
-        
 
+        <Grid Grid.Column="1" >
+            <StackPanel Orientation="Vertical">
+                <Label Content="Connection Name" />
+                <TextBox />
+
+                <Label Content="Server Name" />
+                <TextBox />
+                
+                <Label Content="Database Name" />
+                <TextBox />
+
+                <CheckBox Content="Use Trusted Connection / Windows Authentication" />
+
+                <Label Content="Username" />
+                <TextBox />
+
+                <Label Content="Password" />
+                <TextBox />
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Save" Width="100" />
+                    <Button Content="Cancel" Width="100" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
