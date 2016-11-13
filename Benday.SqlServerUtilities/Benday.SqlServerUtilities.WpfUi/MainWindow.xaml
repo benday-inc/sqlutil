@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800" FontSize="18">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" Style="{DynamicResource MenuStackPanel}">
+            <Button x:Name="_ButtonSearchByName" Content="Search By Name" />
+            <Button x:Name="_ButtonEditConnections" Content="Connections" />
+        </StackPanel>
+
+        <ContentControl 
+            x:Name="_CurrentControl" 
+            Grid.Column="1" />
+
     </Grid>
 </Window>

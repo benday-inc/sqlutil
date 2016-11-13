@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Window">
+            
+        </Style>
     </Application.Resources>
 </Application>
