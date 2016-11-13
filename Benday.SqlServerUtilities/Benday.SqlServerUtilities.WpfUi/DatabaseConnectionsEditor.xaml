@@ -33,6 +33,12 @@
             <Label Content="Connections" Grid.Row="0" />
             <ListView Grid.Row="1" ItemsSource="{Binding Connections.Items, Mode=OneWay}" 
                       SelectedItem="{Binding Connections.SelectedItem}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
 
             </ListView>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
@@ -45,23 +51,23 @@
         <Grid Grid.Column="1" DataContext="{Binding Connections.SelectedItem}" >
             <StackPanel Orientation="Vertical">
                 <Label Content="Connection Name" />
-                <TextBox Text="{Binding Name}" />
+                <TextBox Text="{Binding Name, Mode=TwoWay}" />
 
                 <Label Content="Server Name" />
-                <TextBox Text="{Binding Server}"/>
-                
+                <TextBox Text="{Binding Server, Mode=TwoWay}"/>
+
                 <Label Content="Database Name" />
-                <TextBox Text="{Binding Database}"/>
+                <TextBox Text="{Binding Database, Mode=TwoWay}"/>
 
                 <CheckBox Content="Use Integrated Security / Windows Authentication" 
-                          IsChecked="{Binding UseIntegratedSecurity}"/>
+                          IsChecked="{Binding UseIntegratedSecurity, Mode=TwoWay}"/>
 
                 <Label Content="Username" />
-                <TextBox Text="{Binding Username}"/>
+                <TextBox Text="{Binding Username, Mode=TwoWay}"/>
 
                 <Label Content="Password" />
                 <TextBox 
-                    Text="{Binding Password}"/>
+                    Text="{Binding Password, Mode=TwoWay}"/>
 
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Save" 
