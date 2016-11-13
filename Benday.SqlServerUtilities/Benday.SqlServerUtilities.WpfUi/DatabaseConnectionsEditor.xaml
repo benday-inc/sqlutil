@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" Style="{DynamicResource DialogStyle}"  >
+             d:DesignHeight="300" d:DesignWidth="600" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
-        <Binding Mode="TwoWay" Path="ConnectionsEditor" Source="{StaticResource Locator}"/>
+        <Binding Mode="OneWay" Path="ConnectionsEditor" Source="{StaticResource Locator}"/>
     </UserControl.DataContext>
     <Grid Style="{DynamicResource DialogGrid}">
         <Grid.ColumnDefinitions>
@@ -34,33 +34,37 @@
 
             </ListView>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Content="Add" />
-                <Button Content="Remove" />
+                <Button Content="Add" Command="{Binding Main.AddConnectionCommand, Mode=OneWay}" />
+                <Button Content="Remove" Command="{Binding Main.DeleteConnectionCommand, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1" >
+        <Grid Grid.Column="1" DataContext="{Binding Main.Connections.SelectedItem}" >
             <StackPanel Orientation="Vertical">
                 <Label Content="Connection Name" />
-                <TextBox />
+                <TextBox Text="{Binding Name}" />
 
                 <Label Content="Server Name" />
-                <TextBox />
+                <TextBox Text="{Binding Server}"/>
                 
                 <Label Content="Database Name" />
-                <TextBox />
+                <TextBox Text="{Binding Database}"/>
 
-                <CheckBox Content="Use Trusted Connection / Windows Authentication" />
+                <CheckBox Content="Use Integrated Security / Windows Authentication" 
+                          IsChecked="{Binding UseIntegratedSecurity}"/>
 
                 <Label Content="Username" />
-                <TextBox />
+                <TextBox Text="{Binding Username}"/>
 
                 <Label Content="Password" />
-                <TextBox />
+                <TextBox 
+                    Text="{Binding Password}"/>
 
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Save"  />
-                    <Button Content="Cancel" />
+                    <Button Content="Save" 
+                            Command="{Binding SaveCommand, Mode=OneWay}"  />
+                    <Button Content="Cancel" 
+                            Command="{Binding Mode=OneWay}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
