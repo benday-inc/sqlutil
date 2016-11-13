@@ -62,12 +62,14 @@
   <ItemGroup>
     <Compile Include="ConnectionStringTokenParser.cs" />
     <Compile Include="DatabaseConnectionString.cs" />
+    <Compile Include="DatabaseConnectionStringRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DatabaseConnectionsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseConnectionViewModel.cs" />
     <Compile Include="IDatabaseConnectionStringRepository.cs" />
     <Compile Include="IStoredDatabaseConnectionString.cs" />
     <Compile Include="StoredDatabaseConnectionString.cs" />
+    <Compile Include="XmlUtilityExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

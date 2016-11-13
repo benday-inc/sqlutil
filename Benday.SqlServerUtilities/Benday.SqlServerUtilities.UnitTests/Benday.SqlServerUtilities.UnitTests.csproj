@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="ConnectionStringTokenParserFixture.cs" />
     <Compile Include="DatabaseConnectionStringFixture.cs" />
+    <Compile Include="DatabaseConnectionStringRepositoryFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestUtility.cs" />
     <Compile Include="ViewModels\DatabaseConnectionViewModelFixture.cs" />
