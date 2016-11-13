@@ -75,7 +75,9 @@
                     <Button Content="Cancel" 
                             Command="{Binding Mode=OneWay}"/>
 
-                    <Button x:Name="_ButtonDebug" Content="DEBUG" Click="_ButtonDebug_Click" 
+                    <Button x:Name="_ButtonDebug" 
+                            Visibility="Collapsed"
+                            Content="DEBUG" Click="_ButtonDebug_Click" 
                             />
                 </StackPanel>
             </StackPanel>

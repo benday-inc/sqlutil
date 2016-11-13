@@ -125,7 +125,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 var connString = new DatabaseConnectionString();
 
-                connString.Load(temp.ConnectionString);
+                connString.Load(item.ConnectionString);
 
                 temp.Initialize(item.Id, item.Name, connString);
 
