@@ -13,6 +13,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Mode="TwoWay" Path="ConnectionsEditor" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
     <Grid Style="{DynamicResource DialogGrid}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
