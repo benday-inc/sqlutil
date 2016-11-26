@@ -212,11 +212,11 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             var expected = new List<string>();
             // exact, starts with, ends with, contains
 
-            expected.Add("Search By Table Name");
-            expected.Add("Search By Column Name");
-            expected.Add("Search By Stored Procedure Name");
-            expected.Add("Search By Stored Procedure Parameter Name");
-            expected.Add("Find In Stored Procedure Source Code");
+            expected.Add("Table Name");
+            expected.Add("Column Name");
+            expected.Add("Stored Procedure Name");
+            expected.Add("Stored Procedure Parameter Name");
+            expected.Add("Stored Procedure Source Code");
             expected.Add("Find Text In Any Table Column");
 
             var actual = SystemUnderTest.SearchType.Items;

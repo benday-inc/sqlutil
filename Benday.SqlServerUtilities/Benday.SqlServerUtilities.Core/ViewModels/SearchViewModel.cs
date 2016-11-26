@@ -13,6 +13,46 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
+        public SearchViewModel()
+        {
+            InitializeProperties();
+        }
+        private void InitializeProperties()
+        {
+            _DatabaseConnections = new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
+            _SearchByTableName = new ViewModelField<string>();
+            _SearchByColumnName = new ViewModelField<string>();
+            _SearchByValue = new ViewModelField<string>();
+            _SearchType = new SingleSelectListViewModel(GetSearchTypes());
+            _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
+            _Results = new ObservableCollection<object>();
+        }
+
+        private IEnumerable<ISelectableItem> GetSearchStringMethods()
+        {
+            var returnValues = new List<SelectableItem>();
+
+            returnValues.Add(new SelectableItem(true, "Contains"));
+            returnValues.Add(new SelectableItem(false, "Exact"));
+            returnValues.Add(new SelectableItem(false, "Starts With"));
+            returnValues.Add(new SelectableItem(false, "Ends With"));
+
+            return returnValues;
+        }
+
+        private IEnumerable<ISelectableItem> GetSearchTypes()
+        {
+            var returnValues = new List<SelectableItem>();
+
+            returnValues.Add(new SelectableItem(true, "Table Name"));
+            returnValues.Add(new SelectableItem(false, "Column Name"));
+            returnValues.Add(new SelectableItem(false, "Stored Procedure Name"));
+            returnValues.Add(new SelectableItem(false, "Stored Procedure Parameter Name"));
+            returnValues.Add(new SelectableItem(false, "Stored Procedure Source Code"));
+            returnValues.Add(new SelectableItem(false, "Find Text In Any Table Column"));
+
+            return returnValues;
+        }
 
         private const string DatabaseConnectionsPropertyName = "DatabaseConnections";
 
