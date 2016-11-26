@@ -9,7 +9,8 @@ using System.ComponentModel;
 
 namespace Benday.Presentation
 {
-    public class SingleSelectListViewModel : SelectableCollectionViewModel<ISelectableItem>
+    public class SingleSelectListViewModel : SelectableCollectionViewModel<ISelectableItem>,
+        IVisibleField
     {        
         protected SingleSelectListViewModel() : base()
         {

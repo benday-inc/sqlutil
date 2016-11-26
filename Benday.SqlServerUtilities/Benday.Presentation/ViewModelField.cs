@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Benday.Presentation
 {
-    public class ViewModelField<T> : ViewModelBase, INotifyPropertyChanged
+    public class ViewModelField<T> : ViewModelBase, INotifyPropertyChanged, IVisibleField
     {
         public ViewModelField()
         {

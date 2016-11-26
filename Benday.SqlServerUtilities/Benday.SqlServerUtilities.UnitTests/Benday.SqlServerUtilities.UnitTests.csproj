@@ -80,6 +80,7 @@
     <Compile Include="ViewModels\DatabaseConnectionViewModelFixture.cs" />
     <Compile Include="ViewModels\DatabaseConnectionsViewModelFixture.cs" />
     <Compile Include="ViewModels\MockDatabaseConnectionStringRepository.cs" />
+    <Compile Include="ViewModels\SearchViewModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj">
