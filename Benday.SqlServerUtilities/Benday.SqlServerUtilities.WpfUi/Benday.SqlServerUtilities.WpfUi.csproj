@@ -75,7 +75,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\LabelField.xaml.cs">
+      <DependentUpon>LabelField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListboxField.xaml.cs">
+      <DependentUpon>ListboxField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RadioButtonList.xaml.cs">
+      <DependentUpon>RadioButtonList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextboxField.xaml.cs">
+      <DependentUpon>TextboxField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Controls\LabelField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ListboxField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RadioButtonList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TextboxField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DatabaseConnectionsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
