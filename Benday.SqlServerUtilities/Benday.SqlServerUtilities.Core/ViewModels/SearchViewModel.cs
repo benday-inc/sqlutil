@@ -23,9 +23,76 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             _SearchByTableName = new ViewModelField<string>();
             _SearchByColumnName = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
-            _SearchType = new SingleSelectListViewModel(GetSearchTypes());
             _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
             _Results = new ObservableCollection<object>();
+
+            _SearchType = new SingleSelectListViewModel(GetSearchTypes());
+
+            _SearchType.OnItemSelected += _SearchType_OnItemSelected;
+
+            UpdateFieldVisibilityForSearchType();
+        }
+
+        private void _SearchType_OnItemSelected(object sender, EventArgs e)
+        {
+            UpdateFieldVisibilityForSearchType();
+        }
+
+        private void UpdateFieldVisibilityForSearchType()
+        {
+            if (_SearchType.SelectedItem != null)
+            {
+                var searchType = _SearchType.SelectedItem.Text;
+
+                if (searchType == "Table Name")
+                {
+                    InitializeForTableNameSearch();
+                }
+                else if (searchType == "Column Name")
+                {
+                    InitializeForColumnNameSearch();
+                }
+                else if (searchType == "Find Text In Any Table Column")
+                {
+                    InitializeForFindTextInTableColumnSearch();
+                }
+                else
+                {
+                    InitializeForStoredProcedureSearch();
+                }
+            }
+        }
+
+        private void InitializeForTableNameSearch()
+        {
+            SearchByTableName.IsVisible = true;
+            SearchByColumnName.IsVisible = false;
+            SearchStringMethod.IsVisible = true;
+            SearchByValue.IsVisible = false;
+        }
+
+        private void InitializeForColumnNameSearch()
+        {
+            SearchByTableName.IsVisible = false;
+            SearchByColumnName.IsVisible = true;
+            SearchStringMethod.IsVisible = true;
+            SearchByValue.IsVisible = false;
+        }
+
+        private void InitializeForStoredProcedureSearch()
+        {
+            SearchByTableName.IsVisible = false;
+            SearchByColumnName.IsVisible = false;
+            SearchStringMethod.IsVisible = true;
+            SearchByValue.IsVisible = true;
+        }
+
+        private void InitializeForFindTextInTableColumnSearch()
+        {
+            SearchByTableName.IsVisible = true;
+            SearchByColumnName.IsVisible = true;
+            SearchStringMethod.IsVisible = false;
+            SearchByValue.IsVisible = true;
         }
 
         private IEnumerable<ISelectableItem> GetSearchStringMethods()

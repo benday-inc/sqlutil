@@ -131,7 +131,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         [TestMethod]
         public void WhenSearchTypeIsSetToStoredProcedureParameterThenFieldVisibilityIsCorrect()
         {
-            var expectedSearchType = "Stored Procedure Parameter";
+            var expectedSearchType = "Stored Procedure Parameter Name";
 
             SystemUnderTest.SearchType.SelectByText(expectedSearchType);
 
@@ -146,7 +146,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         [TestMethod]
         public void WhenSearchTypeIsSetToStoredProcedureCodeThenFieldVisibilityIsCorrect()
         {
-            var expectedSearchType = "Stored Procedure Code";
+            var expectedSearchType = "Stored Procedure Source Code";
 
             SystemUnderTest.SearchType.SelectByText(expectedSearchType);
 
