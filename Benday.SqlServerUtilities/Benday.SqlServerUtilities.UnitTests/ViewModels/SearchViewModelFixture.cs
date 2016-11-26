@@ -11,12 +11,13 @@ using System.Collections.ObjectModel;
 namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 {
     [TestClass]
-    public class SearchViewModelFixture
+    public class SearchViewModelFixture : ViewModelFixtureBase
     {
         [TestInitialize]
         public void OnTestInitialize()
         {
             _SystemUnderTest = null;
+            _DatabaseConnectionStringRepositoryInstance = null;
         }
 
         private SearchViewModel _SystemUnderTest;
@@ -26,10 +27,34 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             {
                 if (_SystemUnderTest == null)
                 {
-                    _SystemUnderTest = new SearchViewModel();
+                    _SystemUnderTest = new SearchViewModel(
+                        DatabaseConnectionStringRepositoryInstance);
                 }
 
                 return _SystemUnderTest;
+            }
+        }
+
+        private MockDatabaseConnectionStringRepository _DatabaseConnectionStringRepositoryInstance;
+        public MockDatabaseConnectionStringRepository DatabaseConnectionStringRepositoryInstance
+        {
+            get
+            {
+                if (_DatabaseConnectionStringRepositoryInstance == null)
+                {
+                    _DatabaseConnectionStringRepositoryInstance =
+                        new MockDatabaseConnectionStringRepository();
+
+                    _DatabaseConnectionStringRepositoryInstance.Add(
+                        Guid.NewGuid().ToString(), "connection 1",
+                        _ValidConnectionStringUseIntegratedSecurity);
+
+                    _DatabaseConnectionStringRepositoryInstance.Add(
+                        Guid.NewGuid().ToString(), "connection 2",
+                        _ValidConnectionStringUserNamePassword);
+                }
+
+                return _DatabaseConnectionStringRepositoryInstance;
             }
         }
 

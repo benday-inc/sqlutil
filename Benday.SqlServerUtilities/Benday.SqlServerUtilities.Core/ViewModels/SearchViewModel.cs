@@ -13,13 +13,23 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
-        public SearchViewModel()
+        public SearchViewModel(IDatabaseConnectionStringRepository repository) 
         {
+            if (repository == null)
+                throw new ArgumentNullException(nameof(repository), 
+                    $"{nameof(repository)} is null.");
+
+            _Repository = repository;
+
             InitializeProperties();
         }
+
+        private IDatabaseConnectionStringRepository _Repository;
+
         private void InitializeProperties()
         {
-            _DatabaseConnections = new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
+            _DatabaseConnections = 
+                new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
             _SearchByTableName = new ViewModelField<string>();
             _SearchByColumnName = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
@@ -31,6 +41,30 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             _SearchType.OnItemSelected += _SearchType_OnItemSelected;
 
             UpdateFieldVisibilityForSearchType();
+
+            RefreshDatabaseConnections();
+        }
+
+        private void RefreshDatabaseConnections()
+        {
+            _DatabaseConnections.Items.Clear();
+
+            var connections = _Repository.GetAll();
+
+            DatabaseConnectionViewModel item;
+            DatabaseConnectionString connString;
+
+            foreach (var connection in connections)
+            {
+                item = new DatabaseConnectionViewModel();
+                connString = new DatabaseConnectionString();
+                connString.Load(connection.ConnectionString);
+
+                item.Initialize(connection.Id, connection.Name,
+                    connString);
+
+                _DatabaseConnections.Add(item);
+            }            
         }
 
         private void _SearchType_OnItemSelected(object sender, EventArgs e)
@@ -239,6 +273,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         private const string ResultsPropertyName = "Results";
 
         private ObservableCollection<object> _Results;
+        
         public ObservableCollection<object> Results
         {
             get

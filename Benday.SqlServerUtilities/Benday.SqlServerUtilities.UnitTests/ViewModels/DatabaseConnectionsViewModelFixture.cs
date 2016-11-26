@@ -7,7 +7,7 @@ using System.Linq;
 namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 {
     [TestClass]
-    public class DatabaseConnectionsViewModelFixture
+    public class DatabaseConnectionsViewModelFixture : ViewModelFixtureBase
     {
         [TestInitialize]
         public void OnTestInitialize()
@@ -124,9 +124,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             Assert.AreEqual<int>(0, DatabaseConnectionStringRepositoryInstance.Items.Count);
         }
 
-        private string _ValidConnectionStringUseIntegratedSecurity = "Server=the_server; Database=the_database_name; Integrated Security=True;";
-        private string _ValidConnectionStringUserNamePassword = "Server=the_server; Database=the_database_name; User Id=the_username; Password=the_password;";
-
+        
         [TestMethod]
         public void WhenInitializedFromRepositoryWithConnectionsThenConnectionsArePopulated()
         {
