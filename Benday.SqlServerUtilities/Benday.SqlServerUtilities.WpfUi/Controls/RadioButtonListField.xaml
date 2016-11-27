@@ -27,6 +27,6 @@
             Style="{StaticResource FieldErrorStyle}" 
             Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}" 
             Margin="4"/>
-        <local:RadioButtonList Grid.Row="2" />
+        <local:RadioButtonList Grid.Row="2" DataContext="{Binding Items}"/>
     </Grid>
 </UserControl>

@@ -33,7 +33,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" />
+            <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" />
                 <ctrls:ComboBoxField LabelText="Match Method" 
