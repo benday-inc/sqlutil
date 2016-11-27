@@ -96,6 +96,9 @@
     <Compile Include="Controls\RadioButtonList.xaml.cs">
       <DependentUpon>RadioButtonList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RadioButtonListField.xaml.cs">
+      <DependentUpon>RadioButtonListField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextboxField.xaml.cs">
       <DependentUpon>TextboxField.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
     <Page Include="Controls\RadioButtonList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RadioButtonListField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TextboxField.xaml">
       <Generator>MSBuild:Compile</Generator>
