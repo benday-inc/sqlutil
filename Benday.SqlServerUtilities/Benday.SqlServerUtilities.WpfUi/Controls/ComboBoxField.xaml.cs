@@ -12,13 +12,12 @@ using System.Windows.Shapes;
 
 namespace Benday.SqlServerUtilities.WpfUi.Controls
 {
-    public partial class ComboBoxField : UserControl
+    public partial class ComboBoxField : UserControl, ILabeledField
     {
         public ComboBoxField()
         {
             InitializeComponent();
         }
-
         public string LabelText
         {
             get
@@ -27,21 +26,25 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
             }
             set
             {
-                if (value == null)
-                {
-                    this.SetValue(LabelTextProperty, String.Empty);                    
-                }
-                else
-                {
-                    string newValueToUpper = value.ToUpper();
-
-                    this.SetValue(LabelTextProperty, newValueToUpper);
-                    m_labelLeftRight.Text = newValueToUpper;
-                }
+                SetLabelText(value);
             }
         }
 
         public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register(
-          "LabelText", typeof(string), typeof(ComboBoxField), new PropertyMetadata(String.Empty));                   
+          "LabelText", typeof(string), typeof(ComboBoxField), new PropertyMetadata(String.Empty, DependencyPropertyUtility.LabelTextPropertyChanged));
+
+        public void SetLabelText(string value)
+        {
+            if (value == null)
+            {
+                this.SetValue(LabelTextProperty, String.Empty);
+                _Label.Text = String.Empty;
+            }
+            else
+            {
+                this.SetValue(LabelTextProperty, value);
+                _Label.Text = value;
+            }
+        }
     }
 }

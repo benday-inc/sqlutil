@@ -10,12 +10,13 @@ using System.Windows.Controls;
 
 namespace Benday.SqlServerUtilities.WpfUi.Controls
 {
-    public sealed partial class LabelField : UserControl
+    public sealed partial class LabelField : UserControl, ILabeledField
     {
         public LabelField()
         {
             InitializeComponent();
         }
+
 
         public string LabelText
         {
@@ -25,22 +26,24 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
             }
             set
             {
-                if (value == null)
-                {
-                    this.SetValue(LabelTextProperty, String.Empty);
-                    m_label.Text = String.Empty;
-                }
-                else
-                {
-                    string newValueToUpper = value.ToUpper();
-
-                    this.SetValue(LabelTextProperty, newValueToUpper);
-                    m_label.Text = newValueToUpper;
-                }
+                SetLabelText(value);
             }
         }
 
         public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register(
-          "LabelText", typeof(string), typeof(LabelField), new PropertyMetadata(String.Empty));
+          "LabelText", typeof(string), typeof(LabelField), new PropertyMetadata(String.Empty, DependencyPropertyUtility.LabelTextPropertyChanged));
+
+        public void SetLabelText(string value)
+        {
+            if (value == null)
+            {
+                this.SetValue(LabelTextProperty, String.Empty);
+                _Label.Text = String.Empty;
+            }
+            else
+            {
+                this.SetValue(LabelTextProperty, value);
+            }
+        }
     }
 }

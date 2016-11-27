@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
             <TextBlock 
-				x:Name="m_label" 
+				x:Name="_Label" 
 				Grid.Column="0" 
 				Text="LABEL TEXT" 
 				VerticalAlignment="Top" 

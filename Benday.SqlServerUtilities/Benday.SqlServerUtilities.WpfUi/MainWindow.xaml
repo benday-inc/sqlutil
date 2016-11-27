@@ -5,14 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" FontSize="18">
-    <!--<Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>-->
+        Title="MainWindow" Height="600" Width="800" FontSize="18" Loaded="Window_Loaded">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -20,8 +14,8 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Vertical" Style="{DynamicResource MenuStackPanel}">
-            <Button x:Name="_ButtonSearchByName" Content="Search By Name" />
-            <Button x:Name="_ButtonEditConnections" Content="Connections" />
+            <Button x:Name="_ButtonSearchByName" Content="Search" Click="_ButtonSearchByName_Click" />
+            <Button x:Name="_ButtonEditConnections" Content="Connections" Click="_ButtonEditConnections_Click" />
         </StackPanel>
 
         <ContentControl 

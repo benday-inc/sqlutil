@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace Benday.SqlServerUtilities.WpfUi.Controls
 {
-    public sealed partial class ListboxField : UserControl
+    public sealed partial class ListboxField : UserControl, ILabeledField
     {
         public ListboxField()
         {
@@ -25,38 +25,23 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
             }
             set
             {
-                if (value == null)
-                {
-                    this.SetValue(LabelTextProperty, String.Empty);
-                    m_label.Text = String.Empty;
-                }
-                else
-                {
-                    // string newValueToUpper = value.ToUpper();
-
-                    // this.SetValue(LabelTextProperty, newValueToUpper);
-
-                    // m_label.Text = newValueToUpper;
-
-                    this.SetValue(LabelTextProperty, value);
-                }
+                SetLabelText(value);
             }
         }
 
         public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register(
-          "LabelText", typeof(string), typeof(ListboxField), new PropertyMetadata(String.Empty, LabelTextPropertyChanged));
+          "LabelText", typeof(string), typeof(ListboxField), new PropertyMetadata(String.Empty,  DependencyPropertyUtility.LabelTextPropertyChanged));
 
-        private static void LabelTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void SetLabelText(string value)
         {
-            ListboxField target = d as ListboxField;
-
-            var tempValue = e.NewValue as string;
-
-            if (target != null && tempValue != null)
+            if (value == null)
             {
-                string newValueToUpper = tempValue.ToUpper();
-
-                target.m_label.Text = newValueToUpper;
+                this.SetValue(LabelTextProperty, String.Empty);
+                m_label.Text = String.Empty;
+            }
+            else
+            {
+                this.SetValue(LabelTextProperty, value);
             }
         }
     }

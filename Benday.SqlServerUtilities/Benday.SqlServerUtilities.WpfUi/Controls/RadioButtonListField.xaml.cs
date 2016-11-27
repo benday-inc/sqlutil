@@ -18,7 +18,7 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
     /// <summary>
     /// Interaction logic for RadioButtonListField.xaml
     /// </summary>
-    public partial class RadioButtonListField : UserControl
+    public partial class RadioButtonListField : UserControl, ILabeledField
     {
         public RadioButtonListField()
         {
@@ -33,34 +33,26 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
             }
             set
             {
-                if (value == null)
-                {
-                    this.SetValue(LabelTextProperty, String.Empty);
-                    m_label.Text = String.Empty;
-                }
-                else
-                {
-                    this.SetValue(LabelTextProperty, value);
-                }
+                SetLabelText(value);
             }
         }
 
         public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register(
-          "LabelText", typeof(string), typeof(RadioButtonListField), new PropertyMetadata(String.Empty, LabelTextPropertyChanged));
+          "LabelText", typeof(string), typeof(RadioButtonListField), 
+          new PropertyMetadata(String.Empty, DependencyPropertyUtility.LabelTextPropertyChanged));
 
-        private static void LabelTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void SetLabelText(string value)
         {
-            TextboxField target = d as TextboxField;
-
-            var tempValue = e.NewValue as string;
-
-            if (target != null && tempValue != null)
+            if (value == null)
             {
-                string newValueToUpper = tempValue.ToUpper();
-
-                target.m_label.Text = newValueToUpper;
+                this.SetValue(LabelTextProperty, String.Empty);
+                _Label.Text = String.Empty;
+            }
+            else
+            {
+                this.SetValue(LabelTextProperty, value);
+                _Label.Text = value;
             }
         }
-
     }
 }

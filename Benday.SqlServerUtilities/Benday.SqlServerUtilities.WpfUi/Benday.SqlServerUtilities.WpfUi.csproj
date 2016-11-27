@@ -87,6 +87,8 @@
     <Compile Include="Controls\ComboBoxField.xaml.cs">
       <DependentUpon>ComboBoxField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DependencyPropertyUtility.cs" />
+    <Compile Include="Controls\ILabeledField.cs" />
     <Compile Include="Controls\LabelField.xaml.cs">
       <DependentUpon>LabelField.xaml</DependentUpon>
     </Compile>

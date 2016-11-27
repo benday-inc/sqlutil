@@ -25,9 +25,36 @@ namespace Benday.SqlServerUtilities.WpfUi
             InitializeComponent();
         }
 
+        private Dictionary<string, UserControl> _Controls;
+
         private void _CurrentControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _CurrentControl.Content = new DatabaseConnectionsEditor();
+            
+        }
+
+        private void _ButtonSearchByName_Click(object sender, RoutedEventArgs e)
+        {
+            SelectControl("Search");
+        }
+
+        private void _ButtonEditConnections_Click(object sender, RoutedEventArgs e)
+        {
+            SelectControl("Connections");
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _Controls = new Dictionary<string, UserControl>();
+
+            _Controls.Add("Connections", new DatabaseConnectionsEditor());
+            _Controls.Add("Search", new DatabaseSearchUserControl());
+
+            SelectControl("Search");
+        }
+
+        private void SelectControl(string controlName)
+        {
+            _CurrentControl.Content = _Controls[controlName];
         }
     }
 }

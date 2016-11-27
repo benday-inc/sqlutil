@@ -28,7 +28,7 @@
 
         <TextBlock 
             Grid.Row="0" 
-            x:Name="m_label" 
+            x:Name="_Label" 
             Text="LABEL TEXT" 
             VerticalAlignment="Top" 
             Margin="4" 

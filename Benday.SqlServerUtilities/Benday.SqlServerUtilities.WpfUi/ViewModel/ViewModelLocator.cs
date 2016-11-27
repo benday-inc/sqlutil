@@ -60,7 +60,22 @@ namespace Benday.SqlServerUtilities.WpfUi.ViewModel
                 }
                 return _ConnectionsEditor;
             }            
-        }        
+        }
+
+
+        private SearchViewModel _Search;
+        public SearchViewModel Search
+        {
+            get
+            {
+                if (_Search == null)
+                {
+                    _Search = new SearchViewModel(
+                        new DatabaseConnectionStringRepository());
+                }
+                return _Search;
+            }
+        }
 
         public static void Cleanup()
         {
