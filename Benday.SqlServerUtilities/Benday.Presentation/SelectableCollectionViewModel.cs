@@ -267,5 +267,21 @@ namespace Benday.Presentation
                 RaisePropertyChanged(AllowMultipleSelectionsPropertyName);
             }
         }
+
+        private const string IsValidPropertyName = "IsValid";
+
+        private bool _IsValid;
+        public bool IsValid
+        {
+            get
+            {
+                return _IsValid;
+            }
+            set
+            {
+                _IsValid = value;
+                RaisePropertyChanged(IsValidPropertyName);
+            }
+        }
     }
 }

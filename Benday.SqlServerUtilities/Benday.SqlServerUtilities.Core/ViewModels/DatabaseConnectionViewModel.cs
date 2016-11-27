@@ -232,13 +232,17 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             get
             {
-                throw new NotImplementedException();
+                return Name;
             }
-
             set
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         public string Value

@@ -35,7 +35,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             _SearchByValue = new ViewModelField<string>();
             _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
             _Results = new ObservableCollection<object>();
-
+            
             _SearchType = new SingleSelectListViewModel(GetSearchTypes());
 
             _SearchType.OnItemSelected += _SearchType_OnItemSelected;
@@ -43,6 +43,13 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             UpdateFieldVisibilityForSearchType();
 
             RefreshDatabaseConnections();
+
+            _DatabaseConnections.IsValid = true;
+            _SearchByColumnName.IsValid = true;
+            _SearchByTableName.IsValid = true;
+            _SearchByValue.IsValid = true;
+            _SearchStringMethod.IsValid = true;
+            _SearchType.IsValid = true;
         }
 
         private void RefreshDatabaseConnections()

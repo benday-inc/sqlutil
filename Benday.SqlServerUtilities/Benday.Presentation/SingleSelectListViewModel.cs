@@ -106,22 +106,6 @@ namespace Benday.Presentation
             }
         }
 
-        private const string IsValidPropertyName = "IsValid";
-
-        private bool _IsValid;
-        public bool IsValid
-        {
-            get
-            {
-                return _IsValid;
-            }
-            set
-            {
-                _IsValid = value;
-                RaisePropertyChanged(IsValidPropertyName);
-            }
-        }
-
         private const string ValidationMessagePropertyName = "ValidationMessage";
 
         private string _ValidationMessage;

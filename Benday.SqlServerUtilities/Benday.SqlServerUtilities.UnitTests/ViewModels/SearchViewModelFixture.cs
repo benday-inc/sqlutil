@@ -83,13 +83,24 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public void WhenInitializedThenPropertiesAreNotNull()
+        public void WhenInitializedThenFieldPropertiesAreNotNull()
         {
             Assert.IsNotNull(SystemUnderTest.SearchStringMethod, "SearchStringMethod is null.");
             Assert.IsNotNull(SystemUnderTest.SearchType, "SearchType is null.");
             Assert.IsNotNull(SystemUnderTest.SearchByColumnName, "SearchByColumnName was null.");
             Assert.IsNotNull(SystemUnderTest.SearchByTableName, "SearchByTableName was null.");
             Assert.IsNotNull(SystemUnderTest.SearchByValue, "SearchByValue was null.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedThenFieldPropertiesAreValid()
+        {
+            Assert.IsTrue(SystemUnderTest.DatabaseConnections.IsValid, "DatabaseConnections should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchStringMethod.IsValid, "SearchStringMethod should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchType.IsValid, "SearchType should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchByColumnName.IsValid, "SearchByColumnName should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchByTableName.IsValid, "SearchByTableName should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchByValue.IsValid, "SearchByValue should be valid.");
         }
 
         [TestMethod]
