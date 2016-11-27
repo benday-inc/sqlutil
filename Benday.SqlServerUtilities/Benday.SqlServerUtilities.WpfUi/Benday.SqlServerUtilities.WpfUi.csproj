@@ -75,6 +75,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CheckboxField.xaml.cs">
+      <DependentUpon>CheckboxField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CheckboxList.xaml.cs">
+      <DependentUpon>CheckboxList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CheckboxListField.xaml.cs">
+      <DependentUpon>CheckboxListField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ComboBoxField.xaml.cs">
+      <DependentUpon>ComboBoxField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LabelField.xaml.cs">
       <DependentUpon>LabelField.xaml</DependentUpon>
     </Compile>
@@ -87,7 +99,26 @@
     <Compile Include="Controls\TextboxField.xaml.cs">
       <DependentUpon>TextboxField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseSearchUserControl.xaml.cs">
+      <DependentUpon>DatabaseSearchUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Controls\CheckboxField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CheckboxList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CheckboxListField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ComboBoxField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\LabelField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +136,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DatabaseConnectionsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatabaseSearchUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
