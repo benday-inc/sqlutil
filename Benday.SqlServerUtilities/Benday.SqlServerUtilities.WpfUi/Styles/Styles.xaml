@@ -85,6 +85,18 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="FieldLabelContentStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}"/>
+        <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
