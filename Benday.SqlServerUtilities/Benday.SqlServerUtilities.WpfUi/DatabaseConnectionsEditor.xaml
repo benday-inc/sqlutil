@@ -41,8 +41,18 @@
             </StackPanel>
         </Grid>
 
+        <TextBlock 
+            Grid.Column="1" 
+            Text="Add a connection or choose an existing connection."
+            Style="{StaticResource FieldLabelContentStyle}"
+            HorizontalAlignment="Center"
+            Visibility="{Binding IsConnectionEditorEnabled, Converter={StaticResource NotVisibilityValueConverterInstance}}"
+              
+            />
+
         <Grid Grid.Column="1" 
-               IsEnabled="{Binding IsConnectionEditorEnabled}"
+              Visibility="{Binding IsConnectionEditorEnabled, Converter={StaticResource VisibilityValueConverterInstance}}"
+               
               >
             <StackPanel 
                 DataContext="{Binding Connections.SelectedItem}"
