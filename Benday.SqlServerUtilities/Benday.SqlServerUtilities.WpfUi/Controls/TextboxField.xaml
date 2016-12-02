@@ -30,9 +30,6 @@
             Grid.Row="0" 
             x:Name="_Label" 
             Text="LABEL TEXT" 
-            VerticalAlignment="Top" 
-            Margin="4" 
-            TextWrapping="Wrap" 
             Style="{StaticResource FieldLabelStyle}"/>
         
         <TextBlock 

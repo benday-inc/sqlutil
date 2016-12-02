@@ -83,12 +83,12 @@
 
     <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Black"/>
-        <!-- <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/> -->
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}"/>
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
 
