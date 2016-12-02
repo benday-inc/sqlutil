@@ -11,9 +11,15 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton 
+                         
                         Style="{StaticResource FieldRadioButtonList}"
-                        Content="{Binding Text}" 
-                        IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                        IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                        <TextBlock 
+                            TextWrapping="Wrap"   
+                            Margin="0"
+                            Style="{StaticResource FieldLabelStyle}"
+                            Text="{Binding Text}" />
+                    </RadioButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

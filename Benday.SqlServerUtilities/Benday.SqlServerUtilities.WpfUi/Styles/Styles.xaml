@@ -4,6 +4,7 @@
                     xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi.Styles">
 
     <FontFamily x:Key="LabelFontFamily">Segoe UI</FontFamily>
+    <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
     <system:Double x:Key="LabelFontSize">15</system:Double>
     <Thickness x:Key="DefaultFieldMargin">4</Thickness>
 
@@ -46,7 +47,9 @@
     </Style>
     <Style x:Key="FieldRadioButtonList" 
            TargetType="{x:Type RadioButton}">
-        <Setter Property="Margin" Value="4" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
     </Style> 
     <Style x:Key="DialogGrid" TargetType="{x:Type Grid}">
         <Setter Property="Margin" Value="4"/>
