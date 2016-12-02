@@ -23,10 +23,23 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ctrls:ComboBoxField
-            Grid.Row="0"
-            DataContext="{Binding DatabaseConnections}"
-            LabelText="Connection" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ctrls:ComboBoxField
+                Grid.Column="0" 
+                DataContext="{Binding DatabaseConnections}"
+                LabelText="Connection" />
+            <Button Grid.Column="1"
+                    Width="{StaticResource DefaultFieldControlHeight}"
+                    Height="{StaticResource DefaultFieldControlHeight}"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding RefreshConnectionsCommand}"
+                    Margin="{StaticResource DefaultFieldMargin}"
+                    ></Button>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
