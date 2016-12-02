@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Benday.Presentation;
 
 namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 {
     [TestClass]
-    public class DatabaseConnectionViewModelFixture
+    public class DatabaseConnectionViewModelFixture : ViewModelFixtureBase
     {
         [TestInitialize]
         public void OnTestInitialize()
@@ -39,21 +40,51 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             UnitTestUtility.AssertIsNotNullOrWhitespace(SystemUnderTest.Id, "Id");
 
-            Assert.IsNotNull(SystemUnderTest.Database, "Database was null.");
-            Assert.IsNotNull(SystemUnderTest.Name, "Name was null.");
-            Assert.IsNotNull(SystemUnderTest.Password, "Password was null.");
-            Assert.IsNotNull(SystemUnderTest.Server, "Server was null.");
-            Assert.IsNotNull(SystemUnderTest.Username, "Username was null.");
-            Assert.IsNotNull(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection was null");
+            AssertFieldIsInitializedToEmptyAndVisibleAndValid(SystemUnderTest.Database, "Database");
+            AssertFieldIsInitializedToEmptyAndVisibleAndValid(SystemUnderTest.Name, "Name");
+            AssertFieldIsInitializedToEmptyAndVisibleAndValid(SystemUnderTest.Password, "Password");
+            AssertFieldIsInitializedToEmptyAndVisibleAndValid(SystemUnderTest.Server, "Server");
+            AssertFieldIsInitializedToEmptyAndVisibleAndValid(SystemUnderTest.Username, "Username");
+            AssertFieldIsInitializedToTrueAndVisibleAndValid(SystemUnderTest.UseIntegratedSecurity, "UseIntegratedSecurity");
+        }
+        private void AssertFieldIsInitializedToEmptyAndVisibleAndValid(
+            ViewModelField<string> actualField, string fieldName)
+        {
+            Assert.IsNotNull(actualField, "Field '{0}' was null.",
+                fieldName);
 
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Database.Value, "Database should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Name.Value, "Name should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password.Value, "Password should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Server.Value, "Server should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username.Value, "Username should be empty.");
-            Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity.Value, "UseTrustedConnection");
+            Assert.AreEqual<string>(String.Empty,
+                actualField.Value,
+                "Value was wrong on field '{0}'.",
+                fieldName);
 
-            
+            Assert.AreEqual<bool>(true,
+                actualField.IsVisible,
+                "Visibility was wrong on field '{0}'.",
+                fieldName);
+
+            Assert.IsTrue(actualField.IsValid, "IsValid was wrong on field '{0}'.",
+                fieldName);
+        }
+
+        private void AssertFieldIsInitializedToTrueAndVisibleAndValid(
+            ViewModelField<bool> actualField, string fieldName)
+        {
+            Assert.IsNotNull(actualField, "Field '{0}' was null.",
+                fieldName);
+
+            Assert.AreEqual<bool>(true,
+                actualField.Value,
+                "Value was wrong on field '{0}'.",
+                fieldName);
+
+            Assert.AreEqual<bool>(true,
+                actualField.IsVisible,
+                "Visibility was wrong on field '{0}'.",
+                fieldName);
+
+            Assert.IsTrue(actualField.IsValid, "IsValid was wrong on field '{0}'.",
+                fieldName);
         }
 
         private DatabaseConnectionString _DatabaseConnectionStringInstance;

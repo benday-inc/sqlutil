@@ -13,7 +13,7 @@ using System.Windows.Data;
 
 namespace Benday.SqlServerUtilities.WpfUi.Controls
 {
-    public partial class CheckboxField : UserControl
+    public partial class CheckboxField : UserControl, ILabeledField
     {
         public CheckboxField()
         {
@@ -28,106 +28,24 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
             }
             set
             {
-                if (value == null)
-                {
-                    this.SetValue(LabelTextProperty, String.Empty);
-                    m_labelTopBottom.Text = String.Empty;
-                }
-                else
-                {
-                    string newValueToUpper = value.ToUpper();
-
-                    this.SetValue(LabelTextProperty, newValueToUpper);
-                    m_labelTopBottom.Text = newValueToUpper;
-                    m_labelLeftRight.Text = newValueToUpper;
-                }
+                SetLabelText(value);
             }
         }
 
         public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register(
-          "LabelText", typeof(string), typeof(CheckboxField), new PropertyMetadata(String.Empty));
+          "LabelText", typeof(string), typeof(CheckboxField), new PropertyMetadata(String.Empty, DependencyPropertyUtility.LabelTextPropertyChanged));
 
-        public Orientation Orientation
+        public void SetLabelText(string value)
         {
-            get
+            if (value == null)
             {
-                return (Orientation)this.GetValue(OrientationProperty);
+                this.SetValue(LabelTextProperty, String.Empty);
+                _Label.Text = String.Empty;
             }
-            set
+            else
             {
-                var originalValue = this.Orientation;
-
-                if (originalValue != value)
-                {
-                    this.SetValue(OrientationProperty, value);
-
-                    if (value == System.Windows.Controls.Orientation.Horizontal)
-                    {
-                        m_gridLeftRight.Visibility = System.Windows.Visibility.Visible;
-                        m_stackPanelTopBottom.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        m_gridLeftRight.Visibility = System.Windows.Visibility.Collapsed;
-                        m_stackPanelTopBottom.Visibility = System.Windows.Visibility.Visible;
-                    }
-                }
-            }
-        }
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-          "Orientation", typeof(Orientation), typeof(CheckboxField), new PropertyMetadata(Orientation.Horizontal));
-
-        public GridLength LabelColumnWidth
-        {
-            get
-            {
-                return (GridLength)this.GetValue(LabelColumnWidthProperty);
-            }
-            set
-            {
-                this.SetValue(LabelColumnWidthProperty, value);
-                if (this.Orientation == Orientation.Horizontal)
-                {
-                    m_columnForLabel.Width = value;
-                }
-            }
-        }
-
-        private static readonly GridLength DefaultLabelColumnWidthValue = new GridLength((double)200);
-        public static readonly DependencyProperty LabelColumnWidthProperty = DependencyProperty.Register(
-          "LabelColumnWidth", typeof(GridLength), typeof(CheckboxField), new PropertyMetadata(DefaultLabelColumnWidthValue));
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                RaiseEnterKeyPressedEvent(sender as TextBox);
-            }
-        }
-
-        /// <summary>
-        /// Raised when Enter key is pressed in the textbox.
-        /// </summary>
-        public event EventHandler OnEnterKey;
-        private void RaiseEnterKeyPressedEvent(TextBox sender)
-        {
-            var temp = OnEnterKey;
-
-            if (temp != null)
-            {
-                if (sender != null)
-                {
-                    // force the viewmodel binding to refresh
-                    BindingExpression binding = sender.GetBindingExpression(TextBox.TextProperty);
-
-                    if (binding != null)
-                    {
-                        binding.UpdateSource();
-                    }
-                }
-
-                OnEnterKey(this, new EventArgs());
+                this.SetValue(LabelTextProperty, value);
+                _Label.Text = value;
             }
         }
     }

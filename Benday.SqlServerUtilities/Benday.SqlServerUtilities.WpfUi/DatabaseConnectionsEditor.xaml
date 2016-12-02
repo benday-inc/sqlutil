@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Benday.SqlServerUtilities.WpfUi.DatabaseConnectionsEditor"
+﻿<UserControl xmlns:Controls="clr-namespace:Benday.SqlServerUtilities.WpfUi.Controls"  x:Class="Benday.SqlServerUtilities.WpfUi.DatabaseConnectionsEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -47,25 +47,38 @@
             <StackPanel 
                 DataContext="{Binding Connections.SelectedItem}"
                 Orientation="Vertical">
-                <Label Content="Connection Name" />
-                <TextBox Text="{Binding Name, Mode=TwoWay}" />
+                <Controls:TextboxField 
+                    LabelText="Connection Name"
+                    DataContext="{Binding Name, Mode=TwoWay}" 
+                    />
 
-                <Label Content="Server Name" />
-                <TextBox Text="{Binding Server, Mode=TwoWay}"/>
+                <Controls:TextboxField 
+                    LabelText="Server Name"
+                    DataContext="{Binding Server, Mode=TwoWay}" 
+                    />
 
-                <Label Content="Database Name" />
-                <TextBox Text="{Binding Database, Mode=TwoWay}"/>
+                <Controls:TextboxField 
+                    LabelText="Database Name"
+                    DataContext="{Binding Database, Mode=TwoWay}" 
+                    />
 
-                <CheckBox Content="Use Integrated Security / Windows Authentication" 
-                          IsChecked="{Binding UseIntegratedSecurity, Mode=TwoWay}"/>
+                <Controls:CheckboxField 
+                    LabelText="Use Integrated Security / Windows Authentication"
+                    DataContext="{Binding UseIntegratedSecurity, Mode=TwoWay}" 
+                    />
 
-                <Label Content="Username" />
-                <TextBox Text="{Binding Username, Mode=TwoWay}"/>
 
-                <Label Content="Password" />
-                <TextBox 
-                    Text="{Binding Password, Mode=TwoWay}"/>
+                <Controls:TextboxField 
+                    LabelText="Username"
+                    DataContext="{Binding Username, Mode=TwoWay}" 
+                    />
 
+
+                <Controls:TextboxField 
+                    LabelText="Password"
+                    DataContext="{Binding Password, Mode=TwoWay}" 
+                    />
+                
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Save" 
                             Command="{Binding SaveCommand, Mode=OneWay}"  />
