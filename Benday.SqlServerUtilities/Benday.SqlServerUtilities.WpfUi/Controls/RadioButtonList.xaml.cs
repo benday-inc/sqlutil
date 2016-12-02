@@ -29,5 +29,15 @@ namespace Benday.SqlServerUtilities.WpfUi.Controls
                 return viewModel;
             }
         }
+
+        private void RadioButton_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var senderAsRadioButton = sender as RadioButton;
+
+            if (senderAsRadioButton != null)
+            {
+                senderAsRadioButton.IsChecked = true;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@
                     <RadioButton 
                          
                         Style="{StaticResource FieldRadioButtonList}"
-                        IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                        IsChecked="{Binding IsSelected, Mode=TwoWay}" GotFocus="RadioButton_GotFocus">
                         <TextBlock 
                             TextWrapping="Wrap"   
                             Margin="0"
