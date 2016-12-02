@@ -37,7 +37,8 @@
                     Height="{StaticResource DefaultFieldControlHeight}"
                     VerticalAlignment="Bottom"
                     Command="{Binding RefreshConnectionsCommand}"
-                    Margin="{StaticResource DefaultFieldMargin}"
+                    Margin="{StaticResource DefaultFieldMargin}" FontFamily="Wingdings 3"
+                    Content="P" FontSize="22"
                     ></Button>
         </Grid>
         <Grid Grid.Row="1">
