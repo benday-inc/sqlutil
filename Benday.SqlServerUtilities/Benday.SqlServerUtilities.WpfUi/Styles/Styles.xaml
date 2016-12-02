@@ -10,7 +10,7 @@
 
     <system:Double x:Key="LabelFontSize">15</system:Double>
 
-    <system:Double x:Key="DefaultFieldControlHeight">36</system:Double>
+    <system:Double x:Key="DefaultFieldControlHeight">32</system:Double>
 
     <Thickness x:Key="DefaultFieldMargin">4</Thickness>
 

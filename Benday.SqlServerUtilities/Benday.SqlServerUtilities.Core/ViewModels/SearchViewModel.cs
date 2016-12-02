@@ -44,6 +44,11 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
             RefreshDatabaseConnections();
 
+            if (_DatabaseConnections.Items.Count > 0)
+            {
+                _DatabaseConnections.Items[0].IsSelected = true;
+            }
+
             _DatabaseConnections.IsValid = true;
             _SearchByColumnName.IsValid = true;
             _SearchByTableName.IsValid = true;
@@ -269,6 +274,21 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 }
 
                 return _SearchCommand;
+            }
+        }
+
+        private ICommand _RefreshConnectionsCommand;
+        public ICommand RefreshConnectionsCommand
+        {
+            get
+            {
+                if (_RefreshConnectionsCommand == null)
+                {
+                    _RefreshConnectionsCommand = 
+                        new RelayCommand(RefreshDatabaseConnections);
+                }
+
+                return _RefreshConnectionsCommand;
             }
         }
 

@@ -67,6 +67,34 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         }
 
         [TestMethod]
+        public void WhenRefreshConnectionsIsCalledThenDatabaseConnectionsAreRefreshed()
+        {
+            Assert.IsNotNull(SystemUnderTest.DatabaseConnections, "DatabaseConnections was null.");
+            Assert.AreNotEqual<int>(0, SystemUnderTest.DatabaseConnections.Count,
+                "Wrong number of items.");
+            var originalCount = SystemUnderTest.DatabaseConnections.Count;
+
+            _DatabaseConnectionStringRepositoryInstance.Add(
+                Guid.NewGuid().ToString(), "connection 3",
+                _ValidConnectionStringUserNamePassword);
+
+            SystemUnderTest.RefreshConnectionsCommand.Execute(null);
+
+            var actualCount = SystemUnderTest.DatabaseConnections.Count;
+        }
+
+        [TestMethod]
+        public void WhenInitializedWithDatabaseConnectionsThenTheFirstItemIsSelected()
+        {
+            Assert.IsNotNull(SystemUnderTest.DatabaseConnections, "DatabaseConnections was null.");
+            Assert.AreNotEqual<int>(0, SystemUnderTest.DatabaseConnections.Count,
+                "Wrong number of items.");
+
+            Assert.IsTrue(SystemUnderTest.DatabaseConnections.Items[0].IsSelected, 
+                "First item should be selected.");
+        }
+
+        [TestMethod]
         public void WhenInitializedTheDefaultSearchTypeIsTableName()
         {
             var expectedSearchType = "Table Name";
