@@ -104,7 +104,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             var temp = new DatabaseConnectionViewModel();
 
-            temp.Name = "(new connection)";
+            temp.Name.Value = "(new connection)";
 
             SubscribeToEvents(temp);
 

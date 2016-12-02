@@ -15,12 +15,34 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         public DatabaseConnectionViewModel()
         {
             Id = Guid.NewGuid().ToString();
-            Name = String.Empty;
-            Server = String.Empty;
-            Database = String.Empty;
-            UseIntegratedSecurity = true;
-            Username = String.Empty;
-            Password = String.Empty;
+            Name = new ViewModelField<string>(String.Empty);
+            Server = new ViewModelField<string>(String.Empty);
+            Database = new ViewModelField<string>(String.Empty);
+            UseIntegratedSecurity = new ViewModelField<bool>(true);
+            Username = new ViewModelField<string>(String.Empty);
+            Password = new ViewModelField<string>(String.Empty);
+
+            SubscribeFieldsToOnValueChanged();
+        }
+
+        private void SubscribeFieldsToOnValueChanged()
+        {
+            SubscribeFieldToOnValueChanged<string>(Name);
+            SubscribeFieldToOnValueChanged<string>(Server);
+            SubscribeFieldToOnValueChanged<string>(Database);
+            SubscribeFieldToOnValueChanged<bool>(UseIntegratedSecurity);
+            SubscribeFieldToOnValueChanged<string>(Username);
+            SubscribeFieldToOnValueChanged<string>(Password);
+        }
+
+        private void SubscribeFieldToOnValueChanged<T>(ViewModelField<T> field)
+        {
+            field.OnValueChanged += Field_OnValueChanged;
+        }
+
+        private void Field_OnValueChanged(object sender, EventArgs e)
+        {
+            RaisePropertyChanged(ConnectionStringPropertyName);
         }
 
         private const string IdPropertyName = "Id";
@@ -41,8 +63,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string NamePropertyName = "Name";
 
-        private string _Name;
-        public string Name
+        private ViewModelField<string> _Name;
+        public ViewModelField<string> Name
         {
             get
             {
@@ -57,8 +79,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string ServerPropertyName = "Server";
 
-        private string _Server;
-        public string Server
+        private ViewModelField<string> _Server;
+        public ViewModelField<string> Server
         {
             get
             {
@@ -74,8 +96,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string DatabasePropertyName = "Database";
 
-        private string _Database;
-        public string Database
+        private ViewModelField<string> _Database;
+        public ViewModelField<string> Database
         {
             get
             {
@@ -91,8 +113,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string UseIntegratedSecurityPropertyName = "UseIntegratedSecurity";
 
-        private bool _UseIntegratedSecurity;
-        public bool UseIntegratedSecurity
+        private ViewModelField<bool> _UseIntegratedSecurity;
+        public ViewModelField<bool> UseIntegratedSecurity
         {
             get
             {
@@ -108,8 +130,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string UsernamePropertyName = "Username";
 
-        private string _Username;
-        public string Username
+        private ViewModelField<string> _Username;
+        public ViewModelField<string> Username
         {
             get
             {
@@ -125,8 +147,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private const string PasswordPropertyName = "Password";
 
-        private string _Password;
-        public string Password
+        private ViewModelField<string> _Password;
+        public ViewModelField<string> Password
         {
             get
             {
@@ -156,7 +178,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
             _OriginalConnectionString = connection;
             Id = databaseConnectionId;
-            Name = originalName;
+            Name.Value = originalName;
             _OriginalConnectionName = originalName;
 
             PopulateFromConnection(_OriginalConnectionString);
@@ -166,11 +188,11 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             var toValue = this;
 
-            toValue.Database = fromValue.Database;
-            toValue.Username = fromValue.Username;
-            toValue.UseIntegratedSecurity = fromValue.UseIntegratedSecurity;
-            toValue.Password = fromValue.Password;
-            toValue.Server = fromValue.Server;
+            toValue.Database.Value = fromValue.Database;
+            toValue.Username.Value = fromValue.Username;
+            toValue.UseIntegratedSecurity.Value = fromValue.UseIntegratedSecurity;
+            toValue.Password.Value = fromValue.Password;
+            toValue.Server.Value = fromValue.Server;
         }
 
         private ICommand _CancelCommand;
@@ -189,7 +211,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private void Cancel()
         {
-            Name = _OriginalConnectionName;
+            Name.Value = _OriginalConnectionName;
             PopulateFromConnection(_OriginalConnectionString);
         }
 
@@ -232,7 +254,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             get
             {
-                return Name;
+                return Name.Value;
             }
             set
             {
@@ -242,7 +264,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public override string ToString()
         {
-            return Name;
+            return Name.Value;
         }
 
         public string Value
@@ -287,15 +309,39 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
+        string IStoredDatabaseConnectionString.Id
+        {
+            get
+            {
+                return Id;
+            }
+        }
+
+        string IStoredDatabaseConnectionString.Name
+        {
+            get
+            {
+                return Name.Value;
+            }
+        }
+
+        string IStoredDatabaseConnectionString.ConnectionString
+        {
+            get
+            {
+                return GetConnectionString();
+            }
+        }
+
         private string GetConnectionString()
         {
             var temp = new DatabaseConnectionString();
 
-            temp.UseIntegratedSecurity = UseIntegratedSecurity;
-            temp.Database = Database;
-            temp.Password = Password;
-            temp.Server = Server;
-            temp.Username = Username;
+            temp.UseIntegratedSecurity = UseIntegratedSecurity.Value;
+            temp.Database = Database.Value;
+            temp.Password = Password.Value;
+            temp.Server = Server.Value;
+            temp.Username = Username.Value;
 
             return temp.ConnectionString;
         }

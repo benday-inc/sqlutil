@@ -39,12 +39,21 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             UnitTestUtility.AssertIsNotNullOrWhitespace(SystemUnderTest.Id, "Id");
 
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Database, "Database should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Name, "Name should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password, "Password should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Server, "Server should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username, "Username should be empty.");
-            Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
+            Assert.IsNotNull(SystemUnderTest.Database, "Database was null.");
+            Assert.IsNotNull(SystemUnderTest.Name, "Name was null.");
+            Assert.IsNotNull(SystemUnderTest.Password, "Password was null.");
+            Assert.IsNotNull(SystemUnderTest.Server, "Server was null.");
+            Assert.IsNotNull(SystemUnderTest.Username, "Username was null.");
+            Assert.IsNotNull(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection was null");
+
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Database.Value, "Database should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Name.Value, "Name should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password.Value, "Password should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Server.Value, "Server should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username.Value, "Username should be empty.");
+            Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity.Value, "UseTrustedConnection");
+
+            
         }
 
         private DatabaseConnectionString _DatabaseConnectionStringInstance;
@@ -116,12 +125,12 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             InitializeUseIntegratedSecurity();
 
             Assert.AreEqual<string>(DatabaseConnectionId, SystemUnderTest.Id, "Id");
-            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name, "Id");
-            Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username, "Username should be empty.");
-            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password, "Password should be empty.");
-            Assert.AreEqual<string>("the_server", SystemUnderTest.Server, "Server");
-            Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
+            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name.Value, "Name");
+            Assert.IsTrue(SystemUnderTest.UseIntegratedSecurity.Value, "UseTrustedConnection");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Username.Value, "Username should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.Password.Value, "Password should be empty.");
+            Assert.AreEqual<string>("the_server", SystemUnderTest.Server.Value, "Server");
+            Assert.AreEqual<string>("the_database", SystemUnderTest.Database.Value, "Database");
         }
 
         [TestMethod]
@@ -130,12 +139,12 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             InitializeUseUsernameAndPassword();
 
             Assert.AreEqual<string>(DatabaseConnectionId, SystemUnderTest.Id, "Id");
-            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name, "Id");
-            Assert.IsFalse(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
-            Assert.AreEqual<string>("the_username", SystemUnderTest.Username, "Username should be empty.");
-            Assert.AreEqual<string>("the_password", SystemUnderTest.Password, "Password should be empty.");
-            Assert.AreEqual<string>("the_server", SystemUnderTest.Server, "Server");
-            Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
+            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name.Value, "Id");
+            Assert.IsFalse(SystemUnderTest.UseIntegratedSecurity.Value, "UseTrustedConnection");
+            Assert.AreEqual<string>("the_username", SystemUnderTest.Username.Value, "Username should be empty.");
+            Assert.AreEqual<string>("the_password", SystemUnderTest.Password.Value, "Password should be empty.");
+            Assert.AreEqual<string>("the_server", SystemUnderTest.Server.Value, "Server");
+            Assert.AreEqual<string>("the_database", SystemUnderTest.Database.Value, "Database");
         }
 
         [TestMethod]
@@ -143,22 +152,22 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             InitializeUseUsernameAndPassword();
 
-            SystemUnderTest.Name = "asdf";
-            SystemUnderTest.UseIntegratedSecurity = true;
-            SystemUnderTest.Username = "asdf";
-            SystemUnderTest.Password = "asdf";
-            SystemUnderTest.Server = "asdf";
-            SystemUnderTest.Database = "asdf";
+            SystemUnderTest.Name.Value = "asdf";
+            SystemUnderTest.UseIntegratedSecurity.Value = true;
+            SystemUnderTest.Username.Value = "asdf";
+            SystemUnderTest.Password.Value = "asdf";
+            SystemUnderTest.Server.Value = "asdf";
+            SystemUnderTest.Database.Value = "asdf";
 
             SystemUnderTest.CancelCommand.Execute(null);
 
             Assert.AreEqual<string>(DatabaseConnectionId, SystemUnderTest.Id, "Id");
-            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name, "Name");
-            Assert.IsFalse(SystemUnderTest.UseIntegratedSecurity, "UseTrustedConnection");
-            Assert.AreEqual<string>("the_username", SystemUnderTest.Username, "Username should be empty.");
-            Assert.AreEqual<string>("the_password", SystemUnderTest.Password, "Password should be empty.");
-            Assert.AreEqual<string>("the_server", SystemUnderTest.Server, "Server");
-            Assert.AreEqual<string>("the_database", SystemUnderTest.Database, "Database");
+            Assert.AreEqual<string>(OriginalName, SystemUnderTest.Name.Value, "Name");
+            Assert.IsFalse(SystemUnderTest.UseIntegratedSecurity.Value, "UseTrustedConnection");
+            Assert.AreEqual<string>("the_username", SystemUnderTest.Username.Value, "Username should be empty.");
+            Assert.AreEqual<string>("the_password", SystemUnderTest.Password.Value, "Password should be empty.");
+            Assert.AreEqual<string>("the_server", SystemUnderTest.Server.Value, "Server");
+            Assert.AreEqual<string>("the_database", SystemUnderTest.Database.Value, "Database");
         }
 
         [TestMethod]
@@ -178,7 +187,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             var tester = new NotifyPropertyChangedTester(SystemUnderTest);
 
-            SystemUnderTest.UseIntegratedSecurity = !SystemUnderTest.UseIntegratedSecurity;
+            SystemUnderTest.UseIntegratedSecurity.Value = !SystemUnderTest.UseIntegratedSecurity.Value;
 
             tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
         }
@@ -188,7 +197,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             var tester = new NotifyPropertyChangedTester(SystemUnderTest);
 
-            SystemUnderTest.Username = "asdf";
+            SystemUnderTest.Username.Value = "asdf";
 
             tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
         }
@@ -198,7 +207,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             var tester = new NotifyPropertyChangedTester(SystemUnderTest);
 
-            SystemUnderTest.Password = "asdf";
+            SystemUnderTest.Password.Value = "asdf";
 
             tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
         }
@@ -208,7 +217,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             var tester = new NotifyPropertyChangedTester(SystemUnderTest);
 
-            SystemUnderTest.Server = "asdf";
+            SystemUnderTest.Server.Value = "asdf";
 
             tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
         }
@@ -218,7 +227,7 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             var tester = new NotifyPropertyChangedTester(SystemUnderTest);
 
-            SystemUnderTest.Database = "asdf";
+            SystemUnderTest.Database.Value = "asdf";
 
             tester.AssertChange(DatabaseConnectionViewModel.ConnectionStringPropertyName);
         }
