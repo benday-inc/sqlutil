@@ -109,7 +109,7 @@
     <Style x:Key="FieldTextboxStyle" TargetType="TextBox">
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}"/>
         <Setter Property="Height" 
                 Value="{StaticResource ResourceKey=DefaultFieldControlHeight}"/>
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
@@ -131,7 +131,7 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}"/>
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
         <Setter Property="Width" Value="140"/>
         <Setter Property="Height" 
@@ -142,7 +142,7 @@
     <Style x:Key="FieldComboBoxStyle" TargetType="ComboBox">
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}"/>
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}"/>
         <Setter Property="Height" 
                 Value="{StaticResource ResourceKey=DefaultFieldControlHeight}"/>
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}"/>
