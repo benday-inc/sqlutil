@@ -41,8 +41,12 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1" DataContext="{Binding Connections.SelectedItem}" >
-            <StackPanel Orientation="Vertical">
+        <Grid Grid.Column="1" 
+               IsEnabled="{Binding IsConnectionEditorEnabled}"
+              >
+            <StackPanel 
+                DataContext="{Binding Connections.SelectedItem}"
+                Orientation="Vertical">
                 <Label Content="Connection Name" />
                 <TextBox Text="{Binding Name, Mode=TwoWay}" />
 
