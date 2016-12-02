@@ -43,10 +43,7 @@
 			Grid.Row="2"			 
 			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay}" 
 			Style="{StaticResource FieldTextboxStyle}"
-			HorizontalAlignment="Stretch" 
-			VerticalAlignment="Top" 
-			Margin="16,4,4,4"
-			HorizontalContentAlignment="Stretch" KeyDown="TextBox_KeyDown"  />
+			KeyDown="TextBox_KeyDown"  />
 
     </Grid>
 </UserControl>
