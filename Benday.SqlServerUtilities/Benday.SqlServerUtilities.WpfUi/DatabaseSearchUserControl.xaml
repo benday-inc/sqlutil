@@ -36,11 +36,13 @@
             <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" />
+                
+                <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" />
+                <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}"/>
+
                 <ctrls:ComboBoxField LabelText="Match Method" 
                                      DataContext="{Binding SearchStringMethod}"
             />
-                <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" />
-                <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}"/>
             </StackPanel>
             <Button
                 Grid.Column="2"
