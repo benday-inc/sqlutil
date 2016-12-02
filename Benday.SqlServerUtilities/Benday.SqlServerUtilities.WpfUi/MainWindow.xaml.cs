@@ -26,6 +26,7 @@ namespace Benday.SqlServerUtilities.WpfUi
         }
 
         private Dictionary<string, UserControl> _Controls;
+        private Dictionary<string, Button> _MenuButtons;
 
         private void _CurrentControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,9 +46,12 @@ namespace Benday.SqlServerUtilities.WpfUi
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _Controls = new Dictionary<string, UserControl>();
+            _MenuButtons = new Dictionary<string, Button>();
 
             _Controls.Add("Connections", new DatabaseConnectionsEditor());
+            _MenuButtons.Add("Connections", _ButtonEditConnections);
             _Controls.Add("Search", new DatabaseSearchUserControl());
+            _MenuButtons.Add("Search", _ButtonSearchByName);
 
             SelectControl("Search");
         }
@@ -55,6 +59,39 @@ namespace Benday.SqlServerUtilities.WpfUi
         private void SelectControl(string controlName)
         {
             _CurrentControl.Content = _Controls[controlName];
+
+            var selectedButton = _MenuButtons[controlName];
+
+            if (selectedButton == _ButtonSearchByName)
+            {
+                SelectButton(_ButtonSearchByName);
+                UnselectButton(_ButtonEditConnections);
+            }
+            else
+            {
+                SelectButton(_ButtonEditConnections);
+                UnselectButton(_ButtonSearchByName);
+            }
+        }
+
+        private void SelectButton(Button button)
+        {
+            var style = Application.Current.TryFindResource("MenuButtonSelected") as Style;
+
+            if (style != null)
+            {
+                button.Style = style;
+            }
+        }
+
+        private void UnselectButton(Button button)
+        {
+            var style = Application.Current.TryFindResource("MenuButtonUnselected") as Style;
+
+            if (style != null)
+            {
+                button.Style = style;
+            }
         }
     }
 }

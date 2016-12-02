@@ -10,21 +10,31 @@
         Width="800"
         FontSize="18"
         Loaded="Window_Loaded">
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" Style="{DynamicResource MenuStackPanel}">
-            <Button x:Name="_ButtonSearchByName" Content="Search" Click="_ButtonSearchByName_Click" />
-            <Button x:Name="_ButtonEditConnections" Content="Connections" Click="_ButtonEditConnections_Click" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+            Grid.Row="0" 
+            Orientation="Horizontal" 
+                    Style="{DynamicResource MenuStackPanel}">
+            <Rectangle />
+            <Button x:Name="_ButtonSearchByName" Content="Search" 
+                    Style="{StaticResource MenuButtonSelected}"
+                    Click="_ButtonSearchByName_Click" />
+            <Button x:Name="_ButtonEditConnections"
+                    Style="{StaticResource MenuButtonUnselected}"
+                    Content="Connections"
+                    Click="_ButtonEditConnections_Click"/>
         </StackPanel>
 
         <ContentControl 
+            Grid.Row="1" 
             x:Name="_CurrentControl" 
-            Grid.Column="1" Loaded="_CurrentControl_Loaded" />
+            Loaded="_CurrentControl_Loaded" />
 
     </Grid>
 </Window>
