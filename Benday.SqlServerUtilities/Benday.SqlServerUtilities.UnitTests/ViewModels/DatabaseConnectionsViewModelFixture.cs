@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Benday.SqlServerUtilities.Core.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using Benday.Presentation.UnitTests;
 
 namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 {
@@ -57,6 +58,34 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         public void WhenInitializedConnectionsPropertyIsEmpty()
         {
             Assert.AreEqual<int>(0, SystemUnderTest.Connections.Count, "Count was wrong.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedWithNoConnectionsThenIsConnectionEditorEnabledIsFalse()
+        {
+            Assert.IsFalse(SystemUnderTest.IsConnectionEditorEnabled);
+        }
+
+        [TestMethod]
+        public void WhenAConnectionIsAddedTheIsConnectionEditorEnabledIsTrue()
+        {
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+
+            Assert.IsTrue(SystemUnderTest.IsConnectionEditorEnabled);
+        }
+
+        [TestMethod]
+        public void WhenConnectionsIsDeletedThenIsConnectionEditorEnabledIsFalse()
+        {
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+            SystemUnderTest.AddConnectionCommand.Execute(null);
+
+            SystemUnderTest.Connections.Items[1].IsSelected = true;
+
+            SystemUnderTest.DeleteConnectionCommand.Execute(null);
+
+            Assert.IsFalse(SystemUnderTest.IsConnectionEditorEnabled);
         }
 
         [TestMethod]

@@ -15,6 +15,13 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         private DatabaseConnectionsViewModel()
         {
             _Connections = new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
+
+            _Connections.OnItemSelected += _Connections_OnItemSelected;
+        }
+
+        private void _Connections_OnItemSelected(object sender, EventArgs e)
+        {
+            IsConnectionEditorEnabled = true;
         }
 
         private IDatabaseConnectionStringRepository _Repository;
@@ -45,6 +52,22 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Connections = value;
                 RaisePropertyChanged(ConnectionsPropertyName);
+            }
+        }
+
+        private const string IsConnectionEditorEnabledPropertyName = "IsConnectionEditorEnabled";
+
+        private bool _IsConnectionEditorEnabled;
+        public bool IsConnectionEditorEnabled
+        {
+            get
+            {
+                return _IsConnectionEditorEnabled;
+            }
+            set
+            {
+                _IsConnectionEditorEnabled = value;
+                RaisePropertyChanged(IsConnectionEditorEnabledPropertyName);
             }
         }
 
@@ -113,6 +136,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 _Repository.Delete(removeThis);
                 Connections.Items.Remove(removeThis);
+                IsConnectionEditorEnabled = false;
             }
         }
 
