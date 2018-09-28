@@ -58,12 +58,24 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public void SetArgumentValue(string key, string value)
         {
-            
+            if (ArgumentValues.ContainsKey(key) == true)
+            {
+                ArgumentValues.Remove(key);
+            }
+
+            ArgumentValues.Add(key, value);
         }
 
         public string GetArgumentValue(string key)
         {
-            return string.Empty;
+            if (HasArgumentValue(key) == false)
+            {
+                return null;
+            }
+            else
+            {
+                return ArgumentValues[key];
+            }
         }
 
         public void Run()
@@ -143,7 +155,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public bool HasArgumentValue(string key)
         {
-            throw new NotImplementedException();
+            return ArgumentValues.ContainsKey(key);
         }
     }
 }
