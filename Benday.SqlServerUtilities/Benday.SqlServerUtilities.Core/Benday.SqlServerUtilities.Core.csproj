@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionStringTokenParser.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="DatabaseConnectionString.cs" />
     <Compile Include="DatabaseConnectionStringRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

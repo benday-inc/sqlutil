@@ -13,10 +13,10 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
-        public SearchViewModel(IDatabaseConnectionStringRepository repository) 
+        public SearchViewModel(IDatabaseConnectionStringRepository repository)
         {
             if (repository == null)
-                throw new ArgumentNullException(nameof(repository), 
+                throw new ArgumentNullException(nameof(repository),
                     $"{nameof(repository)} is null.");
 
             _Repository = repository;
@@ -28,14 +28,14 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private void InitializeProperties()
         {
-            _DatabaseConnections = 
+            _DatabaseConnections =
                 new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
             _SearchByTableName = new ViewModelField<string>();
             _SearchByColumnName = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
             _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
             _Results = new ObservableCollection<object>();
-            
+
             _SearchType = new SingleSelectListViewModel(GetSearchTypes());
 
             _SearchType.OnItemSelected += _SearchType_OnItemSelected;
@@ -74,9 +74,9 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 item.Initialize(connection.Id, connection.Name,
                     connString);
-
+                                
                 _DatabaseConnections.Add(item);
-            }            
+            }
         }
 
         private void _SearchType_OnItemSelected(object sender, EventArgs e)
@@ -90,15 +90,15 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 var searchType = _SearchType.SelectedItem.Text;
 
-                if (searchType == "Table Name")
+                if (searchType == Constants.SearchTypeTableName)
                 {
                     InitializeForTableNameSearch();
                 }
-                else if (searchType == "Column Name")
+                else if (searchType == Constants.SearchTypeColumnName)
                 {
                     InitializeForColumnNameSearch();
                 }
-                else if (searchType == "Find Text In Any Table Column")
+                else if (searchType == Constants.SearchTypeFindTextInTableColumn)
                 {
                     InitializeForFindTextInTableColumnSearch();
                 }
@@ -145,27 +145,34 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             var returnValues = new List<SelectableItem>();
 
-            returnValues.Add(new SelectableItem(true, "Contains"));
-            returnValues.Add(new SelectableItem(false, "Exact"));
-            returnValues.Add(new SelectableItem(false, "Starts With"));
-            returnValues.Add(new SelectableItem(false, "Ends With"));
+            returnValues.Add(new SelectableItem(true, 
+                Constants.SearchStringMethodContains));
+            returnValues.Add(new SelectableItem(false,
+                Constants.SearchStringMethodExact));
+            returnValues.Add(new SelectableItem(false,
+                Constants.SearchStringMethodStartsWith));
+            returnValues.Add(new SelectableItem(false,
+                Constants.SearchStringMethodEndsWith));
 
             return returnValues;
         }
+
 
         private IEnumerable<ISelectableItem> GetSearchTypes()
         {
             var returnValues = new List<SelectableItem>();
 
-            returnValues.Add(new SelectableItem(true, "Table Name"));
-            returnValues.Add(new SelectableItem(false, "Column Name"));
-            returnValues.Add(new SelectableItem(false, "Stored Procedure Name"));
-            returnValues.Add(new SelectableItem(false, "Stored Procedure Parameter Name"));
-            returnValues.Add(new SelectableItem(false, "Stored Procedure Source Code"));
-            returnValues.Add(new SelectableItem(false, "Find Text In Any Table Column"));
+            returnValues.Add(new SelectableItem(true, Constants.SearchTypeTableName));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeColumnName));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureName));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureParameterName));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureSourceCode));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeFindTextInTableColumn));
 
             return returnValues;
         }
+
+
 
         private const string DatabaseConnectionsPropertyName = "DatabaseConnections";
 
@@ -284,7 +291,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             {
                 if (_RefreshConnectionsCommand == null)
                 {
-                    _RefreshConnectionsCommand = 
+                    _RefreshConnectionsCommand =
                         new RelayCommand(RefreshDatabaseConnections);
                 }
 
@@ -294,13 +301,24 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         private void Search()
         {
-            throw new NotImplementedException();
+            if (SearchType.SelectedItem == null)
+            {
+                
+            }
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeTableName)
+            {
+
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private const string ResultsPropertyName = "Results";
 
         private ObservableCollection<object> _Results;
-        
+
         public ObservableCollection<object> Results
         {
             get
@@ -315,4 +333,6 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         }
 
     }
+
+
 }
