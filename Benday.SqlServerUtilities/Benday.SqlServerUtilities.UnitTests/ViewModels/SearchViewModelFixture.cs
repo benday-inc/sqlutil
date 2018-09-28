@@ -132,10 +132,9 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public void WhenInitializedThenSearchResultsIsNonNullAndZeroLength()
+        public void WhenInitializedThenSearchResultIsNull()
         {
-            Assert.IsNotNull(SystemUnderTest.Results, "Results was null.");
-            Assert.AreEqual<int>(0, SystemUnderTest.Results.Count, "Result count should be zero.");
+            Assert.IsNull(SystemUnderTest.Result, "Result was null.");
         }
 
         [TestMethod]

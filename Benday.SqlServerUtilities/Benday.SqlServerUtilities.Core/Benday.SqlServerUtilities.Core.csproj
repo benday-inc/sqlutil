@@ -70,6 +70,7 @@
     <Compile Include="IDatabaseConnectionStringRepository.cs" />
     <Compile Include="IStoredDatabaseConnectionString.cs" />
     <Compile Include="StoredDatabaseConnectionString.cs" />
+    <Compile Include="ViewModels\DatabaseQueryViewModelBase.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="XmlUtilityExtensionMethods.cs" />
   </ItemGroup>

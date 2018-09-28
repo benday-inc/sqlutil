@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             _SearchByColumnName = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
             _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
-            _Results = new ObservableCollection<object>();
+            _Result = null;
 
             _SearchType = new SingleSelectListViewModel(GetSearchTypes());
 
@@ -315,24 +316,22 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
-        private const string ResultsPropertyName = "Results";
+        private const string ResultPropertyName = "Result";
 
-        private ObservableCollection<object> _Results;
+        private DatabaseQueryViewModelBase _Result;
 
-        public ObservableCollection<object> Results
+        public DatabaseQueryViewModelBase Result
         {
             get
             {
-                return _Results;
+                return _Result;
             }
             set
             {
-                _Results = value;
-                RaisePropertyChanged(ResultsPropertyName);
+                _Result = value;
+                RaisePropertyChanged(ResultPropertyName);
             }
         }
 
     }
-
-
 }
