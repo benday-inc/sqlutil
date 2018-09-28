@@ -12,11 +12,9 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using Benday.SqlServerUtilities.Core;
-using Benday.SqlServerUtilities.Core.ViewModels;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Benday.SqlServerUtilities.WpfUi.ViewModel
 {
@@ -44,39 +42,17 @@ namespace Benday.SqlServerUtilities.WpfUi.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            //SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
-            //SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
+            SimpleIoc.Default.Register<MainViewModel>();
         }
-        
-        private DatabaseConnectionsViewModel _ConnectionsEditor;
-        public DatabaseConnectionsViewModel ConnectionsEditor
+
+        public MainViewModel Main
         {
             get
             {
-                if (_ConnectionsEditor == null)
-                {
-                    _ConnectionsEditor = new DatabaseConnectionsViewModel(
-                        new DatabaseConnectionStringRepository());
-                }
-                return _ConnectionsEditor;
-            }            
-        }
-
-
-        private SearchViewModel _Search;
-        public SearchViewModel Search
-        {
-            get
-            {
-                if (_Search == null)
-                {
-                    _Search = new SearchViewModel(
-                        new DatabaseConnectionStringRepository());
-                }
-                return _Search;
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-
+        
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
