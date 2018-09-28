@@ -46,6 +46,9 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
             SystemUnderTest.RequiredArguments.Add("Value1");
             SystemUnderTest.RequiredArguments.Add("Value2");
 
+            SystemUnderTest.SetArgumentValue("Value1", "val1");
+            SystemUnderTest.SetArgumentValue("Value2", "val2");
+
             SystemUnderTest.Run();
 
             // if no exception, it worked

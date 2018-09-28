@@ -113,12 +113,37 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 {
                     ValidationMessage = GetValidationFailureMessageForMissingFields(
                         missingArgs);
+                    IsValid = false;
+                }
+                else
+                {
+                    ValidationMessage = String.Empty;
+                    IsValid = true;
                 }
             }
         }
         private string GetValidationFailureMessageForMissingFields(List<string> missingArgs)
         {
-            return string.Empty;
+            // "A value is required for ''.
+
+            if (missingArgs.Count == 0)
+            {
+                return string.Empty;
+            }
+            else if (missingArgs.Count == 1)
+            {
+                return String.Format("A value is required for '{0}'.", missingArgs[0]);
+            }
+            else if (missingArgs.Count == 2)
+            {
+                return String.Format("Values are required for '{0}' and '{1}'.", 
+                    missingArgs[0], missingArgs[1]);
+            }
+            else
+            {
+                return String.Format("Values are required for '{0}', '{1}', and '{2}'.",
+                    missingArgs[0], missingArgs[1], missingArgs[2]);
+            }
         }
 
         private const string IsValidPropertyName = "IsValid";
