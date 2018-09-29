@@ -12,6 +12,8 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Benday.SqlServerUtilities.Core;
+using Benday.SqlServerUtilities.Core.ViewModels;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
@@ -41,18 +43,41 @@ namespace Benday.SqlServerUtilities.WpfUi.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-
-            SimpleIoc.Default.Register<MainViewModel>();
+            
+            SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
+            SimpleIoc.Default.Register<SearchViewModel>();
+            SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
         }
 
-        public MainViewModel Main
+        private DatabaseConnectionsViewModel _ConnectionsEditor;
+        public DatabaseConnectionsViewModel ConnectionsEditor
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                if (_ConnectionsEditor == null)
+                {
+                    _ConnectionsEditor = new DatabaseConnectionsViewModel(
+                        new DatabaseConnectionStringRepository());
+                }
+                return _ConnectionsEditor;
             }
         }
-        
+
+
+        private SearchViewModel _Search;
+        public SearchViewModel Search
+        {
+            get
+            {
+                if (_Search == null)
+                {
+                    _Search = new SearchViewModel(
+                        new DatabaseConnectionStringRepository());
+                }
+                return _Search;
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

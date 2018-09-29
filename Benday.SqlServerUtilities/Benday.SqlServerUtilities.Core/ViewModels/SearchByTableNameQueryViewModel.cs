@@ -30,17 +30,27 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public override void Execute()
         {
+            IsVisible = false;
+
             DataSet results = new DataSet();
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                using (var adapter = new SqlDataAdapter(GetSqlCommand()))
+                using (var command = GetSqlCommand())
                 {
-                    adapter.Fill(results);
+                    command.Connection = connection;
+
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(results);
+                    }
                 }
             }
 
             base.Results = results.Tables[0];
+
+            IsVisible = true;
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace Benday.SqlServerUtilities.Core
 {
     public class DatabaseConnectionStringRepository : IDatabaseConnectionStringRepository
     {
+        [PreferredConstructor]
         public DatabaseConnectionStringRepository()
         {
 

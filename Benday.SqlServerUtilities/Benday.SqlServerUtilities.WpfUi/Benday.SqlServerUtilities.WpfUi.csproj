@@ -102,7 +102,6 @@
     <Compile Include="DatabaseSearchUserControl.xaml.cs">
       <DependentUpon>DatabaseSearchUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="Controls\CheckboxField.xaml">
       <Generator>MSBuild:Compile</Generator>
