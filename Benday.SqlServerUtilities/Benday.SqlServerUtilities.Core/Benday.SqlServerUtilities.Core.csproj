@@ -67,6 +67,7 @@
     <Compile Include="StoredDatabaseConnectionString.cs" />
     <Compile Include="ViewModels\DatabaseQueryViewModelBase.cs" />
     <Compile Include="ViewModels\SearchByColumnNameQueryViewModel.cs" />
+    <Compile Include="ViewModels\SearchByStoredProcedureNameQueryViewModel.cs" />
     <Compile Include="ViewModels\SearchByTableNameQueryViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="XmlUtilityExtensionMethods.cs" />
