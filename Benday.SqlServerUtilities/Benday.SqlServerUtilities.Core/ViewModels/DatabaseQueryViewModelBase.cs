@@ -25,7 +25,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
-        private const string ResultsPropertyName = "Results";
+        protected const string ResultsPropertyName = "Results";
 
         private DataTable _Results;
 

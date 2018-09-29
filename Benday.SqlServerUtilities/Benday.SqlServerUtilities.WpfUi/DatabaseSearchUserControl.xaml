@@ -67,7 +67,7 @@
         <Grid Grid.Row="2">
             <DataGrid DataContext="{Binding Result}" 
                       Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                      ItemsSource="{Binding Results}"
+                      ItemsSource="{Binding Results}" IsSynchronizedWithCurrentItem="True"
                       >
                 
             </DataGrid>

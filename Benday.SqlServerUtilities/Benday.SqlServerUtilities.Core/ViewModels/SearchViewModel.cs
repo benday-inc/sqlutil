@@ -332,6 +332,22 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 query.Execute();
             }
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeFindTextInTableColumn)
+            {
+                var query = new SearchByTextColumnContentQueryViewModel();
+
+                query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+                query.SetArgumentValue("COLUMN_NAME", SearchByColumnName.Value);
+                query.SetArgumentValue("TABLE_NAME", SearchByTableName.Value);
+                query.SetArgumentValue("SEARCH_TEXT", SearchByValue.Value);
+
+                query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+
+                Result = query;
+
+                query.Execute();
+            }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureName)
             {
                 var query = new SearchByStoredProcedureNameQueryViewModel();
