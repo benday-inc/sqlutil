@@ -358,6 +358,19 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 query.Execute();
             }
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureSourceCode)
+            {
+                var query = new SearchByStoredProcedureSourceCodeQueryViewModel();
+
+                query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+                query.SetArgumentValue("STORED_PROCEDURE_CODE", this.SearchByValue.Value);
+                query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+
+                Result = query;
+
+                query.Execute();
+            }
             else
             {
                 throw new NotImplementedException();
