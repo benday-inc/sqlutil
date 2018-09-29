@@ -313,6 +313,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
                 query.SetArgumentValue("TABLE_NAME", SearchByTableName.Value);
+                query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
                 Result = query;
 

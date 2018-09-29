@@ -42,6 +42,24 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
+        private string _MatchMethod;
+        public string MatchMethod
+        {
+            get
+            {
+                if (_MatchMethod == null)
+                {
+                    _MatchMethod = Constants.SearchStringMethodContains;
+                }
+
+                return _MatchMethod;
+            }
+            set
+            {
+                _MatchMethod = value;
+            }
+        }
+
         private Dictionary<string, string> _ArgumentValues;
 
         private Dictionary<string, string> ArgumentValues
@@ -94,6 +112,29 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         protected abstract string SqlQueryTemplate { get; }
 
+        private string GetArgumentValueForMatchMethod(string value)
+        {
+            if (MatchMethod == Constants.SearchStringMethodExact)
+            {
+                return value;
+            }
+            else if (MatchMethod == Constants.SearchStringMethodContains)
+            {
+                return String.Format("%{0}%", value);
+            }
+            else if (MatchMethod == Constants.SearchStringMethodStartsWith)
+            {
+                return String.Format("{0}%", value);
+            }
+            else if (MatchMethod == Constants.SearchStringMethodEndsWith)
+            {
+                return String.Format("%{0}", value);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown string match method.");
+            }
+        }
         protected SqlCommand GetSqlCommand()
         {
             var command = new SqlCommand(SqlQueryTemplate);
@@ -104,7 +145,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 parameter.ParameterName = String.Format("@{0}", key);
                 parameter.SqlDbType = SqlDbType.NVarChar;
-                parameter.Value = _ArgumentValues[key];
+                parameter.Value = GetArgumentValueForMatchMethod(_ArgumentValues[key]);
 
                 command.Parameters.Add(parameter);
             }

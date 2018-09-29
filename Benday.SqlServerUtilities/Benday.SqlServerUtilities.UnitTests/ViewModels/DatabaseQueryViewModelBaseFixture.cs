@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Benday.SqlServerUtilities.Core;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
@@ -184,6 +185,8 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         {
             SystemUnderTest.RequiredArguments.Clear();
 
+            SystemUnderTest.MatchMethod = Constants.SearchStringMethodExact;
+
             string arg0key = "id";
             string arg1key = "lastname";
 
@@ -211,6 +214,138 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
 
             Assert.AreEqual<string>(arg0value, parameter0.Value.ToString(), "Param 0 parameter value");
             Assert.AreEqual<string>(arg1value, parameter1.Value.ToString(), "Param 1 parameter value");
+        }
+
+        [TestMethod]
+        public void GenerateSqlCommand_OneRequiredArg_MatchMethod_Contains()
+        {
+            SystemUnderTest.RequiredArguments.Clear();
+            
+            string arg0key = "TABLE_NAME";
+
+            string arg0value = "id value";
+
+            string expectedArgValue = "%" + arg0value + "%";
+
+            SystemUnderTest.MatchMethod = Constants.SearchStringMethodContains;
+
+            SystemUnderTest.RequiredArguments.Add(arg0key);
+
+            SystemUnderTest.SetArgumentValue(arg0key, arg0value);
+
+            var actual = SystemUnderTest.GetGeneratedSqlCommand();
+
+            Assert.AreEqual<string>(SystemUnderTest.GetSqlQueryTemplate(),
+                actual.CommandText, "CommandText was wrong.");
+
+            Assert.AreEqual<int>(1, actual.Parameters.Count, "Parameter count was wrong.");
+
+            var parameter0 = actual.Parameters[0];
+
+            Assert.AreEqual<string>("@" + arg0key, parameter0.ParameterName, "Param 0 parameter name");
+
+            Assert.AreEqual<string>(
+                expectedArgValue, parameter0.Value.ToString(), 
+                "Param 0 parameter value");
+        }
+
+        [TestMethod]
+        public void GenerateSqlCommand_OneRequiredArg_MatchMethod_StartsWith()
+        {
+            SystemUnderTest.RequiredArguments.Clear();
+
+            string arg0key = "TABLE_NAME";
+
+            string arg0value = "id value";
+
+            string expectedArgValue = arg0value + "%";
+
+            SystemUnderTest.MatchMethod = Constants.SearchStringMethodStartsWith;
+
+            SystemUnderTest.RequiredArguments.Add(arg0key);
+
+            SystemUnderTest.SetArgumentValue(arg0key, arg0value);
+
+            var actual = SystemUnderTest.GetGeneratedSqlCommand();
+
+            Assert.AreEqual<string>(SystemUnderTest.GetSqlQueryTemplate(),
+                actual.CommandText, "CommandText was wrong.");
+
+            Assert.AreEqual<int>(1, actual.Parameters.Count, "Parameter count was wrong.");
+
+            var parameter0 = actual.Parameters[0];
+
+            Assert.AreEqual<string>("@" + arg0key, parameter0.ParameterName, "Param 0 parameter name");
+
+            Assert.AreEqual<string>(
+                expectedArgValue, parameter0.Value.ToString(),
+                "Param 0 parameter value");
+        }
+
+        [TestMethod]
+        public void GenerateSqlCommand_OneRequiredArg_MatchMethod_EndsWith()
+        {
+            SystemUnderTest.RequiredArguments.Clear();
+
+            string arg0key = "TABLE_NAME";
+
+            string arg0value = "id value";
+
+            string expectedArgValue = "%" + arg0value;
+
+            SystemUnderTest.MatchMethod = Constants.SearchStringMethodEndsWith;
+
+            SystemUnderTest.RequiredArguments.Add(arg0key);
+
+            SystemUnderTest.SetArgumentValue(arg0key, arg0value);
+
+            var actual = SystemUnderTest.GetGeneratedSqlCommand();
+
+            Assert.AreEqual<string>(SystemUnderTest.GetSqlQueryTemplate(),
+                actual.CommandText, "CommandText was wrong.");
+
+            Assert.AreEqual<int>(1, actual.Parameters.Count, "Parameter count was wrong.");
+
+            var parameter0 = actual.Parameters[0];
+
+            Assert.AreEqual<string>("@" + arg0key, parameter0.ParameterName, "Param 0 parameter name");
+
+            Assert.AreEqual<string>(
+                expectedArgValue, parameter0.Value.ToString(),
+                "Param 0 parameter value");
+        }
+
+        [TestMethod]
+        public void GenerateSqlCommand_OneRequiredArg_MatchMethod_Exact()
+        {
+            SystemUnderTest.RequiredArguments.Clear();
+
+            string arg0key = "TABLE_NAME";
+
+            string arg0value = "id value";
+
+            string expectedArgValue = arg0value;
+
+            SystemUnderTest.MatchMethod = Constants.SearchStringMethodExact;
+
+            SystemUnderTest.RequiredArguments.Add(arg0key);
+
+            SystemUnderTest.SetArgumentValue(arg0key, arg0value);
+
+            var actual = SystemUnderTest.GetGeneratedSqlCommand();
+
+            Assert.AreEqual<string>(SystemUnderTest.GetSqlQueryTemplate(),
+                actual.CommandText, "CommandText was wrong.");
+
+            Assert.AreEqual<int>(1, actual.Parameters.Count, "Parameter count was wrong.");
+
+            var parameter0 = actual.Parameters[0];
+
+            Assert.AreEqual<string>("@" + arg0key, parameter0.ParameterName, "Param 0 parameter name");
+
+            Assert.AreEqual<string>(
+                expectedArgValue, parameter0.Value.ToString(),
+                "Param 0 parameter value");
         }
     }
 }
