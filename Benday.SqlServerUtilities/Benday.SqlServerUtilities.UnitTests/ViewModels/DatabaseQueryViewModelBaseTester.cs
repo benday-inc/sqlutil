@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,24 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
         public override void Execute()
         {
             WasExecuteCalled = true;
+        }
+
+        protected override string SqlQueryTemplate
+        {
+            get
+            {
+                return "SELECT * FROM MyTable WHERE Id = @id AND LastName LIKE @LastName";
+            }
+        }
+
+        public string GetSqlQueryTemplate()
+        {
+            return SqlQueryTemplate;    
+        }
+
+        public SqlCommand GetGeneratedSqlCommand()
+        {
+            return GetSqlCommand();
         }
     }
 }

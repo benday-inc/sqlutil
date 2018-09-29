@@ -178,5 +178,39 @@ namespace Benday.SqlServerUtilities.UnitTests.ViewModels
                 SystemUnderTest.ValidationMessage,
                 "Validation message is wrong.");
         }
+
+        [TestMethod]
+        public void GenerateSqlCommand_TwoRequiredArgs_PopulatesArguments()
+        {
+            SystemUnderTest.RequiredArguments.Clear();
+
+            string arg0key = "id";
+            string arg1key = "lastname";
+
+            string arg0value = "id value";
+            string arg1value = "%lastname%";
+
+            SystemUnderTest.RequiredArguments.Add(arg0key);
+            SystemUnderTest.RequiredArguments.Add(arg1key);
+
+            SystemUnderTest.SetArgumentValue(arg0key, arg0value);
+            SystemUnderTest.SetArgumentValue(arg1key, arg1value);
+
+            var actual = SystemUnderTest.GetGeneratedSqlCommand();
+
+            Assert.AreEqual<string>(SystemUnderTest.GetSqlQueryTemplate(), 
+                actual.CommandText, "CommandText was wrong.");
+
+            Assert.AreEqual<int>(2, actual.Parameters.Count, "Parameter count was wrong.");
+
+            var parameter0 = actual.Parameters[0];
+            var parameter1 = actual.Parameters[1];
+
+            Assert.AreEqual<string>("@" + arg0key, parameter0.ParameterName, "Param 0 parameter name");
+            Assert.AreEqual<string>("@" + arg1key, parameter1.ParameterName, "Param 1 parameter name");
+
+            Assert.AreEqual<string>(arg0value, parameter0.Value.ToString(), "Param 0 parameter value");
+            Assert.AreEqual<string>(arg1value, parameter1.Value.ToString(), "Param 1 parameter value");
+        }
     }
 }

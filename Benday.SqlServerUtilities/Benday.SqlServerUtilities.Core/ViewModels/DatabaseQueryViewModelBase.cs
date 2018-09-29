@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Benday.SqlServerUtilities.Core.ViewModels
@@ -88,6 +89,26 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         public abstract void Execute();
 
         protected abstract List<string> GetRequiredArguments();
+
+        protected abstract string SqlQueryTemplate { get; }
+
+        protected SqlCommand GetSqlCommand()
+        {
+            var command = new SqlCommand(SqlQueryTemplate);
+
+            foreach (var key in _ArgumentValues.Keys)
+            {
+                var parameter = new SqlParameter();
+
+                parameter.ParameterName = String.Format("@{0}", key);
+                parameter.SqlDbType = SqlDbType.NVarChar;
+                parameter.Value = _ArgumentValues[key];
+
+                command.Parameters.Add(parameter);
+            }
+
+            return command;
+        }
 
         protected virtual void ValidateArguments()
         {
