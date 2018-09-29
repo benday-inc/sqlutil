@@ -345,6 +345,19 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 query.Execute();
             }
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureParameterName)
+            {
+                var query = new SearchByStoredProcedureParameterNameQueryViewModel();
+
+                query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+                query.SetArgumentValue("STORED_PROCEDURE_PARAMETER_NAME", this.SearchByValue.Value);
+                query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+
+                Result = query;
+
+                query.Execute();
+            }
             else
             {
                 throw new NotImplementedException();
