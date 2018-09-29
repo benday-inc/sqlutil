@@ -88,6 +88,8 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public abstract void Execute();
 
+        public string ConnectionString { get; set; }
+
         protected abstract List<string> GetRequiredArguments();
 
         protected abstract string SqlQueryTemplate { get; }

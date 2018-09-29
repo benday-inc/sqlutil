@@ -308,7 +308,15 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeTableName)
             {
+                var query = new SearchByTableNameQueryViewModel();
 
+                query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+                query.SetArgumentValue("TABLE_NAME", SearchByTableName.Value);
+
+                Result = query;
+
+                query.Execute();
             }
             else
             {
