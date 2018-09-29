@@ -319,6 +319,19 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
                 query.Execute();
             }
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeColumnName)
+            {
+                var query = new SearchByColumnNameQueryViewModel();
+
+                query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+                query.SetArgumentValue("COLUMN_NAME", SearchByColumnName.Value);
+                query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+
+                Result = query;
+
+                query.Execute();
+            }
             else
             {
                 throw new NotImplementedException();
