@@ -285,6 +285,25 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
         }
 
+        private ICommand _DebugCommand;
+        public ICommand DebugCommand
+        {
+            get
+            {
+                if (_DebugCommand == null)
+                {
+                    _DebugCommand = new RelayCommand(DoDebug);
+                }
+
+                return _DebugCommand;
+            }
+        }
+
+        private void DoDebug()
+        {
+            Console.WriteLine();
+        }
+
         private ICommand _RefreshConnectionsCommand;
         public ICommand RefreshConnectionsCommand
         {
@@ -343,10 +362,10 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                 query.SetArgumentValue("SEARCH_TEXT", SearchByValue.Value);
 
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+                
+                query.Execute();
 
                 Result = query;
-
-                query.Execute();
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureName)
             {

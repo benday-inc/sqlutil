@@ -61,13 +61,18 @@
                         Content="Search"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"
                         Style="{StaticResource FieldButtonStyle}"/>
+
+                <Button Command="{Binding DebugCommand, Mode=OneWay}"
+                        Content="Debug"
+                        Margin="{StaticResource SpacedSeparatedControlMargin}"
+                        Style="{StaticResource FieldButtonStyle}"/>
             </StackPanel>
 
         </Grid>
         <Grid Grid.Row="2">
-            <DataGrid DataContext="{Binding Result}" 
+            <DataGrid DataContext="{Binding Result, Mode=TwoWay}" 
                       Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                      ItemsSource="{Binding Results}" IsSynchronizedWithCurrentItem="True"
+                      ItemsSource="{Binding Results, Mode=TwoWay}" 
                       >
                 
             </DataGrid>

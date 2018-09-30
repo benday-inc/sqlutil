@@ -37,7 +37,13 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
         {
             IsVisible = false;
 
+            var dataset = new DataSet();
+
             var results = new DataTable();
+
+            results.TableName = "Results";
+
+            dataset.Tables.Add(results);
 
             results.Columns.Add("TABLE SCHEMA", typeof(string));
             results.Columns.Add("TABLE NAME", typeof(string));
@@ -47,11 +53,144 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
             Results = results;
 
-            FindTextInColumnAsync(results);
+            FindTextInColumn(false);
 
             IsVisible = true;
         }
-        
+
+        private void FindTextInColumn(bool runAsync)
+        {
+            ProgressMessage = "Starting search...";
+
+            IsStopSearchButtonVisible = true;
+
+            IsSearchRunning = true;
+
+            if (runAsync == true)
+            {
+                // ThreadPool.QueueUserWorkItem(new WaitCallback(FindTextInColumn), results);
+
+                Task.Run(() => FindTextInColumn()).Wait();
+            }
+            else
+            {
+                FindTextInColumn();
+            }
+        }
+
+        private void FindTextInColumn()
+        {
+            string columnName = GetArgumentValue("COLUMN_NAME");
+            string tableName = GetArgumentValue("TABLE_NAME");
+
+            if (columnName == null)
+            {
+                columnName = String.Empty;
+            }
+
+            if (tableName == null)
+            {
+                tableName = String.Empty;
+            }
+
+            //DataTable resultsDataTable = tempDataTable as DataTable;
+
+            ProgressMessage = String.Empty;
+            _StopSearchRequested = false;
+
+            try
+            {
+                string query = null;
+                DataTable textColumnsDataTable;
+                SqlCommand getTextColumnsCommand;
+
+                if (columnName.Trim().Length > 0 &&
+                    tableName.Trim().Length > 0)
+                {
+                    query = GetTextColumnQueryForTableAndColumn();
+
+                    getTextColumnsCommand = GetSqlCommand(query);
+
+                    AddParameterForLikeStatement(getTextColumnsCommand, "COLUMN_NAME");
+                    AddParameterForLikeStatement(getTextColumnsCommand, "TABLE_NAME");
+                }
+                else if (tableName.Trim().Length > 0)
+                {
+                    query = GetTextColumnQueryForTable();
+
+                    getTextColumnsCommand = GetSqlCommand(query);
+
+                    AddParameterForLikeStatement(getTextColumnsCommand, "TABLE_NAME");
+                }
+                else if (columnName.Trim().Length > 0)
+                {
+                    query = GetTextColumnQueryForColumn();
+
+                    getTextColumnsCommand = GetSqlCommand(query);
+
+                    AddParameterForLikeStatement(getTextColumnsCommand, "COLUMN_NAME");
+                }
+                else
+                {
+                    query = GetTextColumnQueryForAllTextColumns();
+
+                    getTextColumnsCommand = GetSqlCommand(query);
+                }
+
+                textColumnsDataTable = ExecuteCommand(getTextColumnsCommand);
+
+                string template =
+                    "select count(*) as recordCount from [{0}].[{1}] where [{2}] like '%{3}%'";
+
+                using (SqlConnection connection = GetSqlConnection())
+                {
+                    connection.Open();
+
+                    int recordCount = 0;
+
+                    object[] vals = new object[5];
+
+                    foreach (DataRow row in textColumnsDataTable.Rows)
+                    {
+                        if (_StopSearchRequested == true)
+                        {
+                            // a stop has been requested
+                            break;
+                        }
+
+                        ProgressMessage =
+                            "[" + row["table_schema"].ToString() + "]." +
+                            "[" + row["table_name"].ToString() + "].[" +
+                            row["column_name"].ToString() + "]";
+
+                        query = String.Format(
+                            template, row["table_schema"], row["table_name"], row["column_name"],
+                            GetArgumentValue("SEARCH_TEXT"));
+
+                        recordCount = ExecuteScalarGetInt32(
+                            connection, query);
+
+                        if (recordCount > 0)
+                        {
+                            AddRow(row, recordCount, query);
+
+                            //Dispatcher.CurrentDispatcher.BeginInvoke(
+                            //    new Action(() => AddRow(row, recordCount, query)));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgressMessage = ex.ToString();
+            }
+            finally
+            {
+                IsSearchRunning = false;
+                RaisePropertyChanged(ResultsPropertyName);
+            }
+        }
+
         private bool _StopSearchRequested;
         
         private const string IsSearchRunningPropertyName = "IsSearchRunning";
@@ -253,19 +392,6 @@ order by c.table_name, c.column_name
             }
         }
 
-        private void FindTextInColumnAsync(DataTable results)
-        {
-            ProgressMessage = "Starting search...";
-
-            IsStopSearchButtonVisible = true;
-
-            IsSearchRunning = true;
-
-            // ThreadPool.QueueUserWorkItem(new WaitCallback(FindTextInColumn), results);
-
-            Task.Run(() => FindTextInColumn()).Wait();
-        }
-
         private void AddRow(DataRow row, int recordCount, string query)
         {
             var tempRow = Results.NewRow();
@@ -279,116 +405,7 @@ order by c.table_name, c.column_name
             Results.Rows.Add(tempRow);
         }
 
-        private void FindTextInColumn()
-        {
-            string columnName = GetArgumentValue("COLUMN_NAME");
-            string tableName = GetArgumentValue("TABLE_NAME");
 
-            if (columnName == null)
-            {
-                columnName = String.Empty;
-            }
-
-            if (tableName == null)
-            {
-                tableName = String.Empty;
-            }
-
-            //DataTable resultsDataTable = tempDataTable as DataTable;
-
-            ProgressMessage = String.Empty;
-            _StopSearchRequested = false;
-
-            try
-            {
-                string query = null;
-                DataTable textColumnsDataTable;
-                SqlCommand getTextColumnsCommand;
-
-                if (columnName.Trim().Length > 0 &&
-                    tableName.Trim().Length > 0)
-                {
-                    query = GetTextColumnQueryForTableAndColumn();
-
-                    getTextColumnsCommand = GetSqlCommand(query);
-
-                    AddParameterForLikeStatement(getTextColumnsCommand, "COLUMN_NAME");
-                    AddParameterForLikeStatement(getTextColumnsCommand, "TABLE_NAME");
-                }
-                else if (tableName.Trim().Length > 0)
-                {
-                    query = GetTextColumnQueryForTable();
-
-                    getTextColumnsCommand = GetSqlCommand(query);
-
-                    AddParameterForLikeStatement(getTextColumnsCommand, "TABLE_NAME");
-                }
-                else if (columnName.Trim().Length > 0)
-                {
-                    query = GetTextColumnQueryForColumn();
-
-                    getTextColumnsCommand = GetSqlCommand(query);
-
-                    AddParameterForLikeStatement(getTextColumnsCommand, "COLUMN_NAME");
-                }
-                else
-                {
-                    query = GetTextColumnQueryForAllTextColumns();
-
-                    getTextColumnsCommand = GetSqlCommand(query);
-                }
-
-                textColumnsDataTable = ExecuteCommand(getTextColumnsCommand);
-
-                string template = 
-                    "select count(*) as recordCount from [{0}].[{1}] where [{2}] like '%{3}%'";
-
-                using (SqlConnection connection = GetSqlConnection())
-                {
-                    connection.Open();
-
-                    int recordCount = 0;
-
-                    object[] vals = new object[5];
-
-                    foreach (DataRow row in textColumnsDataTable.Rows)
-                    {
-                        if (_StopSearchRequested == true)
-                        {
-                            // a stop has been requested
-                            break;
-                        }
-
-                        ProgressMessage =
-                            "[" + row["table_schema"].ToString() + "]." +
-                            "[" + row["table_name"].ToString() + "].[" +
-                            row["column_name"].ToString() + "]";
-
-                        query = String.Format(
-                            template, row["table_schema"], row["table_name"], row["column_name"], 
-                            GetArgumentValue("SEARCH_TEXT"));
-
-                        recordCount = ExecuteScalarGetInt32(
-                            connection, query);
-
-                        if (recordCount > 0)
-                        {
-                            Dispatcher.CurrentDispatcher.BeginInvoke(
-                                new Action(() => AddRow(row, recordCount, query)));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ProgressMessage = ex.ToString();
-            }
-            finally
-            {
-                IsSearchRunning = false;
-                RaisePropertyChanged(ResultsPropertyName);
-            }
-        }
 
         public DataTable ExecuteCommand(SqlCommand command)
         {
