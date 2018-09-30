@@ -35,7 +35,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
 
         public override void Execute()
         {
-            IsVisible = false;
+            IsVisible = true;
 
             var dataset = new DataSet();
 
@@ -54,8 +54,6 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             Results = results;
 
             FindTextInColumn(false);
-
-            IsVisible = true;
         }
 
         private void FindTextInColumn(bool runAsync)

@@ -70,12 +70,35 @@
 
         </Grid>
         <Grid Grid.Row="2">
-            <DataGrid DataContext="{Binding Result, Mode=TwoWay}" 
-                      Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                      ItemsSource="{Binding Results, Mode=TwoWay}" 
-                      >
-                
-            </DataGrid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+
+                <DataGrid
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    DataContext="{Binding Result, Mode=TwoWay}"
+                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                    ItemsSource="{Binding Results, Mode=TwoWay}" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Height="Auto"
+                    DataContext="{Binding Result, Mode=TwoWay}"
+                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                    Content="{Binding ProgressMessage, Mode=TwoWay}"
+                    Margin="{StaticResource DefaultFieldMargin}" />
+            </Grid>
         </Grid>
     </Grid>
 
