@@ -157,9 +157,9 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
                         }
 
                         ProgressMessage =
-                            "[" + row["table_schema"].ToString() + "]." +
+                            "Searching [" + row["table_schema"].ToString() + "]." +
                             "[" + row["table_name"].ToString() + "].[" +
-                            row["column_name"].ToString() + "]";
+                            row["column_name"].ToString() + "]...";
 
                         query = String.Format(
                             template, row["table_schema"], row["table_name"], row["column_name"],
@@ -184,6 +184,7 @@ namespace Benday.SqlServerUtilities.Core.ViewModels
             }
             finally
             {
+                ProgressMessage = "Search complete.";
                 IsSearchRunning = false;
                 RaisePropertyChanged(ResultsPropertyName);
             }
