@@ -1,0 +1,188 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:Benday.SqlServerUtilities.WpfUi.Styles">
+
+    <FontFamily x:Key="LabelFontFamily">Segoe UI</FontFamily>
+
+    <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
+
+    <system:Double x:Key="LabelFontSize">15</system:Double>
+
+    <system:Double x:Key="DefaultFieldControlHeight">32</system:Double>
+
+    <Thickness x:Key="DefaultFieldMargin">4</Thickness>
+
+    <Thickness x:Key="SpacedSeparatedControlMargin">18,18,4,4</Thickness>
+
+    <Style x:Key="MenuStackPanel" TargetType="{x:Type StackPanel}">
+        <Style.Resources>
+            <Style TargetType="{x:Type Rectangle}">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Fill" Value="Blue" />
+                <Setter Property="Margin" Value="0,2,2,2" />
+            </Style>            
+        </Style.Resources>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <Style x:Key="MenuButtonBase" TargetType="Button">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Margin" Value="8,6,8,8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock TextDecorations="None">
+                                <ContentPresenter />
+                    </TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="Red" />
+            </Trigger>
+            <!--<Trigger Property="">
+                        
+                    </Trigger>-->
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="MenuButtonUnselected" TargetType="Button"
+           BasedOn="{StaticResource MenuButtonBase}">
+        
+        <Setter Property="Foreground" Value="LightGray" />
+        
+    </Style>
+
+    <Style x:Key="MenuButtonSelected"
+           BasedOn="{StaticResource MenuButtonBase}"
+           TargetType="Button">
+        <Setter Property="Foreground" Value="Gray" />
+        
+    </Style>
+
+
+
+    <Style x:Key="FieldRadioButtonList" TargetType="{x:Type RadioButton}">
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
+    </Style>
+
+    <Style x:Key="DialogGrid" TargetType="{x:Type Grid}">
+        <Setter Property="Margin" Value="4" />
+        <Style.Resources>
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="Margin" Value="4, 10, 6, 4" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="4, 0, 4, 0" />
+            </Style>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+            <Style TargetType="{x:Type ListView}">
+                <Setter Property="Margin" Value="4" />
+            </Style>
+            <Style TargetType="{x:Type StackPanel}">
+                <Setter Property="Margin" Value="0" />
+                <Style.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="Width" Value="80" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="FieldLabelContentStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="FieldTextboxStyle" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="FieldErrorStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="FieldButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="Width" Value="140" />
+        <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+
+
+    <Style x:Key="FieldCheckboxStyle" TargetType="CheckBox">
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+
+    <Style x:Key="FieldComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+</ResourceDictionary>
