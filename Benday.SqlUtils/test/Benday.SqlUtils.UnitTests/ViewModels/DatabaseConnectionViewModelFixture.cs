@@ -1,6 +1,6 @@
 ﻿using Benday.Presentation.UnitTests;
-using Benday.SqlServerUtilities.Core;
-using Benday.SqlServerUtilities.Core.ViewModels;
+using Benday.SqlUtils.Core;
+using Benday.SqlUtils.Core.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Benday.Presentation;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     [TestClass]
     public class DatabaseConnectionViewModelFixture : ViewModelFixtureBase

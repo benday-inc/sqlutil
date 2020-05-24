@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Benday.SqlServerUtilities.Core
+namespace Benday.SqlUtils.Core
 {
     public class ConnectionStringTokenParser
     {

@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Benday.SqlServerUtilities.WpfUi.Controls
+namespace Benday.SqlUtils.WpfUi.Controls
 {
     public sealed partial class TextboxField : UserControl, ILabeledField
     {

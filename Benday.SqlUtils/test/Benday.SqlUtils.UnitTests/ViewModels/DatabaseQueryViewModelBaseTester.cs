@@ -1,4 +1,4 @@
-﻿using Benday.SqlServerUtilities.Core.ViewModels;
+﻿using Benday.SqlUtils.Core.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     public class DatabaseQueryViewModelBaseTester : DatabaseQueryViewModelBase
     {

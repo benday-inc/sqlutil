@@ -1,5 +1,4 @@
 ﻿using Benday.Presentation;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Benday.SqlServerUtilities.Core.ViewModels
+namespace Benday.SqlUtils.Core.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {

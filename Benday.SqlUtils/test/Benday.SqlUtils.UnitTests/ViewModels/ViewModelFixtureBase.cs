@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     public abstract class ViewModelFixtureBase
     {

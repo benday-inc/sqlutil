@@ -1,10 +1,10 @@
-﻿using Benday.SqlServerUtilities.Core;
-using Benday.SqlServerUtilities.Core.ViewModels;
+﻿using Benday.SqlUtils.Core;
+using Benday.SqlUtils.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     public class MockDatabaseConnectionStringRepository : IDatabaseConnectionStringRepository
     {

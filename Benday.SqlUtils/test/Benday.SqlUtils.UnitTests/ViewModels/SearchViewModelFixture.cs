@@ -1,5 +1,5 @@
 ﻿using Benday.Presentation;
-using Benday.SqlServerUtilities.Core.ViewModels;
+using Benday.SqlUtils.Core.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     [TestClass]
     public class SearchViewModelFixture : ViewModelFixtureBase

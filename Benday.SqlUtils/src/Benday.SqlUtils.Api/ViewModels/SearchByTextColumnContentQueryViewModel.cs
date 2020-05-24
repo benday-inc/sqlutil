@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Benday.SqlServerUtilities.Core.ViewModels
+namespace Benday.SqlUtils.Core.ViewModels
 {
     public class SearchByTextColumnContentQueryViewModel : DatabaseQueryViewModelBase
     {

@@ -1,11 +1,12 @@
-﻿using GalaSoft.MvvmLight;
+﻿
+using Benday.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.Core.ViewModels
+namespace Benday.SqlUtils.Core.ViewModels
 {
     public abstract class DatabaseQueryViewModelBase : ViewModelBase
     {

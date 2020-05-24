@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Benday.SqlServerUtilities.Core;
+using Benday.SqlUtils.Core;
 
-namespace Benday.SqlServerUtilities.UnitTests
+namespace Benday.SqlUtils.UnitTests
 {
     [TestClass]
     public class DatabaseConnectionStringFixture

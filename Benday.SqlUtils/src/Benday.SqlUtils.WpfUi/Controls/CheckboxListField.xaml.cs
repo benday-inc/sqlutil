@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Benday.SqlServerUtilities.WpfUi.Controls
+namespace Benday.SqlUtils.WpfUi.Controls
 {
     public partial class CheckboxListField : UserControl
     {

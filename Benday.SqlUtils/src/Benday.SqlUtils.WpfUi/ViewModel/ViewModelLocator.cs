@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:Benday.SqlServerUtilities.WpfUi"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:Benday.SqlUtils.WpfUi"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -12,13 +12,12 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using Benday.SqlServerUtilities.Core;
-using Benday.SqlServerUtilities.Core.ViewModels;
-using CommonServiceLocator;
-using GalaSoft.MvvmLight;
+using Benday.SqlUtils.Core;
+using Benday.SqlUtils.Core.ViewModels;
+
 using GalaSoft.MvvmLight.Ioc;
 
-namespace Benday.SqlServerUtilities.WpfUi.ViewModel
+namespace Benday.SqlUtils.WpfUi.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -31,7 +30,7 @@ namespace Benday.SqlServerUtilities.WpfUi.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            // ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{

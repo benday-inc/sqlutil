@@ -1,4 +1,4 @@
-﻿using Benday.SqlServerUtilities.Core;
+﻿using Benday.SqlUtils.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Benday.SqlServerUtilities.UnitTests
+namespace Benday.SqlUtils.UnitTests
 {
     [TestClass]
     public class DatabaseConnectionStringRepositoryFixture

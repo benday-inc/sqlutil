@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Benday.SqlServerUtilities.UnitTests
+namespace Benday.SqlUtils.UnitTests
 {
     public static class UnitTestUtility
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
+
 using System.Threading;
-using GalaSoft.MvvmLight.Command;
+
 
 using System.Threading.Tasks;
 using System.ComponentModel;

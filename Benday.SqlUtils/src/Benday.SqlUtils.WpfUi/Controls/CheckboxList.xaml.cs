@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using Benday.Presentation;
 
-namespace Benday.SqlServerUtilities.WpfUi.Controls
+namespace Benday.SqlUtils.WpfUi.Controls
 {
     public partial class CheckboxList : UserControl
     {

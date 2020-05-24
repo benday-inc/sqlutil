@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.Core
+namespace Benday.SqlUtils.Core
 {
     public interface IStoredDatabaseConnectionString
     {

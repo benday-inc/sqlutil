@@ -1,9 +1,9 @@
-﻿using Benday.SqlServerUtilities.Core;
+﻿using Benday.SqlUtils.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.UnitTests.ViewModels
+namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     [TestClass]
     public class DatabaseQueryViewModelBaseFixture

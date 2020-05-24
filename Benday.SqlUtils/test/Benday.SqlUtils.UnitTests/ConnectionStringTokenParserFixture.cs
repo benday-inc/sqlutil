@@ -1,9 +1,9 @@
-﻿using Benday.SqlServerUtilities.Core;
+﻿using Benday.SqlUtils.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace Benday.SqlServerUtilities.UnitTests
+namespace Benday.SqlUtils.UnitTests
 {
     [TestClass]
     public class ConnectionStringTokenParserFixture

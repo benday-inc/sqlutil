@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+
 using System.Collections.Specialized;
 using System.ComponentModel;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace Benday.SqlServerUtilities.WpfUi.Controls
+namespace Benday.SqlUtils.WpfUi.Controls
 {
     public static class DependencyPropertyUtility
     {

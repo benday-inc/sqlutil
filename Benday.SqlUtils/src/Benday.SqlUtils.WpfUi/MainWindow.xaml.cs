@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Benday.SqlServerUtilities.WpfUi
+namespace Benday.SqlUtils.WpfUi
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

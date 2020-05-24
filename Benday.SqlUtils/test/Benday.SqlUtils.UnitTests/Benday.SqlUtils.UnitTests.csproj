@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
     <ProjectReference Include="..\..\src\Benday.SqlUtils.ConsoleUi\Benday.SqlUtils.ConsoleUi.csproj" />
+    <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" />
   </ItemGroup>
 
 </Project>

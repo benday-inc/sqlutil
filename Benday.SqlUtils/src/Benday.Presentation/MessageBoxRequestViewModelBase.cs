@@ -3,7 +3,7 @@ using System;
 
 namespace Benday.Presentation
 {
-    public abstract class MessageBoxRequestViewModelBase : GalaSoft.MvvmLight.ViewModelBase, IViewModelBase
+    public abstract class MessageBoxRequestViewModelBase : ViewModelBase, IViewModelBase
     {
 
         public MessageBoxRequestViewModelBase()

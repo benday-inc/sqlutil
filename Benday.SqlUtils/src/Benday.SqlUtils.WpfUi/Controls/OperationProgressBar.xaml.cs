@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 
-namespace CardCatalog.Client.Controls
+namespace Benday.SqlUtils.WpfUi.Controls
 {
     public partial class OperationProgressBar : UserControl
     {

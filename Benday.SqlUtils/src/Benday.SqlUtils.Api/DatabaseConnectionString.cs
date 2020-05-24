@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Benday.SqlServerUtilities.Core
+namespace Benday.SqlUtils.Core
 {
     public class DatabaseConnectionString
     {

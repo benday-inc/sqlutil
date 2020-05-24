@@ -1,7 +1,8 @@
 using System;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
+
 using Benday.Presentation;
+using GalaSoft.MvvmLight.Command;
 
 namespace Benday.MvvmTips.ViewModels
 {

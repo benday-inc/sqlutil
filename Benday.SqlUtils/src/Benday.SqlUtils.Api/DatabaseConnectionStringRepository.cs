@@ -1,26 +1,23 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Benday.SqlServerUtilities.Core
+namespace Benday.SqlUtils.Core
 {
     public class DatabaseConnectionStringRepository : IDatabaseConnectionStringRepository
     {
-        [PreferredConstructor]
-        public DatabaseConnectionStringRepository()
-        {
-
-        }
-
         public DatabaseConnectionStringRepository(string pathToConnectionsFile)
         {
             if (string.IsNullOrEmpty(pathToConnectionsFile))
                 throw new ArgumentException($"{nameof(pathToConnectionsFile)} is null or empty.", nameof(pathToConnectionsFile));
 
             _ConnectionsFilePath = pathToConnectionsFile;
+        }
+
+        public DatabaseConnectionStringRepository()
+        {
         }
 
         private string _ConnectionsFilePath;

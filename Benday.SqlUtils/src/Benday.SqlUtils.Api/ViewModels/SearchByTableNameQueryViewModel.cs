@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Benday.SqlServerUtilities.Core.ViewModels
+namespace Benday.SqlUtils.Core.ViewModels
 {
     public class SearchByTableNameQueryViewModel : DatabaseQueryViewModelBase
     {
