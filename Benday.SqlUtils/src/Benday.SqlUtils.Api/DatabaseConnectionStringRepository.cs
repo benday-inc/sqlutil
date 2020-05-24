@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Benday.SqlUtils.Core
             _ConnectionsFilePath = pathToConnectionsFile;
         }
 
+        [PreferredConstructor]
         public DatabaseConnectionStringRepository()
         {
         }
