@@ -30,9 +30,9 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             get { return _WasDescribeTableCalled; }
         }
 
-        public DataTable DescribeTableReturnValue { get; set; }
+        public TableDescription DescribeTableReturnValue { get; set; }
 
-        public DataTable DescribeTable(string tableName)
+        public TableDescription DescribeTable(string tableName)
         {
             _WasDescribeTableCalled = true;
             return DescribeTableReturnValue;

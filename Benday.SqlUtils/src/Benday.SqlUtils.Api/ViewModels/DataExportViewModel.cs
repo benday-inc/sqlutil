@@ -129,7 +129,21 @@ namespace Benday.SqlUtils.Api.ViewModels
             }
         }
 
-        private DataTable _TableDescription = null;
+        private const string TableDescriptionPropertyName = "TableDescription";
+
+        private TableDescription _TableDescription;
+        public TableDescription TableDescription
+        {
+            get
+            {
+                return _TableDescription;
+            }
+            set
+            {
+                _TableDescription = value;
+                RaisePropertyChanged(TableDescriptionPropertyName);
+            }
+        }
 
         private ICommand _CreateInsertScriptCommand;
         public ICommand CreateInsertScriptCommand

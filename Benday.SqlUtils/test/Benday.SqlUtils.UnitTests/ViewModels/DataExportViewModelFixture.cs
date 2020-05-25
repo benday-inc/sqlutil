@@ -15,7 +15,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         {
             _SystemUnderTest = null;
             _DatabaseConnectionStringRepositoryInstance = null;
-            _DatabaseQueryExecuterInstance = null;
+            _DatabaseUtilityInstance = null;
         }
 
         private DataExportViewModel _SystemUnderTest;
@@ -27,7 +27,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 {
                     _SystemUnderTest = new DataExportViewModel(
                         DatabaseConnectionStringRepositoryInstance,
-                        DatabaseQueryExecuterInstance
+                        DatabaseUtilityInstance
                         );
                 }
 
@@ -35,17 +35,17 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             }
         }
 
-        private MockDatabaseUtility _DatabaseQueryExecuterInstance;
-        public MockDatabaseUtility DatabaseQueryExecuterInstance
+        private MockDatabaseUtility _DatabaseUtilityInstance;
+        public MockDatabaseUtility DatabaseUtilityInstance
         {
             get
             {
-                if (_DatabaseQueryExecuterInstance == null)
+                if (_DatabaseUtilityInstance == null)
                 {
-                    _DatabaseQueryExecuterInstance = new MockDatabaseUtility();
+                    _DatabaseUtilityInstance = new MockDatabaseUtility();
                 }
 
-                return _DatabaseQueryExecuterInstance;
+                return _DatabaseUtilityInstance;
             }
         }        
 
@@ -161,6 +161,23 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             // assert
             Assert.AreEqual<string>(expectedTableName, actual, "ExportTableName is wrong");
             Assert.AreEqual<bool>(expectedIsValid, SystemUnderTest.ExportTableName.IsValid, "IsValid");
+        }
+
+        [TestMethod]
+        public void TableDescriptionIsPopulatedWhenQueryIsRun()
+        {
+            SystemUnderTest.Query.Value = "select * from person";
+            this.DatabaseUtilityInstance.DescribeTableReturnValue =
+                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
+
+            // act
+            SystemUnderTest.RunQueryCommand.Execute(null);
+
+            var actual = SystemUnderTest.TableDescription;
+
+            // assert
+            Assert.IsNotNull(actual, "Table description");
+            Assert.AreSame(DatabaseUtilityInstance.DescribeTableReturnValue, actual, "Wrong instance");
         }
     }
 }
