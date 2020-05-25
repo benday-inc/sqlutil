@@ -24,10 +24,8 @@ namespace Benday.SqlUtils.Api.ViewModels
             _GenerateIdentityInsert = new ViewModelField<bool>();
             _ExportTableName = new ViewModelField<string>();
 
-            _Query.IsValid = true;
-            _GeneratedQuery.IsValid = true;
-            _GenerateIdentityInsert.IsValid = true;
-            _ExportTableName.IsValid = true;
+            _GeneratedQuery.IsEnabled = false;
+            _ExportTableName.IsEnabled = false;
         }
 
         private const string QueryPropertyName = "Query";

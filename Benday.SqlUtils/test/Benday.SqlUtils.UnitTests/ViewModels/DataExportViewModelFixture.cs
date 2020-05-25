@@ -52,7 +52,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
                 return _DatabaseConnectionStringRepositoryInstance;
             }
-        }
+        } 
 
         [TestMethod]
         public void WhenInitializedThenFieldPropertiesAreNotNull()
@@ -61,6 +61,38 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsNotNull(SystemUnderTest.GeneratedQuery, "GeneratedQuery is null.");
             Assert.IsNotNull(SystemUnderTest.GenerateIdentityInsert, "GenerateIdentityInsert was null.");
             Assert.IsNotNull(SystemUnderTest.ExportTableName, "ExportTableName was null.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedThenFieldPropertiesSetToExpectedInitialValues()
+        {
+            Assert.IsTrue(SystemUnderTest.Query.IsVisible,
+                "Query.IsVisible");
+            Assert.IsTrue(SystemUnderTest.Query.IsEnabled,
+                "Query.IsEnabled");
+            Assert.IsTrue(SystemUnderTest.Query.IsValid,
+                "Query.IsValid");
+
+            Assert.IsTrue(SystemUnderTest.GeneratedQuery.IsVisible,
+                "GeneratedQuery.IsVisible");
+            Assert.IsFalse(SystemUnderTest.GeneratedQuery.IsEnabled,
+                "GeneratedQuery.IsEnabled");
+            Assert.IsTrue(SystemUnderTest.GeneratedQuery.IsValid,
+                "GeneratedQuery.IsValid");
+
+            Assert.IsTrue(SystemUnderTest.GenerateIdentityInsert.IsVisible,
+                "GenerateIdentityInsert.IsVisible");
+            Assert.IsTrue(SystemUnderTest.GenerateIdentityInsert.IsEnabled,
+                "GenerateIdentityInsert.IsEnabled");
+            Assert.IsTrue(SystemUnderTest.GenerateIdentityInsert.IsValid,
+                "GenerateIdentityInsert.IsValid");
+
+            Assert.IsTrue(SystemUnderTest.ExportTableName.IsVisible,
+                "ExportTableName.IsVisible");
+            Assert.IsFalse(SystemUnderTest.ExportTableName.IsEnabled,
+                "ExportTableName.IsEnabled");
+            Assert.IsTrue(SystemUnderTest.ExportTableName.IsValid,
+                "ExportTableName.IsValid");
         }
     }
 }

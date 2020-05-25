@@ -17,6 +17,7 @@ namespace Benday.Presentation
         {
             IsValid = true;
             IsVisible = true;
+            IsEnabled = true;
             ValidationMessage = String.Empty;
         }
 
@@ -82,6 +83,22 @@ namespace Benday.Presentation
             {
                 m_IsValid = value;
                 RaisePropertyChanged(IsValidPropertyName);
+            }
+        }
+
+        private const string IsEnabledPropertyName = "IsEnabled";
+
+        private bool _IsEnabled;
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                _IsEnabled = value;
+                RaisePropertyChanged(IsEnabledPropertyName);
             }
         }
 
