@@ -1,0 +1,142 @@
+<NewDataSet>
+  <Table1>
+    <Id>7041</Id>
+    <Name>life's not a paragraph</Name>
+    <Description>Stir with ice, strain into a cocktail coupe pre-rinsed with apricot liqueur (1/3 bsp Rothman &amp; Winter), and garnish with an orange twist.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/lifes-not-paragraph.html</Source>
+    <PhotoUrl>https://1.bp.blogspot.com/-OsSrp5fLlBM/XryRs3Q0QDI/AAAAAAAAOsk/4nmr_Dp2kXAf7lkbFAI098Z1Qd4ldLPOwCLcBGAsYHQ/s320/lifenotparagraph5428.jpg</PhotoUrl>
+    <EntryDate>2020-05-22T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpY=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7040</Id>
+    <Name>bitter spring</Name>
+    <Description>Shake with ice, strain into a Collins glass, fill with crushed ice, and top with several heavy dashes of Peychaud's Bitters.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/bitter-spring.html</Source>
+    <PhotoUrl>https://4.bp.blogspot.com/-XhrGduVi7r8/XryO2nR8XdI/AAAAAAAAOsY/4uXTL47uiD8OV0Q-K32LN-HEmZN6NukZACLcBGAsYHQ/s320/bitterspring5425.jpg</PhotoUrl>
+    <EntryDate>2020-05-21T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpU=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7039</Id>
+    <Name>pineapple margarita</Name>
+    <Description>Shake with ice and strain into a double old fashioned glass with ice.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/pineapple-margarita.html</Source>
+    <PhotoUrl>https://3.bp.blogspot.com/-wQU0G_Q5hlQ/XryMjXzcslI/AAAAAAAAOsM/CNkJGHgGOPstyLdopf1xxyJE17LhVlZfQCLcBGAsYHQ/s320/pineapplemargarita5423.jpg</PhotoUrl>
+    <EntryDate>2020-05-20T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpQ=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7038</Id>
+    <Name>bone crusher</Name>
+    <Description>Shake with ice, strain into a cocktail coupe, and no garnish needed (I opted for a floated lime wheel).</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/bone-crusher.html</Source>
+    <PhotoUrl>https://3.bp.blogspot.com/-zdnRZyMZVf0/XriRgeC1DMI/AAAAAAAAOr0/0HyPRqcZIdcETnOuCnYVNkCrxBkaeB1nwCLcBGAsYHQ/s320/bonecrusher5421.jpg</PhotoUrl>
+    <EntryDate>2020-05-19T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpM=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7037</Id>
+    <Name>happy hemingway</Name>
+    <Description>Shake with ice, strain into a cocktail (Fizz) glass with 1 1/2 oz Champagne (Chandon sparkling wine), and garnish with a lemon or grapefruit twist (grapefruit twist).</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/happy-hemingway.html</Source>
+    <PhotoUrl>https://2.bp.blogspot.com/-rNiHN63e_6U/Xrh4m7Mm7kI/AAAAAAAAOrc/uJ2q0LjNa5UuJhbyks4tK9JPDgHVfFfgwCLcBGAsYHQ/s320/happyhemingway5417.jpg</PhotoUrl>
+    <EntryDate>2020-05-17T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpI=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7036</Id>
+    <Name>cabaret cocktail</Name>
+    <Description>Stir with ice, strain into a cocktail glass, and garnish with a cherry.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/cabaret-cocktail.html</Source>
+    <PhotoUrl>https://3.bp.blogspot.com/-BF1tpmm0Za4/XrNEVIuJ3ZI/AAAAAAAAOq4/Do3aquY03VISHz-HotPruSz9ZNj7U5oxACLcBGAsYHQ/s320/cabaret5415.jpg</PhotoUrl>
+    <EntryDate>2020-05-16T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpE=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7035</Id>
+    <Name>cortez</Name>
+    <Description>Shake with ice, and strain into a Highball glass with ice and 2 oz Champagne (Chandon sparkling wine).</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/cortez.html</Source>
+    <PhotoUrl>https://3.bp.blogspot.com/-YNU70EaTX5k/XrNCXz0MziI/AAAAAAAAOqs/ZXv1aXHQNN4FTAwfkhH08TiQU85q7qRmgCLcBGAsYHQ/s320/cortez5413.jpg</PhotoUrl>
+    <EntryDate>2020-05-15T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFpA=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7034</Id>
+    <Name>glisan grog</Name>
+    <Description>Whip shake with 6 oz crushed ice, pour into a double rock glass (Tiki mug), and garnish with a mint sprig (chocolate mint) and freshly grated nutmeg.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/glisan-grog.html</Source>
+    <PhotoUrl>https://4.bp.blogspot.com/-4h9KIBqEnJc/XrM-8WUEVjI/AAAAAAAAOqg/4ngjGMW_cVQiUlGuRcRa4ZkMADv9W3o-wCLcBGAsYHQ/s320/glisanglog5410.jpg</PhotoUrl>
+    <EntryDate>2020-05-14T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFo8=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7033</Id>
+    <Name>la passione del conte</Name>
+    <Description>Stir with ice, strain into an old fashioned glass with a large ice cube, and garnish with an orange twist.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/la-passione-del-conte.html</Source>
+    <PhotoUrl>https://2.bp.blogspot.com/-uhQQlQaCNl4/XqyNIZcCC7I/AAAAAAAAOpk/7lYfgKO7Ge4HbwD8nSFVXF6NdXmfFYdjwCLcBGAsYHQ/s320/passioneconte5407.jpg</PhotoUrl>
+    <EntryDate>2020-05-12T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFo4=</Timestamp>
+  </Table1>
+  <Table1>
+    <Id>7032</Id>
+    <Name>an apple tree grows in brooklyn</Name>
+    <Description>Stir with ice, strain into a cocktail glass, and garnish with a lemon twist.</Description>
+    <Source>http://cocktailvirgin.blogspot.com/2020/05/an-apple-tree-grows-in-brooklyn.html</Source>
+    <PhotoUrl>https://1.bp.blogspot.com/-CQwLQJrT9lg/Xqs9-KauWyI/AAAAAAAAOpQ/URXNn3LMK-oTpVjMa_8fp7gBmIQy1OifQCLcBGAsYHQ/s320/appletreebrooklyn5403.jpg</PhotoUrl>
+    <EntryDate>2020-05-10T12:00:00-04:00</EntryDate>
+    <Status>Active</Status>
+    <CreatedBy>(import)</CreatedBy>
+    <CreatedDate>2020-05-22T13:54:40-04:00</CreatedDate>
+    <LastModifiedBy>(import)</LastModifiedBy>
+    <LastModifiedDate>2020-05-22T13:54:40-04:00</LastModifiedDate>
+    <Timestamp>AAAAAAAAFo0=</Timestamp>
+  </Table1>
+</NewDataSet>

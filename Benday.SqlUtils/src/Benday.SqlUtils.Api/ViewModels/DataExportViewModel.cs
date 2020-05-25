@@ -34,9 +34,13 @@ namespace Benday.SqlUtils.Api.ViewModels
             _GeneratedQuery = new ViewModelField<string>();
             _GenerateIdentityInsert = new ViewModelField<bool>();
             _ExportTableName = new ViewModelField<string>();
+            _Message = new ViewModelField<string>();
+            _QueryResults = new ViewModelField<DataTable>();
 
             _GeneratedQuery.IsEnabled = false;
             _ExportTableName.IsEnabled = false;
+            _Message.IsVisible = false;
+            _QueryResults.IsEnabled = false;
         }
 
         private const string QueryPropertyName = "Query";
@@ -123,9 +127,25 @@ namespace Benday.SqlUtils.Api.ViewModels
 
             if (ExportTableName.IsValid == true)
             {
-                var tableName = Query.Value;
+                _TableDescription = _DatabaseUtility.DescribeTable(ExportTableName.Value);
 
-                _TableDescription = _DatabaseUtility.DescribeTable(tableName);
+                _QueryResults.Value = _DatabaseUtility.RunQuery(Query.Value);
+            }            
+        }
+
+        private const string QueryResultsPropertyName = "QueryResults";
+
+        private ViewModelField<DataTable> _QueryResults;
+        public ViewModelField<DataTable> QueryResults
+        {
+            get
+            {
+                return _QueryResults;
+            }
+            set
+            {
+                _QueryResults = value;
+                RaisePropertyChanged(QueryResultsPropertyName);
             }
         }
 
@@ -145,6 +165,22 @@ namespace Benday.SqlUtils.Api.ViewModels
             }
         }
 
+        private const string MessagePropertyName = "Message";
+
+        private ViewModelField<string> _Message;
+        public ViewModelField<string> Message
+        {
+            get
+            {
+                return _Message;
+            }
+            set
+            {
+                _Message = value;
+                RaisePropertyChanged(MessagePropertyName);
+            }
+        }
+
         private ICommand _CreateInsertScriptCommand;
         public ICommand CreateInsertScriptCommand
         {
@@ -160,7 +196,22 @@ namespace Benday.SqlUtils.Api.ViewModels
         }
         private void CreateInsertScript()
         {
-            throw new NotImplementedException();
+            if (ExportTableName.IsValid == true && 
+                _TableDescription != null &&
+                QueryResults.Value != null)
+            {
+                var script = GetInsertScript();
+
+                GeneratedQuery.IsEnabled = true;
+                GeneratedQuery.Value = script;                
+            }
+            else
+            {
+                GeneratedQuery.IsEnabled = false;
+                GeneratedQuery.Value = String.Empty;
+                Message.IsVisible = true;
+                Message.Value = "Table name to export is not valid, query data has not been loaded, and/or table description has not been loaded.";
+            }
         }
 
         private ICommand _CreateMergeIntoScriptCommand;
@@ -252,6 +303,133 @@ namespace Benday.SqlUtils.Api.ViewModels
             }
 
             return tableNameFormatter;
+        }
+
+        private string GetInsertScript()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            string identityColumnName = _TableDescription.GetIdentityColumnName();
+
+            var tableName = ExportTableName.Value;
+            
+            if (identityColumnName != null && GenerateIdentityInsert.Value == true)
+            {
+                builder.Append("SET IDENTITY_INSERT ");
+                builder.Append(tableName);
+                builder.Append(" ON");
+                builder.Append(Environment.NewLine);
+                builder.Append(Environment.NewLine);
+            }
+
+            StringBuilder insertCommand = null;
+
+            DataTable resultsToExportDataTable = this.QueryResults.Value;
+
+            foreach (DataRow resultRow in resultsToExportDataTable.Rows)
+            {
+                insertCommand = new StringBuilder();
+
+                insertCommand.Append("INSERT INTO ");
+                insertCommand.Append(tableName);
+                insertCommand.Append(" ");
+                insertCommand.Append(Environment.NewLine);
+                insertCommand.Append("(");
+
+                bool needsComma = false;
+
+                foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
+                {
+                    if (resultColumn.DataType == typeof(byte[]))
+                    {
+                        // skip byte arrays & concurrency columns
+                        continue;
+                    }
+
+                    if (resultColumn.ColumnName != identityColumnName ||
+                        (resultColumn.ColumnName == identityColumnName && 
+                        GenerateIdentityInsert.Value == true))
+                    {
+                        if (needsComma == true)
+                        {
+                            insertCommand.Append(", ");
+                            insertCommand.Append(Environment.NewLine);
+                        }
+
+                        insertCommand.Append(resultColumn.ColumnName);
+                        needsComma = true;
+                    }
+                }
+
+                insertCommand.Append(")");
+                insertCommand.Append(Environment.NewLine);
+
+                insertCommand.Append("VALUES (");
+                insertCommand.Append(Environment.NewLine);
+
+                needsComma = false;
+
+                foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
+                {
+                    if (resultColumn.DataType == typeof(byte[]))
+                    {
+                        // skip byte arrays & concurrency columns
+                        continue;
+                    }
+
+                    if (resultColumn.ColumnName != identityColumnName ||
+                        (resultColumn.ColumnName == identityColumnName && 
+                        GenerateIdentityInsert.Value == true))
+                    {
+                        if (needsComma == true)
+                        {
+                            insertCommand.Append(", ");
+                            insertCommand.Append(Environment.NewLine);
+                        }
+
+                        if (resultRow[resultColumn.ColumnName] == DBNull.Value)
+                        {
+                            insertCommand.Append("NULL");
+                        }
+                        else if (resultColumn.DataType == typeof(bool))
+                        {
+                            bool valueAsBool = (bool)resultRow[resultColumn.ColumnName];
+
+                            if (valueAsBool == true)
+                            {
+                                insertCommand.Append("1");
+                            }
+                            else
+                            {
+                                insertCommand.Append("0");
+                            }
+                        }
+                        else if (resultColumn.DataType == typeof(string) ||
+                            resultColumn.DataType == typeof(Guid) ||
+                            resultColumn.DataType == typeof(DateTime))
+                        {
+                            insertCommand.Append("'");
+                            insertCommand.Append(resultRow[resultColumn.ColumnName].ToString().Replace("'", "''"));
+                            insertCommand.Append("'");
+                        }
+                        else
+                        {
+                            insertCommand.Append(resultRow[resultColumn.ColumnName].ToString());
+                        }
+
+                        needsComma = true;
+                    }
+                }
+
+                insertCommand.Append(")");
+                insertCommand.Append(Environment.NewLine);
+
+                insertCommand.Append(Environment.NewLine);
+
+                builder.Append(insertCommand.ToString());
+            }
+
+            return builder.ToString();
         }
     }
 }

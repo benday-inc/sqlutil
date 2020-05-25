@@ -3,6 +3,8 @@ using Benday.SqlUtils.Api.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Text;
 
 namespace Benday.SqlUtils.UnitTests.ViewModels
@@ -79,6 +81,8 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsNotNull(SystemUnderTest.GeneratedQuery, "GeneratedQuery is null.");
             Assert.IsNotNull(SystemUnderTest.GenerateIdentityInsert, "GenerateIdentityInsert was null.");
             Assert.IsNotNull(SystemUnderTest.ExportTableName, "ExportTableName was null.");
+            Assert.IsNotNull(SystemUnderTest.Message, "Message was null.");
+            Assert.IsNotNull(SystemUnderTest.QueryResults, "QueryResults was null.");
         }
 
         [TestMethod]
@@ -94,6 +98,16 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         [TestMethod]
         public void WhenInitializedThenFieldPropertiesSetToExpectedInitialValues()
         {
+            Assert.IsFalse(SystemUnderTest.Message.IsVisible, 
+                "Message should not be visible.");
+
+            Assert.IsTrue(SystemUnderTest.QueryResults.IsVisible,
+                "QueryResults.IsVisible");
+            Assert.IsFalse(SystemUnderTest.QueryResults.IsEnabled,
+                "QueryResults.IsEnabled");
+            Assert.IsTrue(SystemUnderTest.QueryResults.IsValid,
+                "QueryResults.IsValid");
+
             Assert.IsTrue(SystemUnderTest.Query.IsVisible,
                 "Query.IsVisible");
             Assert.IsTrue(SystemUnderTest.Query.IsEnabled,
@@ -166,7 +180,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         [TestMethod]
         public void TableDescriptionIsPopulatedWhenQueryIsRun()
         {
-            SystemUnderTest.Query.Value = "select * from person";
+            SystemUnderTest.Query.Value = "select * from recipe";
             this.DatabaseUtilityInstance.DescribeTableReturnValue =
                 new TableDescription(UnitTestUtility.GetDescriptionDataTable());
 
@@ -178,6 +192,78 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             // assert
             Assert.IsNotNull(actual, "Table description");
             Assert.AreSame(DatabaseUtilityInstance.DescribeTableReturnValue, actual, "Wrong instance");
+        }
+
+        [TestMethod]
+        public void CreateInsertScript_NoIdentityInsert()
+        {
+            SystemUnderTest.Query.Value = "select * from recipe";
+            InitializeExportedData();
+            this.DatabaseUtilityInstance.DescribeTableReturnValue =
+                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
+            SystemUnderTest.RunQueryCommand.Execute(null);
+
+            // act
+            SystemUnderTest.CreateInsertScriptCommand.Execute(null);
+
+            var actual = SystemUnderTest.GeneratedQuery;
+
+            // assert
+            Assert.IsNotNull(actual, "Generated query field");
+
+            Assert.IsFalse(SystemUnderTest.Message.IsVisible, 
+                "Message field should not be visible.  Message value is '{0}'", 
+                SystemUnderTest.Message.Value);
+
+            Assert.IsNotNull(actual.Value, "Generated query field value");
+
+            Console.WriteLine(actual.Value);
+
+            Assert.IsFalse(String.IsNullOrWhiteSpace(actual.Value), "Generated query was empty");
+            Assert.IsFalse(actual.Value.Contains("IDENTITY_INSERT"), "Should not contain identity insert");
+        }
+
+        [TestMethod]
+        public void CreateInsertScript_IdentityInsert()
+        {
+            SystemUnderTest.Query.Value = "select * from recipe";
+            InitializeExportedData();
+            this.DatabaseUtilityInstance.DescribeTableReturnValue =
+                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
+            SystemUnderTest.RunQueryCommand.Execute(null);
+            SystemUnderTest.GenerateIdentityInsert.Value = true;
+
+            // act
+            SystemUnderTest.CreateInsertScriptCommand.Execute(null);
+
+            var actual = SystemUnderTest.GeneratedQuery;
+
+            // assert
+            Assert.IsNotNull(actual, "Generated query field");
+
+            Assert.IsFalse(SystemUnderTest.Message.IsVisible,
+                "Message field should not be visible.  Message value is '{0}'",
+                SystemUnderTest.Message.Value);
+
+            Assert.IsNotNull(actual.Value, "Generated query field value");
+
+            Console.WriteLine(actual.Value);
+
+            Assert.IsFalse(String.IsNullOrWhiteSpace(actual.Value), "Generated query was empty");
+            Assert.IsTrue(actual.Value.Contains("IDENTITY_INSERT"), "Should contain identity insert");
+        }
+
+        private void InitializeExportedData()
+        {
+            var sampleFile = @"C:\code\repos\sql-server-utils\Benday.SqlUtils\test\Benday.SqlUtils.UnitTests\recipe-data-export-dataset.xml.txt";
+
+            var dataset = new DataSet();
+
+            var reader = new StringReader(File.ReadAllText(sampleFile));
+
+            dataset.ReadXml(reader);
+
+            this.DatabaseUtilityInstance.RunQueryReturnValue = dataset.Tables[0];
         }
     }
 }

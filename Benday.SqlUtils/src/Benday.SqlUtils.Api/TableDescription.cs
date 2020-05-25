@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Linq;
+using System.Reflection.PortableExecutable;
 
 namespace Benday.SqlUtils.Api
 {
@@ -21,5 +23,20 @@ namespace Benday.SqlUtils.Api
         }
 
         public List<ColumnDescription> Columns { get; }
+        public string GetIdentityColumnName()
+        {
+            var match = (from temp in Columns
+                         where temp.IsIdentity == true
+                         select temp).FirstOrDefault();
+
+            if (match == null)
+            {
+                return null;
+            }
+            else
+            {
+                return match.ColumnName;
+            }
+        }
     }
 }
