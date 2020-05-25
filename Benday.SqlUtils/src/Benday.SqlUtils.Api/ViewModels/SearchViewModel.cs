@@ -4,32 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Benday.SqlUtils.Core.ViewModels
 {
-    public class SearchViewModel : ViewModelBase
+    public class SearchViewModel : DatabaseUtilityViewModelBase
     {
-        public SearchViewModel(IDatabaseConnectionStringRepository repository)
+        public SearchViewModel(IDatabaseConnectionStringRepository repository) : 
+            base(repository)
         {
-            if (repository == null)
-                throw new ArgumentNullException(nameof(repository),
-                    $"{nameof(repository)} is null.");
-
-            _Repository = repository;
-
-            InitializeProperties();
+            
         }
 
-        private IDatabaseConnectionStringRepository _Repository;
-
-        private void InitializeProperties()
+        protected override void OnInitialize()
         {
-            _DatabaseConnections =
-                new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
             _SearchByTableName = new ViewModelField<string>();
             _SearchByColumnName = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
@@ -42,42 +32,12 @@ namespace Benday.SqlUtils.Core.ViewModels
 
             UpdateFieldVisibilityForSearchType();
 
-            RefreshDatabaseConnections();
-
-            if (_DatabaseConnections.Items.Count > 0)
-            {
-                _DatabaseConnections.Items[0].IsSelected = true;
-            }
-
-            _DatabaseConnections.IsValid = true;
             _SearchByColumnName.IsValid = true;
             _SearchByTableName.IsValid = true;
             _SearchByValue.IsValid = true;
             _SearchStringMethod.IsValid = true;
             _SearchType.IsValid = true;
-        }
-
-        private void RefreshDatabaseConnections()
-        {
-            _DatabaseConnections.Items.Clear();
-
-            var connections = _Repository.GetAll();
-
-            DatabaseConnectionViewModel item;
-            DatabaseConnectionString connString;
-
-            foreach (var connection in connections)
-            {
-                item = new DatabaseConnectionViewModel();
-                connString = new DatabaseConnectionString();
-                connString.Load(connection.ConnectionString);
-
-                item.Initialize(connection.Id, connection.Name,
-                    connString);
-                                
-                _DatabaseConnections.Add(item);
-            }
-        }
+        }        
 
         private void _SearchType_OnItemSelected(object sender, EventArgs e)
         {
@@ -174,21 +134,7 @@ namespace Benday.SqlUtils.Core.ViewModels
 
 
 
-        private const string DatabaseConnectionsPropertyName = "DatabaseConnections";
-
-        private SelectableCollectionViewModel<DatabaseConnectionViewModel> _DatabaseConnections;
-        public SelectableCollectionViewModel<DatabaseConnectionViewModel> DatabaseConnections
-        {
-            get
-            {
-                return _DatabaseConnections;
-            }
-            set
-            {
-                _DatabaseConnections = value;
-                RaisePropertyChanged(DatabaseConnectionsPropertyName);
-            }
-        }
+        
 
         private const string SearchByTableNamePropertyName = "SearchByTableName";
 
@@ -301,21 +247,6 @@ namespace Benday.SqlUtils.Core.ViewModels
         private void DoDebug()
         {
             Console.WriteLine();
-        }
-
-        private ICommand _RefreshConnectionsCommand;
-        public ICommand RefreshConnectionsCommand
-        {
-            get
-            {
-                if (_RefreshConnectionsCommand == null)
-                {
-                    _RefreshConnectionsCommand =
-                        new RelayCommand(RefreshDatabaseConnections);
-                }
-
-                return _RefreshConnectionsCommand;
-            }
         }
 
         private void Search()
