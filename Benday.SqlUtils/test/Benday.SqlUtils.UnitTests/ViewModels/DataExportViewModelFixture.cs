@@ -195,6 +195,36 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
+        public void CreateMergeIntoScript()
+        {
+            SystemUnderTest.Query.Value = "select * from recipe";
+            InitializeExportedData();
+            this.DatabaseUtilityInstance.DescribeTableReturnValue =
+                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
+            SystemUnderTest.RunQueryCommand.Execute(null);
+
+            // act
+            SystemUnderTest.CreateMergeIntoScriptCommand.Execute(null);
+
+            var actual = SystemUnderTest.GeneratedQuery;
+
+            // assert
+            Assert.IsNotNull(actual, "Generated query field");
+
+            Assert.IsFalse(SystemUnderTest.Message.IsVisible,
+                "Message field should not be visible.  Message value is '{0}'",
+                SystemUnderTest.Message.Value);
+
+            Assert.IsNotNull(actual.Value, "Generated query field value");
+
+            Console.WriteLine(actual.Value);
+
+            Assert.IsFalse(String.IsNullOrWhiteSpace(actual.Value), "Generated query was empty");
+            Assert.IsTrue(actual.Value.Contains("IDENTITY_INSERT"), "Should contain identity insert");
+            Assert.IsTrue(actual.Value.Contains("MERGE INTO"), "Should contain 'merge into'");
+        }
+
+        [TestMethod]
         public void CreateInsertScript_NoIdentityInsert()
         {
             SystemUnderTest.Query.Value = "select * from recipe";
