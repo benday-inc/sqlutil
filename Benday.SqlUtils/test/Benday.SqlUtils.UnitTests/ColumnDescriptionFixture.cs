@@ -139,6 +139,24 @@ namespace Benday.SqlUtils.UnitTests
             // assert
             AssertColumn(SystemUnderTest, "dbo", "recipe", "Id", "int", false, true);
         }
+
+        [TestMethod]
+        public void InitializeFromDataRow_StringColumn()
+        {
+            // arrange
+            var table = GetDescriptionDataTable();
+
+            var index = 1;
+            var fromValue = table.Rows[index];
+
+            // act
+            _SystemUnderTest = new ColumnDescription(fromValue);
+
+            // assert
+            AssertColumn(SystemUnderTest, "dbo", "recipe", "Name", "nvarchar", false, false);
+        }
+
+
         private void AssertColumn(
             ColumnDescription actual, 
             string expectedSchema, string expectedTableName, string expectedColumnName, string expectedDataType, bool expectedIsNullable, bool expectedIsIdentity)
@@ -149,7 +167,6 @@ namespace Benday.SqlUtils.UnitTests
             Assert.AreEqual<string>(expectedDataType, actual.DataType, "DataType");
             Assert.AreEqual<bool>(expectedIsNullable, actual.IsNullable, "IsNullable");
             Assert.AreEqual<bool>(expectedIsIdentity, actual.IsIdentity, "IsIdentity");
-
         }
     }
 }
