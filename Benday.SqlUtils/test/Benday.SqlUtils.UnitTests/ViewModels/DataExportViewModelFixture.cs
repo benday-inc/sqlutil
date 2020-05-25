@@ -35,14 +35,14 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             }
         }
 
-        private MockDatabaseQueryExecuter _DatabaseQueryExecuterInstance;
-        public MockDatabaseQueryExecuter DatabaseQueryExecuterInstance
+        private MockDatabaseUtility _DatabaseQueryExecuterInstance;
+        public MockDatabaseUtility DatabaseQueryExecuterInstance
         {
             get
             {
                 if (_DatabaseQueryExecuterInstance == null)
                 {
-                    _DatabaseQueryExecuterInstance = new MockDatabaseQueryExecuter();
+                    _DatabaseQueryExecuterInstance = new MockDatabaseUtility();
                 }
 
                 return _DatabaseQueryExecuterInstance;
@@ -127,25 +127,25 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         public void ExportTableNameIsDetectedFromQuery()
         {
             ExportTableNameIsDetectedFromQuery(
-                "select * from person", "[person]", true);
+                "select * from person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * from [person]", "[person]", true);
+                "select * from person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * from [person] where firstname=123", "[person]", true);
+                "select * from person where firstname=123", "person", true);
 
             ExportTableNameIsDetectedFromQuery(
-                "select * From person", "[person]", true);
+                "select * From person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * From [person]", "[person]", true);
+                "select * From person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * From [person] where firstname=123", "[person]", true);
+                "select * From person where firstname=123", "person", true);
 
             ExportTableNameIsDetectedFromQuery(
-                "select * FROM person", "[person]", true);
+                "select * FROM person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * FROM [person]", "[person]", true);
+                "select * FROM person", "person", true);
             ExportTableNameIsDetectedFromQuery(
-                "select * FROM [person] where firstname=123", "[person]", true);
+                "select * FROM person where firstname=123", "person", true);
         }
 
         private void ExportTableNameIsDetectedFromQuery(

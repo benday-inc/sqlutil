@@ -13,11 +13,11 @@ namespace Benday.SqlUtils.Api.ViewModels
 
     public class DataExportViewModel : DatabaseUtilityViewModelBase
     {
-        private IDatabaseQueryExecuter _QueryExecuter;
+        private IDatabaseUtility _DatabaseUtility;
 
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
-            IDatabaseQueryExecuter queryExecuter) :
+            IDatabaseUtility queryExecuter) :
                     base(repository)
         {
             if (queryExecuter == null)
@@ -25,7 +25,7 @@ namespace Benday.SqlUtils.Api.ViewModels
                 throw new ArgumentNullException("queryExecuter", "Argument cannot be null.");
             }
 
-            _QueryExecuter = queryExecuter;
+            _DatabaseUtility = queryExecuter;
         }
 
         protected override void OnInitialize()
@@ -116,10 +116,20 @@ namespace Benday.SqlUtils.Api.ViewModels
                 return _RunQueryCommand;
             }
         }
+
         private void RunQuery()
         {
             PopulateExportTableName(Query.Value);
+
+            if (ExportTableName.IsValid == true)
+            {
+                var tableName = Query.Value;
+
+                _TableDescription = _DatabaseUtility.DescribeTable(tableName);
+            }
         }
+
+        private DataTable _TableDescription = null;
 
         private ICommand _CreateInsertScriptCommand;
         public ICommand CreateInsertScriptCommand
@@ -204,27 +214,30 @@ namespace Benday.SqlUtils.Api.ViewModels
                 }
 
                 var tableName = builder.ToString().Trim();
-
-                StringBuilder tableNameFormatter = new StringBuilder();
-
-                if (tableName.StartsWith("[") == false)
-                {
-                    tableNameFormatter.Append("[");
-                }
-
-                tableNameFormatter.Append(tableName);
-
-                if (tableName.EndsWith("]") == false)
-                {
-                    tableNameFormatter.Append("]");
-                }
-
-                this.ExportTableName.Value = tableNameFormatter.ToString();
+                
+                this.ExportTableName.Value = tableName.ToString();
                 this.ExportTableName.IsValid = true;
                 this.ExportTableName.IsEnabled = false;
             }
         }
 
+        private static StringBuilder FormatTableName(string tableName)
+        {
+            StringBuilder tableNameFormatter = new StringBuilder();
 
+            if (tableName.StartsWith("[") == false)
+            {
+                tableNameFormatter.Append("[");
+            }
+
+            tableNameFormatter.Append(tableName);
+
+            if (tableName.EndsWith("]") == false)
+            {
+                tableNameFormatter.Append("]");
+            }
+
+            return tableNameFormatter;
+        }
     }
 }
