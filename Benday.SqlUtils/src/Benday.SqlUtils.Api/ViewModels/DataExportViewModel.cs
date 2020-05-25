@@ -4,17 +4,28 @@ using Benday.SqlUtils.Core.ViewModels;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Windows.Input;
 
 namespace Benday.SqlUtils.Api.ViewModels
 {
+
     public class DataExportViewModel : DatabaseUtilityViewModelBase
     {
-        public DataExportViewModel(IDatabaseConnectionStringRepository repository) :
+        private IDatabaseQueryExecuter _QueryExecuter;
+
+        public DataExportViewModel(
+            IDatabaseConnectionStringRepository repository,
+            IDatabaseQueryExecuter queryExecuter) :
                     base(repository)
         {
+            if (queryExecuter == null)
+            {
+                throw new ArgumentNullException("queryExecuter", "Argument cannot be null.");
+            }
 
+            _QueryExecuter = queryExecuter;
         }
 
         protected override void OnInitialize()
@@ -107,7 +118,7 @@ namespace Benday.SqlUtils.Api.ViewModels
         }
         private void RunQuery()
         {
-            throw new NotImplementedException();
+            PopulateExportTableName(Query.Value);
         }
 
         private ICommand _CreateInsertScriptCommand;
@@ -145,5 +156,75 @@ namespace Benday.SqlUtils.Api.ViewModels
         {
             throw new NotImplementedException();
         }
+
+        private void PopulateExportTableName(string query)
+        {
+            var queryWithoutNewLines = query.Replace(Environment.NewLine, " ");
+
+            const string queryTokenForFromStatement = " from ";
+
+            var fromPosition = queryWithoutNewLines.IndexOf(queryTokenForFromStatement,
+                StringComparison.InvariantCultureIgnoreCase);
+
+            if (fromPosition == -1)
+            {
+                this.ExportTableName.Value = "(table name not found)";
+                this.ExportTableName.IsValid = false;
+                this.ExportTableName.IsEnabled = false;
+                this.ExportTableName.ValidationMessage = "Could not locate table name in query.";
+            }
+            else
+            {
+                StringBuilder builder = new StringBuilder();
+
+                bool foundFirstChar = false;
+
+                int fromStatementLength = queryTokenForFromStatement.Length;
+
+                for (int index = fromPosition + fromStatementLength; index < queryWithoutNewLines.Length; index++)
+                {
+                    if (foundFirstChar == false)
+                    {
+                        while (queryWithoutNewLines[index] == ' ')
+                        {
+                            index++;
+                        }
+
+                        foundFirstChar = true;
+                    }
+
+                    if (queryWithoutNewLines[index] == ' ')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        builder.Append(queryWithoutNewLines[index]);
+                    }
+                }
+
+                var tableName = builder.ToString().Trim();
+
+                StringBuilder tableNameFormatter = new StringBuilder();
+
+                if (tableName.StartsWith("[") == false)
+                {
+                    tableNameFormatter.Append("[");
+                }
+
+                tableNameFormatter.Append(tableName);
+
+                if (tableName.EndsWith("]") == false)
+                {
+                    tableNameFormatter.Append("]");
+                }
+
+                this.ExportTableName.Value = tableNameFormatter.ToString();
+                this.ExportTableName.IsValid = true;
+                this.ExportTableName.IsEnabled = false;
+            }
+        }
+
+
     }
 }

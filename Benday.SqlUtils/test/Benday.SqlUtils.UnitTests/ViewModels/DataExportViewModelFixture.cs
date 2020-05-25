@@ -1,4 +1,5 @@
-﻿using Benday.SqlUtils.Api.ViewModels;
+﻿using Benday.SqlUtils.Api;
+using Benday.SqlUtils.Api.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         {
             _SystemUnderTest = null;
             _DatabaseConnectionStringRepositoryInstance = null;
+            _DatabaseQueryExecuterInstance = null;
         }
 
         private DataExportViewModel _SystemUnderTest;
@@ -24,12 +26,28 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 if (_SystemUnderTest == null)
                 {
                     _SystemUnderTest = new DataExportViewModel(
-                        DatabaseConnectionStringRepositoryInstance);
+                        DatabaseConnectionStringRepositoryInstance,
+                        DatabaseQueryExecuterInstance
+                        );
                 }
 
                 return _SystemUnderTest;
             }
         }
+
+        private MockDatabaseQueryExecuter _DatabaseQueryExecuterInstance;
+        public MockDatabaseQueryExecuter DatabaseQueryExecuterInstance
+        {
+            get
+            {
+                if (_DatabaseQueryExecuterInstance == null)
+                {
+                    _DatabaseQueryExecuterInstance = new MockDatabaseQueryExecuter();
+                }
+
+                return _DatabaseQueryExecuterInstance;
+            }
+        }        
 
         private MockDatabaseConnectionStringRepository _DatabaseConnectionStringRepositoryInstance;
         public MockDatabaseConnectionStringRepository DatabaseConnectionStringRepositoryInstance
@@ -64,6 +82,16 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
+        public void WhenInitializedThenCommandsAreNotNull()
+        {
+            Assert.IsNotNull(SystemUnderTest.RunQueryCommand, 
+                "RunQueryCommand");
+            Assert.IsNotNull(SystemUnderTest.RefreshConnectionsCommand, "RefreshConnectionsCommand");
+            Assert.IsNotNull(SystemUnderTest.CreateInsertScriptCommand, "CreateInsertScriptCommand");
+            Assert.IsNotNull(SystemUnderTest.CreateMergeIntoScriptCommand, "CreateMergeIntoScriptCommand");
+        }
+
+        [TestMethod]
         public void WhenInitializedThenFieldPropertiesSetToExpectedInitialValues()
         {
             Assert.IsTrue(SystemUnderTest.Query.IsVisible,
@@ -93,6 +121,46 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 "ExportTableName.IsEnabled");
             Assert.IsTrue(SystemUnderTest.ExportTableName.IsValid,
                 "ExportTableName.IsValid");
+        }
+
+        [TestMethod]
+        public void ExportTableNameIsDetectedFromQuery()
+        {
+            ExportTableNameIsDetectedFromQuery(
+                "select * from person", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * from [person]", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * from [person] where firstname=123", "[person]", true);
+
+            ExportTableNameIsDetectedFromQuery(
+                "select * From person", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * From [person]", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * From [person] where firstname=123", "[person]", true);
+
+            ExportTableNameIsDetectedFromQuery(
+                "select * FROM person", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * FROM [person]", "[person]", true);
+            ExportTableNameIsDetectedFromQuery(
+                "select * FROM [person] where firstname=123", "[person]", true);
+        }
+
+        private void ExportTableNameIsDetectedFromQuery(
+            string query, string expectedTableName, bool expectedIsValid)
+        {
+            SystemUnderTest.Query.Value = query;
+
+            // act
+            SystemUnderTest.RunQueryCommand.Execute(null);
+
+            var actual = SystemUnderTest.ExportTableName.Value;
+
+            // assert
+            Assert.AreEqual<string>(expectedTableName, actual, "ExportTableName is wrong");
+            Assert.AreEqual<bool>(expectedIsValid, SystemUnderTest.ExportTableName.IsValid, "IsValid");
         }
     }
 }

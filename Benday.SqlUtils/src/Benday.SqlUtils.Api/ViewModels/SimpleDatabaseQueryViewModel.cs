@@ -6,24 +6,36 @@ using System.Linq;
 
 namespace Benday.SqlUtils.Core.ViewModels
 {
-    public class SearchByColumnNameQueryViewModel : DatabaseQueryViewModelBase
+    public class SimpleDatabaseQueryViewModel : DatabaseQueryViewModelBase
     {
+
+        public SimpleDatabaseQueryViewModel()
+        {
+
+        }
+
+        private const string QueryTextPropertyName = "QueryText";
+
+        private string _QueryText;
+        public string QueryText
+        {
+            get
+            {
+                return _QueryText;
+            }
+            set
+            {
+                _QueryText = value;
+                RaisePropertyChanged(QueryTextPropertyName);
+            }
+        }
+
         protected override string SqlQueryTemplate
         {
             get
             {
-                return @"select table_schema, table_name, column_name, data_type, character_maximum_length
-from information_schema.columns where column_name like @COLUMN_NAME ORDER BY COLUMN_NAME, TABLE_NAME";
+                return QueryText;
             }
-        }
-
-        protected override List<string> GetRequiredArguments()
-        {
-            List<string> args = new List<string>();
-
-            args.Add("COLUMN_NAME");
-
-            return args;
         }
 
         public override void Execute()
@@ -48,6 +60,13 @@ from information_schema.columns where column_name like @COLUMN_NAME ORDER BY COL
             base.Results = results.Tables[0];
 
             IsVisible = true;
+        }
+
+        protected override List<string> GetRequiredArguments()
+        {
+            List<string> args = new List<string>();
+
+            return args;
         }
     }
 }
