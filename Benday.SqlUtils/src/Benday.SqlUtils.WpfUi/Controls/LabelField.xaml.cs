@@ -43,6 +43,7 @@ namespace Benday.SqlUtils.WpfUi.Controls
             else
             {
                 this.SetValue(LabelTextProperty, value);
+                _Label.Text = value;
             }
         }
     }

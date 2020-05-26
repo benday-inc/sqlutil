@@ -12,6 +12,8 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Benday.SqlUtils.Api;
+using Benday.SqlUtils.Api.ViewModels;
 using Benday.SqlUtils.Core;
 using Benday.SqlUtils.Core.ViewModels;
 
@@ -46,6 +48,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
             SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
+            SimpleIoc.Default.Register<DataExportViewModel>();
         }
 
         private DatabaseConnectionsViewModel _ConnectionsEditor;
@@ -74,6 +77,21 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                         new DatabaseConnectionStringRepository());
                 }
                 return _Search;
+            }
+        }
+
+        private DataExportViewModel _DataExport;
+        public DataExportViewModel DataExport
+        {
+            get
+            {
+                if (_DataExport == null)
+                {
+                    _DataExport = new DataExportViewModel(
+                        new DatabaseConnectionStringRepository(),
+                        new SqlServerDatabaseUtility());
+                }
+                return _DataExport;
             }
         }
 

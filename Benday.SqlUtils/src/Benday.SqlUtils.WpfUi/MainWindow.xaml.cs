@@ -42,6 +42,11 @@ namespace Benday.SqlUtils.WpfUi
         {
             SelectControl("Connections");
         }
+        
+        private void _ButtonExportData_Click(object sender, RoutedEventArgs e)
+        {
+            SelectControl("DataExport");
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -50,8 +55,12 @@ namespace Benday.SqlUtils.WpfUi
 
             _Controls.Add("Connections", new DatabaseConnectionsEditor());
             _MenuButtons.Add("Connections", _ButtonEditConnections);
+            
             _Controls.Add("Search", new DatabaseSearchUserControl());
             _MenuButtons.Add("Search", _ButtonSearchByName);
+
+            _Controls.Add("DataExport", new DataExportUserControl());
+            _MenuButtons.Add("DataExport", _ButtonExportData);
 
             SelectControl("Search");
         }

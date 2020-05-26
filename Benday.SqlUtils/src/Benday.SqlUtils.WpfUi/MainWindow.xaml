@@ -25,6 +25,10 @@
             <Button x:Name="_ButtonSearchByName" Content="Search" 
                     Style="{StaticResource MenuButtonSelected}"
                     Click="_ButtonSearchByName_Click" />
+            <Button x:Name="_ButtonExportData"
+                    Style="{StaticResource MenuButtonUnselected}"
+                    Content="Export Data"
+                    Click="_ButtonExportData_Click"/>
             <Button x:Name="_ButtonEditConnections"
                     Style="{StaticResource MenuButtonUnselected}"
                     Content="Connections"

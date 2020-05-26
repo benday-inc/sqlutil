@@ -17,7 +17,7 @@
         <Binding Converter="{StaticResource VisibilityValueConverterInstance}" Path="IsVisible"/>
     </UserControl.Visibility>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -28,9 +28,11 @@
 				Text="LABEL TEXT" 
 				VerticalAlignment="Top" 
 				Margin="6,4,4,1" 
-				TextWrapping="Wrap"/>
+				TextWrapping="Wrap"
+                Style="{StaticResource FieldLabelStyle}" />
             <TextBlock 
 				Text="{Binding ValidationMessage}"
+                Style="{StaticResource FieldErrorStyle}" 
 				Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}"
 				Foreground="Red"
 				Margin="4"

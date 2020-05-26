@@ -35,7 +35,28 @@ namespace Benday.SqlUtils.Api
             }
             else
             {
-                return Boolean.Parse(value[columnName].ToString());
+                var fieldValue = value[columnName];
+
+                if (fieldValue is bool)
+                {
+                    return (bool)fieldValue;
+                }
+                else if (fieldValue is int)
+                {
+                    if ((int)fieldValue == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return bool.Parse(fieldValue.ToString());
+                }
+                
             }
         }
         

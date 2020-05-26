@@ -127,6 +127,11 @@ namespace Benday.SqlUtils.Api.ViewModels
 
         private void DatabaseConnections_OnItemSelected(object sender, EventArgs e)
         {
+            SelectDatabaseConnectionAndInitialize();
+        }
+
+        private void SelectDatabaseConnectionAndInitialize()
+        {
             var value = DatabaseConnections.SelectedItem;
 
             if (value != null)
@@ -141,6 +146,8 @@ namespace Benday.SqlUtils.Api.ViewModels
 
             if (ExportTableName.IsValid == true)
             {
+                SelectDatabaseConnectionAndInitialize();
+
                 _TableDescription = _DatabaseUtility.DescribeTable(ExportTableName.Value);
 
                 _QueryResults.Value = _DatabaseUtility.RunQuery(Query.Value);
