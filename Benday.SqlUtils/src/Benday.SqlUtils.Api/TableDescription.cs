@@ -39,9 +39,9 @@ namespace Benday.SqlUtils.Api
             }
         }
 
-        public string GetPrimaryKeyColumnName()
+        public string PrimaryKeyColumnName
         {
-            return GetIdentityColumnName();
+            get; set;
         }
     }
 }

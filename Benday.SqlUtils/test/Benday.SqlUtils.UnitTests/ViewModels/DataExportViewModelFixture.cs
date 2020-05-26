@@ -1,10 +1,12 @@
 ﻿using Benday.SqlUtils.Api;
 using Benday.SqlUtils.Api.ViewModels;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Benday.SqlUtils.UnitTests.ViewModels
@@ -77,6 +79,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         [TestMethod]
         public void WhenInitializedThenFieldPropertiesAreNotNull()
         {
+            Assert.IsNotNull(SystemUnderTest.DatabaseConnections, "DatabaseConnections is null.");
             Assert.IsNotNull(SystemUnderTest.Query, "Query is null.");
             Assert.IsNotNull(SystemUnderTest.GeneratedQuery, "GeneratedQuery is null.");
             Assert.IsNotNull(SystemUnderTest.GenerateIdentityInsert, "GenerateIdentityInsert was null.");
@@ -165,6 +168,14 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         private void ExportTableNameIsDetectedFromQuery(
             string query, string expectedTableName, bool expectedIsValid)
         {
+            Assert.IsTrue(SystemUnderTest.DatabaseConnections.HasOnItemSelectedSubscriber, 
+                "Database connections field should have an onitemselected subscriber.");
+
+            SystemUnderTest.DatabaseConnections.SelectedItem =
+                SystemUnderTest.DatabaseConnections.Items[0];
+
+            Assert.IsTrue(DatabaseUtilityInstance.WasInitializeCalled, "Initialize wasn't called on db util before test.");
+
             SystemUnderTest.Query.Value = query;
 
             // act
@@ -175,6 +186,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             // assert
             Assert.AreEqual<string>(expectedTableName, actual, "ExportTableName is wrong");
             Assert.AreEqual<bool>(expectedIsValid, SystemUnderTest.ExportTableName.IsValid, "IsValid");
+            Assert.IsTrue(DatabaseUtilityInstance.WasInitializeCalled, "Initialize wasn't called on db util.");
         }
 
         [TestMethod]

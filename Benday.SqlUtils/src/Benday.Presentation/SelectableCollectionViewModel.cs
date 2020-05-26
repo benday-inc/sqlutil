@@ -16,6 +16,14 @@ namespace Benday.Presentation
             Items = new ObservableCollection<T>();
         }
 
+        public bool HasOnItemSelectedSubscriber
+        {
+            get
+            {
+                return (OnItemSelected != null);
+            }
+        }        
+
         public event EventHandler OnItemSelected;
 
         private void RaiseOnItemSelected()
@@ -226,9 +234,9 @@ namespace Benday.Presentation
                     {
                         _SelectedItem.IsSelected = true;
                     }
-
-                    RaiseOnItemSelected();
                 }
+
+                RaiseOnItemSelected();
 
                 RaisePropertyChanged(SelectedItemPropertyName);
             }

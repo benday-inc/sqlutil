@@ -17,7 +17,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
         public DataTable RunQueryReturnValue { get; set; }        
 
-        public DataTable RunQuery(string query)
+        public DataTable RunQuery(string query, Dictionary<string, string> args = null)
         {
             _WasRunQueryCalled = true;
 
@@ -36,6 +36,12 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         {
             _WasDescribeTableCalled = true;
             return DescribeTableReturnValue;
+        }
+
+        public bool WasInitializeCalled { get; set; }
+        public void Initialize(string connectionString)
+        {
+            WasInitializeCalled = true;
         }
     }
 }

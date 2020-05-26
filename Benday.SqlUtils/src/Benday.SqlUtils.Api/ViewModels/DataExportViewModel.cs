@@ -28,8 +28,10 @@ namespace Benday.SqlUtils.Api.ViewModels
             _DatabaseUtility = queryExecuter;
         }
 
-        protected override void OnInitialize()
+        protected override void InitializeProperties()
         {
+            base.InitializeProperties();
+
             _Query = new ViewModelField<string>();
             _GeneratedQuery = new ViewModelField<string>();
             _GenerateIdentityInsert = new ViewModelField<bool>();
@@ -41,6 +43,8 @@ namespace Benday.SqlUtils.Api.ViewModels
             _ExportTableName.IsEnabled = false;
             _Message.IsVisible = false;
             _QueryResults.IsEnabled = false;
+
+            DatabaseConnections.OnItemSelected += DatabaseConnections_OnItemSelected;
         }
 
         private const string QueryPropertyName = "Query";
@@ -121,6 +125,16 @@ namespace Benday.SqlUtils.Api.ViewModels
             }
         }
 
+        private void DatabaseConnections_OnItemSelected(object sender, EventArgs e)
+        {
+            var value = DatabaseConnections.SelectedItem;
+
+            if (value != null)
+            {
+                _DatabaseUtility.Initialize(value.ConnectionString);
+            }
+        }
+
         private void RunQuery()
         {
             PopulateExportTableName(Query.Value);
@@ -130,7 +144,7 @@ namespace Benday.SqlUtils.Api.ViewModels
                 _TableDescription = _DatabaseUtility.DescribeTable(ExportTableName.Value);
 
                 _QueryResults.Value = _DatabaseUtility.RunQuery(Query.Value);
-            }            
+            }
         }
 
         private const string QueryResultsPropertyName = "QueryResults";
@@ -196,14 +210,14 @@ namespace Benday.SqlUtils.Api.ViewModels
         }
         private void CreateInsertScript()
         {
-            if (ExportTableName.IsValid == true && 
+            if (ExportTableName.IsValid == true &&
                 _TableDescription != null &&
                 QueryResults.Value != null)
             {
                 var script = GetInsertScript();
 
                 GeneratedQuery.IsEnabled = true;
-                GeneratedQuery.Value = script;                
+                GeneratedQuery.Value = script;
             }
             else
             {
@@ -294,7 +308,7 @@ namespace Benday.SqlUtils.Api.ViewModels
                 }
 
                 var tableName = builder.ToString().Trim();
-                
+
                 this.ExportTableName.Value = tableName.ToString();
                 this.ExportTableName.IsValid = true;
                 this.ExportTableName.IsEnabled = false;
@@ -327,7 +341,7 @@ namespace Benday.SqlUtils.Api.ViewModels
             string identityColumnName = _TableDescription.GetIdentityColumnName();
 
             var tableName = ExportTableName.Value;
-            
+
             if (identityColumnName != null && GenerateIdentityInsert.Value == true)
             {
                 builder.Append("SET IDENTITY_INSERT ");
@@ -362,7 +376,7 @@ namespace Benday.SqlUtils.Api.ViewModels
                     }
 
                     if (resultColumn.ColumnName != identityColumnName ||
-                        (resultColumn.ColumnName == identityColumnName && 
+                        (resultColumn.ColumnName == identityColumnName &&
                         GenerateIdentityInsert.Value == true))
                     {
                         if (needsComma == true)
@@ -393,7 +407,7 @@ namespace Benday.SqlUtils.Api.ViewModels
                     }
 
                     if (resultColumn.ColumnName != identityColumnName ||
-                        (resultColumn.ColumnName == identityColumnName && 
+                        (resultColumn.ColumnName == identityColumnName &&
                         GenerateIdentityInsert.Value == true))
                     {
                         if (needsComma == true)
@@ -454,7 +468,7 @@ namespace Benday.SqlUtils.Api.ViewModels
             var tableName = ExportTableName.Value;
             DataTable resultsToExportDataTable = this.QueryResults.Value;
 
-            var primaryKeyColumnName = _TableDescription.GetPrimaryKeyColumnName();
+            var primaryKeyColumnName = _TableDescription.PrimaryKeyColumnName;
 
             builder.AppendLine($"SET IDENTITY_INSERT {tableName} ON");
             builder.AppendLine("GO");
