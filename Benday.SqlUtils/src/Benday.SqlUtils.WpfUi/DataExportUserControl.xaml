@@ -39,7 +39,9 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Orientation="Vertical">
-                <ctrls:TextboxField LabelText="SQL Query to Export" DataContext="{Binding Query, Mode=TwoWay}" />
+                <ctrls:TextboxField LabelText="SQL Query to Export" Height="200"
+                                    MultiLine="True" 
+                                    DataContext="{Binding Query, Mode=TwoWay}" />
                 <Button Command="{Binding RunQueryCommand, Mode=OneWay}"
                         Content="Run Query"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"

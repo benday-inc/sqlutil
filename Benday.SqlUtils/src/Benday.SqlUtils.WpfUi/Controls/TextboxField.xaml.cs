@@ -79,5 +79,64 @@ namespace Benday.SqlUtils.WpfUi.Controls
                 _Label.Text = value;
             }
         }
+
+        private void SetMultiLineMode(bool value)
+        {
+            if (value == true)
+            {
+                this.SetValue(MultiLineProperty, value);
+                _Textbox.TextWrapping = TextWrapping.Wrap;
+                _Textbox.AcceptsReturn = true;
+                _Textbox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
+            else
+            {
+                this.SetValue(MultiLineProperty, value);
+
+                _Textbox.Height = (double)TextBox.HeightProperty.DefaultMetadata.DefaultValue;
+
+                Style style = FindResource("FieldTextboxMultiLineStyle") as Style;
+
+                if (style == null)
+                {
+                    throw new InvalidOperationException("Could not find style");
+                }
+
+                _Textbox.Style = style;
+                _Textbox.TextWrapping = TextWrapping.NoWrap;
+                _Textbox.AcceptsReturn = false;
+                _Textbox.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            }
+        }
+        public bool MultiLine
+        {
+            get
+            {
+                return (bool)this.GetValue(MultiLineProperty);
+            }
+            set
+            {
+                SetMultiLineMode(value);
+            }
+        }
+
+        public static readonly DependencyProperty MultiLineProperty = DependencyProperty.Register(
+          "MultiLine", typeof(bool), typeof(TextboxField), new PropertyMetadata(false));
+
+        public double TextboxHeight
+        {
+            get
+            {
+                return (int)this.GetValue(TextboxHeightProperty);
+            }
+            set
+            {
+                this.SetValue(TextboxHeightProperty, value);
+                _Textbox.Height = value;
+            }
+        }
+
+        public static readonly DependencyProperty TextboxHeightProperty = DependencyProperty.Register(
+          "TextboxHeight", typeof(double), typeof(TextboxField), new PropertyMetadata(App.Current.FindResource("DefaultFieldControlHeight")));
     }
 }
