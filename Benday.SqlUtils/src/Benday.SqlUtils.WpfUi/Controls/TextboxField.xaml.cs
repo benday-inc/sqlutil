@@ -80,34 +80,31 @@ namespace Benday.SqlUtils.WpfUi.Controls
             }
         }
 
-        private void SetMultiLineMode(bool value)
+        public void SetMultiLineMode(bool value)
         {
-            if (value == true)
+            string styleKey;
+
+            if (value == false)
             {
-                this.SetValue(MultiLineProperty, value);
-                _Textbox.TextWrapping = TextWrapping.Wrap;
-                _Textbox.AcceptsReturn = true;
-                _Textbox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                styleKey = "FieldTextboxStyle";
             }
             else
             {
-                this.SetValue(MultiLineProperty, value);
-
-                _Textbox.Height = (double)TextBox.HeightProperty.DefaultMetadata.DefaultValue;
-
-                Style style = FindResource("FieldTextboxMultiLineStyle") as Style;
-
-                if (style == null)
-                {
-                    throw new InvalidOperationException("Could not find style");
-                }
-
-                _Textbox.Style = style;
-                _Textbox.TextWrapping = TextWrapping.NoWrap;
-                _Textbox.AcceptsReturn = false;
-                _Textbox.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                styleKey = "FieldTextboxMultiLineStyle";
             }
+
+            Style style = FindResource(styleKey) as Style;
+
+            if (style == null)
+            {
+                throw new InvalidOperationException("Could not find style");
+            }
+
+            _Textbox.Style = style;
+
+            this.SetValue(MultiLineProperty, value);           
         }
+
         public bool MultiLine
         {
             get
@@ -121,22 +118,13 @@ namespace Benday.SqlUtils.WpfUi.Controls
         }
 
         public static readonly DependencyProperty MultiLineProperty = DependencyProperty.Register(
-          "MultiLine", typeof(bool), typeof(TextboxField), new PropertyMetadata(false));
+          "MultiLine", typeof(bool), typeof(TextboxField), new PropertyMetadata(false, DependencyPropertyUtility.MultiLinePropertyChanged));        
 
-        public double TextboxHeight
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            get
-            {
-                return (int)this.GetValue(TextboxHeightProperty);
-            }
-            set
-            {
-                this.SetValue(TextboxHeightProperty, value);
-                _Textbox.Height = value;
-            }
-        }
+            var currentMultiLineValue = this.MultiLine;
 
-        public static readonly DependencyProperty TextboxHeightProperty = DependencyProperty.Register(
-          "TextboxHeight", typeof(double), typeof(TextboxField), new PropertyMetadata(App.Current.FindResource("DefaultFieldControlHeight")));
+            this.MultiLine = !currentMultiLineValue;
+        }
     }
 }

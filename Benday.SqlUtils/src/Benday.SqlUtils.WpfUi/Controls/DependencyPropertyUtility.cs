@@ -19,5 +19,17 @@ namespace Benday.SqlUtils.WpfUi.Controls
                 target.SetLabelText(newValueToUpper);
             }
         }
+
+        public static void MultiLinePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var target = d as TextboxField;
+
+            if (target != null && e.NewValue is bool)
+            {
+                var tempValue = (bool)e.NewValue;
+
+                target.SetMultiLineMode(tempValue);
+            }
+        }
     }
 }
