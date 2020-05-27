@@ -74,12 +74,20 @@ namespace Benday.SqlUtils.WpfUi
             if (selectedButton == _ButtonSearchByName)
             {
                 SelectButton(_ButtonSearchByName);
+                UnselectButton(_ButtonExportData);
+                UnselectButton(_ButtonEditConnections);
+            }
+            else if (selectedButton == _ButtonExportData)
+            {
+                UnselectButton(_ButtonSearchByName);
+                SelectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
             }
             else
             {
-                SelectButton(_ButtonEditConnections);
                 UnselectButton(_ButtonSearchByName);
+                UnselectButton(_ButtonExportData);
+                SelectButton(_ButtonEditConnections);
             }
         }
 

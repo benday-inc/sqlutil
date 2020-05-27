@@ -46,7 +46,7 @@
                         Content="Run Query"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"
                         Style="{StaticResource FieldButtonStyle}"/>
-                <ctrls:LabelField LabelText="Query Results to Export" />
+                <ctrls:LabelOnlyField LabelText="Query Results to Export" />
                 <DataGrid
                     Height="200"
                     DataContext="{Binding QueryResults, Mode=TwoWay}"
@@ -85,25 +85,11 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="150" />
-                </Grid.ColumnDefinitions>
-
+                
                 <ctrls:TextboxField LabelText="SQL Query to Export" 
                                     MultiLine="True" Height="200"
-                                    DataContext="{Binding GeneratedQuery}" />
-
-                <Label
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Height="Auto"
-                    DataContext="{Binding Result, Mode=TwoWay}"
-                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                    Content="{Binding Message, Mode=TwoWay}"
-                    Margin="{StaticResource DefaultFieldMargin}" />
+                                    DataContext="{Binding GeneratedQuery}" />                
             </Grid>
         </Grid>
     </Grid>
