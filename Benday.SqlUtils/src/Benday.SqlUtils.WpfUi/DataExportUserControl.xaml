@@ -17,7 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -55,7 +55,7 @@
                     ItemsSource="{Binding Path=Value, Mode=TwoWay}" />
                 <ctrls:TextboxField LabelText="Table to Export" DataContext="{Binding ExportTableName}" />
 
-               
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -80,17 +80,9 @@
             </StackPanel>
 
         </Grid>
-        <Grid Grid.Row="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                
-                <ctrls:TextboxField LabelText="SQL Query to Export" 
+        <ctrls:TextboxField Grid.Row="2" LabelText="SQL Query to Export" 
                                     MultiLine="True" Height="200"
-                                    DataContext="{Binding GeneratedQuery}" />                
-            </Grid>
-        </Grid>
+                                    DataContext="{Binding GeneratedQuery}" />
 
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Content="Save" 
