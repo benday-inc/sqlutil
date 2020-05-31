@@ -20,6 +20,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             _SystemUnderTest = null;
             _DatabaseConnectionStringRepositoryInstance = null;
             _DatabaseUtilityInstance = null;
+            _FileDialogServiceInstance = null;
         }
 
         private DataExportViewModel _SystemUnderTest;
@@ -31,7 +32,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 {
                     _SystemUnderTest = new DataExportViewModel(
                         DatabaseConnectionStringRepositoryInstance,
-                        DatabaseUtilityInstance
+                        DatabaseUtilityInstance, FileDialogServiceInstance
                         );
                 }
 
@@ -51,7 +52,21 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
                 return _DatabaseUtilityInstance;
             }
-        }        
+        }
+
+        private MockFileDialogService _FileDialogServiceInstance;
+        public MockFileDialogService FileDialogServiceInstance
+        {
+            get
+            {
+                if (_FileDialogServiceInstance == null)
+                {
+                    _FileDialogServiceInstance = new MockFileDialogService();
+                }
+
+                return _FileDialogServiceInstance;
+            }
+        }
 
         private MockDatabaseConnectionStringRepository _DatabaseConnectionStringRepositoryInstance;
         public MockDatabaseConnectionStringRepository DatabaseConnectionStringRepositoryInstance
@@ -86,6 +101,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsNotNull(SystemUnderTest.ExportTableName, "ExportTableName was null.");
             Assert.IsNotNull(SystemUnderTest.Message, "Message was null.");
             Assert.IsNotNull(SystemUnderTest.QueryResults, "QueryResults was null.");
+            Assert.IsNotNull(SystemUnderTest.SaveToFileName, "SaveToFileName");
         }
 
         [TestMethod]
@@ -96,6 +112,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsNotNull(SystemUnderTest.RefreshConnectionsCommand, "RefreshConnectionsCommand");
             Assert.IsNotNull(SystemUnderTest.CreateInsertScriptCommand, "CreateInsertScriptCommand");
             Assert.IsNotNull(SystemUnderTest.CreateMergeIntoScriptCommand, "CreateMergeIntoScriptCommand");
+            Assert.IsNotNull(SystemUnderTest.SaveScriptCommand, "SaveScriptCommand");
         }
 
         [TestMethod]
@@ -263,6 +280,31 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             Assert.IsFalse(String.IsNullOrWhiteSpace(actual.Value), "Generated query was empty");
             Assert.IsFalse(actual.Value.Contains("IDENTITY_INSERT"), "Should not contain identity insert");
+        }
+
+        [TestMethod]
+        public void SaveScriptToDisk()
+        {
+            SystemUnderTest.Query.Value = "select * from recipe";
+            InitializeExportedData();
+            this.DatabaseUtilityInstance.DescribeTableReturnValue =
+                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
+            SystemUnderTest.RunQueryCommand.Execute(null);
+            SystemUnderTest.CreateInsertScriptCommand.Execute(null);
+            var actual = SystemUnderTest.GeneratedQuery;
+
+            _FileDialogServiceInstance.ShowFileDialogReturnValue = true;
+            _FileDialogServiceInstance.Filename = "asdfasdfasdf.txt";
+
+            // act
+            SystemUnderTest.SaveScriptCommand.Execute(null);
+
+            // assert
+
+            Assert.IsTrue(SystemUnderTest.SaveToFileName.IsVisible,
+                "SaveToFileName field should be visible.");
+
+            Assert.IsTrue(_FileDialogServiceInstance.WasShowFileDialogCalled, "Show dialog was not called");
         }
 
         [TestMethod]

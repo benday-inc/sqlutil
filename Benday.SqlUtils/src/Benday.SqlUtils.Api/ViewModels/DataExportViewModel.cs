@@ -14,10 +14,12 @@ namespace Benday.SqlUtils.Api.ViewModels
     public class DataExportViewModel : DatabaseUtilityViewModelBase
     {
         private IDatabaseUtility _DatabaseUtility;
+        private IFileDialogService _FileDialogService;
 
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
-            IDatabaseUtility queryExecuter) :
+            IDatabaseUtility queryExecuter,
+            IFileDialogService fileDialogService) :
                     base(repository)
         {
             if (queryExecuter == null)
@@ -25,7 +27,13 @@ namespace Benday.SqlUtils.Api.ViewModels
                 throw new ArgumentNullException("queryExecuter", "Argument cannot be null.");
             }
 
+            if (fileDialogService == null)
+            {
+                throw new ArgumentNullException("fileDialogService", "Argument cannot be null.");
+            }
+
             _DatabaseUtility = queryExecuter;
+            _FileDialogService = fileDialogService;
         }
 
         protected override void InitializeProperties()
@@ -37,12 +45,14 @@ namespace Benday.SqlUtils.Api.ViewModels
             _GenerateIdentityInsert = new ViewModelField<bool>();
             _ExportTableName = new ViewModelField<string>();
             _Message = new ViewModelField<string>();
+            _SaveToFileName = new ViewModelField<string>();
             _QueryResults = new ViewModelField<DataTable>();
 
             _GeneratedQuery.IsEnabled = false;
             _ExportTableName.IsEnabled = false;
             _Message.IsVisible = false;
             _QueryResults.IsEnabled = false;
+            _SaveToFileName.IsEnabled = false;
 
             DatabaseConnections.OnItemSelected += DatabaseConnections_OnItemSelected;
         }
@@ -675,6 +685,52 @@ namespace Benday.SqlUtils.Api.ViewModels
             builder.AppendLine("GO");
 
             return builder.ToString();
+        }
+
+        private ICommand _SaveScriptCommand;
+        public ICommand SaveScriptCommand
+        {
+            get
+            {
+                if (_SaveScriptCommand == null)
+                {
+                    _SaveScriptCommand = new RelayCommand(SaveScript);
+                }
+
+                return _SaveScriptCommand;
+            }
+        }
+        private void SaveScript()
+        {
+            if (this.GeneratedQuery.IsEnabled == true && this.GeneratedQuery.IsValid == true &&
+                this.GeneratedQuery.IsVisible == true)
+            {
+                var result = _FileDialogService.ShowFileDialog();
+
+                if (result == true)
+                {
+                    SaveToFileName.Value = _FileDialogService.Filename;
+                    SaveToFileName.IsVisible = true;
+
+                    Console.WriteLine("Save file to {0}...", SaveToFileName.Value);
+                }
+            }
+        }
+
+        private const string SaveToFileNamePropertyName = "SaveToFileName";
+
+        private ViewModelField<string> _SaveToFileName;
+        public ViewModelField<string> SaveToFileName
+        {
+            get
+            {
+                return _SaveToFileName;
+            }
+            set
+            {
+                _SaveToFileName = value;
+                RaisePropertyChanged(SaveToFileNamePropertyName);
+            }
         }
     }
 }
