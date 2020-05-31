@@ -42,7 +42,7 @@
         
         <TextBox x:Name="_Textbox" 
 			Grid.Row="2"			 
-			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay}" 
+			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 			Style="{StaticResource FieldTextboxStyle}"
 			KeyDown="TextBox_KeyDown"  />
 

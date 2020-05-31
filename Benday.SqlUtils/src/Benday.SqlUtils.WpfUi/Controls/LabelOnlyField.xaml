@@ -19,7 +19,7 @@
 
     <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
             <TextBlock 

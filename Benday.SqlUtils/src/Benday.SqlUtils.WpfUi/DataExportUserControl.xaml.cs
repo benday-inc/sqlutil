@@ -27,5 +27,10 @@ namespace Benday.SqlUtils.WpfUi
         {
             Console.WriteLine();
         }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

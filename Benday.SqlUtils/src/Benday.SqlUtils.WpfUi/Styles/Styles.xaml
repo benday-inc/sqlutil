@@ -136,6 +136,9 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="AcceptsReturn" Value="False" />
+
     </Style>
 
     <Style x:Key="FieldTextboxMultiLineStyle" TargetType="TextBox" >
@@ -143,7 +146,9 @@
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
-        
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="AcceptsReturn" Value="True" />
+
         <!--<Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeightForMultiline}" />-->
         <!--<Setter Property="Height" Value="{Binding Source={x:Static TextBox.HeightProperty}, Path=DefaultMetadata.DefaultValue}" />-->
         <Setter Property="VerticalAlignment" Value="Stretch" />
