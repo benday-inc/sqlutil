@@ -54,14 +54,14 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             }
         }
 
-        private MockFileDialogService _FileDialogServiceInstance;
-        public MockFileDialogService FileDialogServiceInstance
+        private MockFileService _FileDialogServiceInstance;
+        public MockFileService FileDialogServiceInstance
         {
             get
             {
                 if (_FileDialogServiceInstance == null)
                 {
-                    _FileDialogServiceInstance = new MockFileDialogService();
+                    _FileDialogServiceInstance = new MockFileService();
                 }
 
                 return _FileDialogServiceInstance;

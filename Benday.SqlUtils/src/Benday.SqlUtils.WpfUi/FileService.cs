@@ -2,11 +2,12 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Benday.SqlUtils.WpfUi
 {
-    public class FileDialogService : IFileDialogService
+    public class FileService : IFileService
     {
         public string Filename
         {
@@ -14,7 +15,12 @@ namespace Benday.SqlUtils.WpfUi
             set;
         }
 
-        public bool ShowFileDialog()
+        public void SaveFile(string filename, string contents)
+        {
+            File.WriteAllText(filename, contents);
+        }
+
+        public bool ShowSaveFileDialog()
         {
             var dialog = new SaveFileDialog();
 

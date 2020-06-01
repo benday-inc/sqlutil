@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Benday.SqlUtils.Api
 {
-    public interface IFileDialogService
+    public interface IFileService
     {
         string Filename { get; set; }
-        bool ShowFileDialog();
+        bool ShowSaveFileDialog();
+        void SaveFile(string filename, string contents);
     }
 }

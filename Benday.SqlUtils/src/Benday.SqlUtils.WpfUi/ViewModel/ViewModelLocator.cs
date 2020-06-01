@@ -89,7 +89,8 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 {
                     _DataExport = new DataExportViewModel(
                         new DatabaseConnectionStringRepository(),
-                        new SqlServerDatabaseUtility());
+                        new SqlServerDatabaseUtility(), 
+                        new FileService());
                 }
                 return _DataExport;
             }

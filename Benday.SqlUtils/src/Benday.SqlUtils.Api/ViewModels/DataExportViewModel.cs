@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Benday.SqlUtils.Api.ViewModels
@@ -14,12 +15,12 @@ namespace Benday.SqlUtils.Api.ViewModels
     public class DataExportViewModel : DatabaseUtilityViewModelBase
     {
         private IDatabaseUtility _DatabaseUtility;
-        private IFileDialogService _FileDialogService;
+        private IFileService _FileService;
 
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
             IDatabaseUtility queryExecuter,
-            IFileDialogService fileDialogService) :
+            IFileService fileDialogService) :
                     base(repository)
         {
             if (queryExecuter == null)
@@ -33,7 +34,7 @@ namespace Benday.SqlUtils.Api.ViewModels
             }
 
             _DatabaseUtility = queryExecuter;
-            _FileDialogService = fileDialogService;
+            _FileService = fileDialogService;
         }
 
         protected override void InitializeProperties()
@@ -705,14 +706,14 @@ namespace Benday.SqlUtils.Api.ViewModels
             if (this.GeneratedQuery.IsEnabled == true && this.GeneratedQuery.IsValid == true &&
                 this.GeneratedQuery.IsVisible == true)
             {
-                var result = _FileDialogService.ShowFileDialog();
+                var result = _FileService.ShowSaveFileDialog();
 
                 if (result == true)
                 {
-                    SaveToFileName.Value = _FileDialogService.Filename;
+                    SaveToFileName.Value = _FileService.Filename;
                     SaveToFileName.IsVisible = true;
 
-                    Console.WriteLine("Save file to {0}...", SaveToFileName.Value);
+                    _FileService.SaveFile(_FileService.Filename, _GeneratedQuery.Value);
                 }
             }
         }
@@ -731,6 +732,24 @@ namespace Benday.SqlUtils.Api.ViewModels
                 _SaveToFileName = value;
                 RaisePropertyChanged(SaveToFileNamePropertyName);
             }
+        }
+
+        private ICommand _CopyGeneratedQueryToClipboardCommand;
+        public ICommand CopyGeneratedQueryToClipboardCommand
+        {
+            get
+            {
+                if (_CopyGeneratedQueryToClipboardCommand == null)
+                {
+                    _CopyGeneratedQueryToClipboardCommand = new RelayCommand(CopyGeneratedQueryToClipboard);
+                }
+
+                return _CopyGeneratedQueryToClipboardCommand;
+            }
+        }
+        private void CopyGeneratedQueryToClipboard()
+        {
+            Clipboard.SetText(_GeneratedQuery.Value);
         }
     }
 }
