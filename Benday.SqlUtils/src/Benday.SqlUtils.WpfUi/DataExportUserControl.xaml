@@ -26,17 +26,12 @@
     </UserControl.DataContext>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!-- Connection Chooser - START -->
-        <Grid Style="{DynamicResource DialogGrid}" Grid.ColumnSpan="2">
+
+        <Grid Style="{DynamicResource DialogGrid}" Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -56,92 +51,106 @@
                 FontFamily="Wingdings 3"
                 FontSize="22" />
         </Grid>
-        <!-- Connection Chooser - END -->
-        <Grid Grid.Row="1" Style="{DynamicResource DialogGrid}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical">
-                <ctrls:TextboxField
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Select Data" Grid.Row="1" Grid.Column="0" >
+                <Grid Grid.Row="1" Style="{DynamicResource DialogGrid}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <ctrls:TextboxField
                     Height="125"
                     DataContext="{Binding Query, Mode=TwoWay}"
                     LabelText="SQL Query to Export"
                     MultiLine="True">
-                    <ctrls:TextboxField.InputBindings>
-                        <KeyBinding
+                            <ctrls:TextboxField.InputBindings>
+                                <KeyBinding
                             Key="E"
                             Command="{Binding RunQueryCommand, UpdateSourceTrigger=PropertyChanged}"
                             Modifiers="Ctrl" />
-                    </ctrls:TextboxField.InputBindings>
-                </ctrls:TextboxField>
-                <Button
+                            </ctrls:TextboxField.InputBindings>
+                        </ctrls:TextboxField>
+                        <Button
                     Command="{Binding RunQueryCommand, Mode=OneWay}"
                     Content="Run Query"
                     Style="{StaticResource FieldButtonStyle}" />
-                <ctrls:LabelOnlyField LabelText="Query Results to Export" />
-                <DataGrid
+                        <ctrls:LabelOnlyField LabelText="Query Results to Export" />
+                        <DataGrid
                     Height="200"
                     DataContext="{Binding QueryResults, Mode=TwoWay}"
                     IsEnabled="{Binding Path=IsEnabled, Converter={StaticResource VisibilityValueConverterInstance}}"
                     ItemsSource="{Binding Path=Value, Mode=TwoWay}"
                     Style="{StaticResource DefaultDataGridStyle}"
                     Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}" />
-                
-            </StackPanel>
-            
-            
-        </Grid>
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <ctrls:TextboxField DataContext="{Binding ExportTableName}" LabelText="Table to Export" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <ctrls:CheckboxField
+
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GridSplitter HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+ Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="5" />
+            <GroupBox Header="Export Data" Grid.Row="1" 
+                      Grid.Column="2">
+
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <ctrls:TextboxField DataContext="{Binding ExportTableName}" LabelText="Table to Export" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ctrls:CheckboxField
                         Grid.Column="0"
                         DataContext="{Binding GenerateIdentityInsert, Mode=TwoWay}"
                         LabelText="Identity Insert" />
-                <Button
+                        <Button
                         Grid.Column="1"
                         Command="{Binding CreateInsertScriptCommand}"
                         Content="Insert Script"
                         Style="{StaticResource FieldButtonStyle}" />
-                <Button
+                        <Button
                         Grid.Column="2"
                         Command="{Binding CreateMergeIntoScriptCommand}"
                         Content="Update Script"
                         Style="{StaticResource FieldButtonStyle}" />
-            </Grid>
-            <Button
+                    </Grid>
+                    <Button
                     Margin="{StaticResource SpacedSeparatedControlMargin}"
                     Click="Button_Click"
                     Command="{Binding DebugCommand, Mode=OneWay}"
                     Content="Debug"
                     Style="{StaticResource FieldButtonStyle}"
                     Visibility="Collapsed" />
-            <ctrls:TextboxField
+                    <ctrls:TextboxField
             Grid.Row="2"
             Height="200"
             DataContext="{Binding GeneratedQuery}"
             LabelText="SQL Query to Export"
             MultiLine="True" />
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Button
+                    <StackPanel Grid.Row="3" Orientation="Horizontal">
+                        <Button
                 Margin="{StaticResource DefaultFieldMargin}"
                 Command="{Binding SaveScriptCommand}"
                 Content="Save"
                 Style="{StaticResource FieldButtonStyle}" />
-                <Button
+                        <Button
                 Margin="{StaticResource DefaultFieldMargin}"
                 Command="{Binding CopyGeneratedQueryToClipboardCommand}"
                 Content="Copy to Clipboard"
                 Style="{StaticResource FieldButtonStyle}" />
-            </StackPanel>
-        </StackPanel>
-        <Label Content="Ready" Grid.Row="2" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+        </Grid>
     </Grid>
 </UserControl>
