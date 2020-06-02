@@ -84,7 +84,7 @@
                     />
 
 
-                <Controls:TextboxField 
+                <Controls:PasswordField 
                     LabelText="Password"
                     DataContext="{Binding Password, Mode=TwoWay}" 
                     />
