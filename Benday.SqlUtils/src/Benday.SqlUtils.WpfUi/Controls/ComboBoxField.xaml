@@ -10,7 +10,7 @@
              Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
               >
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
