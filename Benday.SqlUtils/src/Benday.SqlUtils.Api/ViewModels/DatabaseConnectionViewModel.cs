@@ -231,6 +231,7 @@ namespace Benday.SqlUtils.Core.ViewModels
         private void Save()
         {
             OnSaveRequested?.Invoke(this, new EventArgs());
+            RaisePropertyChanged(NamePropertyName);
         }
 
         public event EventHandler OnSaveRequested;

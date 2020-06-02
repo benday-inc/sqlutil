@@ -114,7 +114,7 @@ namespace Benday.Presentation
             }
         }
 
-        private const string ItemsPropertyName = "Items";
+        public readonly string ItemsPropertyName = "Items";
 
         protected ObservableCollection<T> _Items;
         public ObservableCollection<T> Items
