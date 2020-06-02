@@ -31,6 +31,7 @@
             Grid.Row="0" 
             x:Name="_Label" 
             Text="LABEL TEXT" 
+            IsEnabled="{Binding IsEnabled}"
             Style="{StaticResource FieldLabelStyle}"/>
         
         <TextBlock 
@@ -39,13 +40,15 @@
             Style="{StaticResource FieldErrorStyle}" 
             Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}" 
             Margin="4"/>
-        
+
         <TextBox x:Name="_Textbox" 
 			Grid.Row="2"			 
 			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             IsEnabled="{Binding IsEnabled}"
 			Style="{StaticResource FieldTextboxStyle}"
-			KeyDown="TextBox_KeyDown"  />
+			KeyDown="TextBox_KeyDown">
+            
+        </TextBox>
 
     </Grid>
 </UserControl>

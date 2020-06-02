@@ -138,7 +138,14 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="AcceptsReturn" Value="False" />
-
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="LightGray" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="FieldTextboxMultiLineStyle" TargetType="TextBox" >
