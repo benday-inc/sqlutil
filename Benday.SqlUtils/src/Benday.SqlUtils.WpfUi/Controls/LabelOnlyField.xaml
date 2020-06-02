@@ -21,8 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical">
-            <TextBlock 
+        <TextBlock 
 				x:Name="_Label" 
 				Grid.Column="0" 
 				Text="LABEL TEXT" 
@@ -30,13 +29,5 @@
 				Margin="6,4,4,1" 
 				TextWrapping="Wrap"
                 Style="{StaticResource FieldLabelStyle}" />
-            <TextBlock 
-				Text="{Binding ValidationMessage}"
-                Style="{StaticResource FieldErrorStyle}" 
-				Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}"
-				Foreground="Red"
-				Margin="4"
-                />
-        </StackPanel>
     </Grid>
 </UserControl>

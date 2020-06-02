@@ -206,4 +206,16 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="DefaultDataGridStyle" TargetType="DataGrid">
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
 </ResourceDictionary>
