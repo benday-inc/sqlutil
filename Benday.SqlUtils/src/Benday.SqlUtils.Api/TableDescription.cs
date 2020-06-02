@@ -20,6 +20,8 @@ namespace Benday.SqlUtils.Api
             {
                 Columns.Add(new ColumnDescription(row));
             }
+
+            PopulateTableName();
         }
 
         public List<ColumnDescription> Columns { get; }
@@ -42,6 +44,21 @@ namespace Benday.SqlUtils.Api
         public string PrimaryKeyColumnName
         {
             get; set;
+        }
+
+        public string TableName
+        {
+            get; set;
+        }
+
+        private void PopulateTableName()
+        {
+            var firstRow = Columns.FirstOrDefault();
+
+            if (firstRow != null)
+            {
+                TableName = firstRow.TableName;
+            }
         }
     }
 }

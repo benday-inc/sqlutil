@@ -1,4 +1,5 @@
-﻿using Benday.SqlUtils.Core.ViewModels;
+﻿using Benday.SqlUtils.Api;
+using Benday.SqlUtils.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -45,7 +46,7 @@ namespace Benday.SqlUtils.WpfUi
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {            
+        {
             var selectedItem = _ResultGrid.SelectedItem;
 
             if (selectedItem == null || _Context == null)
@@ -111,8 +112,28 @@ namespace Benday.SqlUtils.WpfUi
             var descTable = new MenuItem();
 
             descTable.Header = $"Describe table: '{tableName}'";
+            descTable.Tag = tableName;
+            descTable.Click += DescribeTable_Click;
 
             _ResultGrid.ContextMenu.Items.Add(descTable);
+        }
+
+        private void DescribeTable_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+
+            if (menuItem != null &&
+                menuItem.Tag != null &&
+                String.IsNullOrWhiteSpace(menuItem.Tag.ToString()) == false)
+            {
+                var dialog = new TableDescriptionWindow();
+
+                var connectionString = _Context.DatabaseConnections.SelectedItem.ConnectionString;
+
+                dialog.DescribeTable(connectionString, menuItem.Tag.ToString());
+
+                dialog.ShowDialog();
+            }                    
         }
 
         private void AddCopyValueToClipboardContextMenu(string valueColumnName)
