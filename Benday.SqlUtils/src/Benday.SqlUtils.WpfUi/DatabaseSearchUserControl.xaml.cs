@@ -45,9 +45,7 @@ namespace Benday.SqlUtils.WpfUi
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            _ResultGrid.ContextMenu.Items.Clear();
-
+        {            
             var selectedItem = _ResultGrid.SelectedItem;
 
             if (selectedItem == null || _Context == null)
@@ -56,6 +54,8 @@ namespace Benday.SqlUtils.WpfUi
             }
             else
             {
+                _ResultGrid.ContextMenu.Items.Clear();
+
                 var context = _ResultGrid.DataContext;
 
                 if (context is SearchByTableNameQueryViewModel)
