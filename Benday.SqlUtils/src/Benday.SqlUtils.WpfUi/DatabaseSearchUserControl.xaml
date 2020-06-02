@@ -8,7 +8,7 @@
     xmlns:ctrls="clr-namespace:Benday.SqlUtils.WpfUi.Controls"
     mc:Ignorable="d"
     d:DesignHeight="800"
-    d:DesignWidth="1100">
+    d:DesignWidth="1100" DataContextChanged="UserControl_DataContextChanged">
 
     <UserControl.DataContext>
         <Binding
@@ -49,10 +49,10 @@
             </Grid.ColumnDefinitions>
             <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" />
+                <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" OnEnterKey="TextboxField_OnEnterKey" />
 
-                <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" />
-                <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}"/>
+                <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}" OnEnterKey="TextboxField_OnEnterKey" />
 
                 <ctrls:ComboBoxField LabelText="Match Method" 
                                      DataContext="{Binding SearchStringMethod}"
@@ -82,12 +82,19 @@
                     <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
 
-                <DataGrid
+                <DataGrid x:Name="_ResultGrid"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     DataContext="{Binding Result, Mode=TwoWay}"
                     Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                    ItemsSource="{Binding Results, Mode=TwoWay}" />
+                    ItemsSource="{Binding Results, Mode=TwoWay}" >
+                    <DataGrid.ContextMenu>
+                        <ContextMenu Opened="ContextMenu_Opened">
+
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    
+                </DataGrid>
 
                 <Label
                     Grid.Row="1"
