@@ -22,6 +22,7 @@ namespace Benday.SqlUtils.Core.ViewModels
             Password = new ViewModelField<string>(String.Empty);
             
             SubscribeFieldsToOnValueChanged();
+            RefreshControlsOnUseIntegratedSecurityChange();
         }
 
         private void SubscribeFieldsToOnValueChanged()
