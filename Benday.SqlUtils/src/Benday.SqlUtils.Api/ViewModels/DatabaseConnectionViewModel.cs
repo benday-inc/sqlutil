@@ -20,7 +20,7 @@ namespace Benday.SqlUtils.Core.ViewModels
             UseIntegratedSecurity = new ViewModelField<bool>(true);
             Username = new ViewModelField<string>(String.Empty);
             Password = new ViewModelField<string>(String.Empty);
-
+            
             SubscribeFieldsToOnValueChanged();
         }
 
@@ -42,6 +42,17 @@ namespace Benday.SqlUtils.Core.ViewModels
         private void Field_OnValueChanged(object sender, EventArgs e)
         {
             RaisePropertyChanged(ConnectionStringPropertyName);
+
+            if (sender == UseIntegratedSecurity)
+            {
+                RefreshControlsOnUseIntegratedSecurityChange();
+            }
+        }
+
+        private void RefreshControlsOnUseIntegratedSecurityChange()
+        {
+            Username.IsEnabled = !UseIntegratedSecurity.Value;
+            Password.IsEnabled = !UseIntegratedSecurity.Value;
         }
 
         private const string IdPropertyName = "Id";
@@ -192,6 +203,8 @@ namespace Benday.SqlUtils.Core.ViewModels
             toValue.UseIntegratedSecurity.Value = fromValue.UseIntegratedSecurity;
             toValue.Password.Value = fromValue.Password;
             toValue.Server.Value = fromValue.Server;
+
+            RefreshControlsOnUseIntegratedSecurityChange();
         }
 
         private ICommand _CancelCommand;

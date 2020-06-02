@@ -15,6 +15,12 @@ namespace Benday.SqlUtils.WpfUi.Controls
         public TextboxField()
         {
             this.InitializeComponent();
+            this.IsEnabledChanged += TextboxField_IsEnabledChanged;
+        }
+
+        private void TextboxField_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            _Textbox.IsEnabled = (bool)e.NewValue;
         }
 
         public string LabelText

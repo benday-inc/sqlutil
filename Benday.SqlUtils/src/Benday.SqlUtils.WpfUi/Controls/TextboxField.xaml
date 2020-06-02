@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="120"
     d:DesignWidth="440" FontFamily="Segoe UI"
+    IsEnabled="{Binding IsEnabled}"
      >
     <UserControl.Resources>
         <ValueConverters:SmartValueConverter x:Key="SmartValueConverter"/>
@@ -31,8 +32,7 @@
             x:Name="_Label" 
             Text="LABEL TEXT" 
             Style="{StaticResource FieldLabelStyle}"/>
-        <Button Grid.Row="1" Content="debug" Click="Button_Click" Visibility="Collapsed" />
-
+        
         <TextBlock 
             Grid.Row="1" 
             Text="{Binding ValidationMessage}" 
@@ -43,6 +43,7 @@
         <TextBox x:Name="_Textbox" 
 			Grid.Row="2"			 
 			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            IsEnabled="{Binding IsEnabled}"
 			Style="{StaticResource FieldTextboxStyle}"
 			KeyDown="TextBox_KeyDown"  />
 
