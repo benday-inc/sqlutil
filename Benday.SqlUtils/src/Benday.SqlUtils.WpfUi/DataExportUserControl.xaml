@@ -59,10 +59,10 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <GroupBox Header="Select Data" Grid.Row="1" Grid.Column="0" >
-                <Grid Grid.Row="1" Style="{DynamicResource DialogGrid}">
+                <Grid Style="{DynamicResource DialogGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Vertical">
@@ -83,58 +83,54 @@
                     Content="Run Query"
                     Style="{StaticResource FieldButtonStyle}" />
                         <ctrls:LabelOnlyField LabelText="Query Results to Export" />
-                        <DataGrid
-                    Height="200"
+                    </StackPanel>
+                    <DataGrid
+                        Grid.Row="1" 
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                     DataContext="{Binding QueryResults, Mode=TwoWay}"
                     IsEnabled="{Binding Path=IsEnabled, Converter={StaticResource VisibilityValueConverterInstance}}"
                     ItemsSource="{Binding Path=Value, Mode=TwoWay}"
                     Style="{StaticResource DefaultDataGridStyle}"
                     Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}" />
 
-                    </StackPanel>
+
                 </Grid>
             </GroupBox>
-            <GridSplitter HorizontalAlignment="Center"
-              VerticalAlignment="Stretch"
- Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="5" />
+            <GridSplitter
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch"
+                Grid.Row="1"
+                Grid.Column="1"
+                ShowsPreview="True"
+                Width="5" />
             <GroupBox Header="Export Data" Grid.Row="1" 
                       Grid.Column="2">
 
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <ctrls:TextboxField DataContext="{Binding ExportTableName}" LabelText="Table to Export" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="0" >
                         <ctrls:CheckboxField
-                        Grid.Column="0"
                         DataContext="{Binding GenerateIdentityInsert, Mode=TwoWay}"
                         LabelText="Identity Insert" />
                         <Button
-                        Grid.Column="1"
                         Command="{Binding CreateInsertScriptCommand}"
                         Content="Insert Script"
                         Style="{StaticResource FieldButtonStyle}" />
                         <Button
-                        Grid.Column="2"
                         Command="{Binding CreateMergeIntoScriptCommand}"
                         Content="Update Script"
                         Style="{StaticResource FieldButtonStyle}" />
-                    </Grid>
-                    <Button
-                    Margin="{StaticResource SpacedSeparatedControlMargin}"
-                    Click="Button_Click"
-                    Command="{Binding DebugCommand, Mode=OneWay}"
-                    Content="Debug"
-                    Style="{StaticResource FieldButtonStyle}"
-                    Visibility="Collapsed" />
+                    </StackPanel>
                     <ctrls:TextboxField
-            Grid.Row="2"
-            Height="200"
+            Grid.Row="1"
             DataContext="{Binding GeneratedQuery}"
             LabelText="SQL Query to Export"
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
             MultiLine="True" />
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
                         <Button
@@ -148,7 +144,7 @@
                 Content="Copy to Clipboard"
                 Style="{StaticResource FieldButtonStyle}" />
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </GroupBox>
 
         </Grid>
