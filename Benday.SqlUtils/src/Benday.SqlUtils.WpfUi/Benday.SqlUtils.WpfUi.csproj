@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
+    <ProjectReference Include="..\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

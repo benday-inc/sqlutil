@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
     <ProjectReference Include="..\..\src\Benday.SqlUtils.ConsoleUi\Benday.SqlUtils.ConsoleUi.csproj" />
+    <ProjectReference Include="..\..\src\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" />
     <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" />
   </ItemGroup>
 
