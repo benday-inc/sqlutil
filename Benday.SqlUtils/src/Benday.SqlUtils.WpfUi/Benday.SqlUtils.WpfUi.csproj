@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <ItemGroup>
+    <None Remove="bdc_logo_960x180.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
   </ItemGroup>
 
@@ -12,6 +16,10 @@
 
   <ItemGroup>
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="bdc_logo_960x180.png" />
   </ItemGroup>
 
 </Project>
