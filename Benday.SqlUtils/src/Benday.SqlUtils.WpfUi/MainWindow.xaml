@@ -33,6 +33,10 @@
                     Style="{StaticResource MenuButtonUnselected}"
                     Content="Connections"
                     Click="_ButtonEditConnections_Click"/>
+            <Button x:Name="_ButtonAbout"
+                    Style="{StaticResource MenuButtonUnselected}"
+                    Content="About"
+                    Click="_ButtonAbout_Click" />
         </StackPanel>
 
         <ContentControl 

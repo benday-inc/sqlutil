@@ -62,6 +62,9 @@ namespace Benday.SqlUtils.WpfUi
             _Controls.Add("DataExport", new DataExportUserControl());
             _MenuButtons.Add("DataExport", _ButtonExportData);
 
+            _Controls.Add("About", new AboutUserControl());
+            _MenuButtons.Add("About", _ButtonAbout);
+
             SelectControl("Search");
         }
 
@@ -76,18 +79,28 @@ namespace Benday.SqlUtils.WpfUi
                 SelectButton(_ButtonSearchByName);
                 UnselectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
+                UnselectButton(_ButtonAbout);
             }
             else if (selectedButton == _ButtonExportData)
             {
                 UnselectButton(_ButtonSearchByName);
                 SelectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
+                UnselectButton(_ButtonAbout);
+            }
+            else if (selectedButton == _ButtonAbout)
+            {
+                UnselectButton(_ButtonSearchByName);
+                UnselectButton(_ButtonExportData);
+                UnselectButton(_ButtonEditConnections);
+                SelectButton(_ButtonAbout);
             }
             else
             {
                 UnselectButton(_ButtonSearchByName);
                 UnselectButton(_ButtonExportData);
                 SelectButton(_ButtonEditConnections);
+                UnselectButton(_ButtonAbout);
             }
         }
 
@@ -109,6 +122,11 @@ namespace Benday.SqlUtils.WpfUi
             {
                 button.Style = style;
             }
+        }
+
+        private void _ButtonAbout_Click(object sender, RoutedEventArgs e)
+        {
+            SelectControl("About");
         }
     }
 }
