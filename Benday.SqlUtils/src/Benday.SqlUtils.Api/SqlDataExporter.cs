@@ -7,12 +7,21 @@ namespace Benday.SqlUtils.Api
 {
     public class SqlDataExport
     {
-        private string _ConnectionString;
         private IDatabaseUtility _DatabaseUtility;
         
-        public SqlDataExport(IDatabaseUtility databaseUtility, string connectionString, string query)
+        public SqlDataExport(IDatabaseUtility databaseUtility, string query)
         {
-            _ConnectionString = connectionString;
+            if (databaseUtility is null)
+            {
+                throw new ArgumentNullException(nameof(databaseUtility));
+            }
+
+            if (string.IsNullOrEmpty(query))
+            {
+                throw new ArgumentException("message", nameof(query));
+            }
+
+            _DatabaseUtility = databaseUtility;
 
             PopulateExportTableName(query);
 

@@ -207,23 +207,6 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public void TableDescriptionIsPopulatedWhenQueryIsRun()
-        {
-            SystemUnderTest.Query.Value = "select * from recipe";
-            this.DatabaseUtilityInstance.DescribeTableReturnValue =
-                new TableDescription(UnitTestUtility.GetDescriptionDataTable());
-
-            // act
-            SystemUnderTest.RunQueryCommand.Execute(null);
-
-            var actual = SystemUnderTest.TableDescription;
-
-            // assert
-            Assert.IsNotNull(actual, "Table description");
-            Assert.AreSame(DatabaseUtilityInstance.DescribeTableReturnValue, actual, "Wrong instance");
-        }
-
-        [TestMethod]
         public void CreateMergeIntoScript()
         {
             SystemUnderTest.Query.Value = "select * from recipe";

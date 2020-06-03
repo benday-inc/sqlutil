@@ -16,6 +16,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private IDatabaseUtility _DatabaseUtility;
         private IFileService _FileService;
 
+        private SqlDataExport _Exporter;
+
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
             IDatabaseUtility queryExecuter,
@@ -150,17 +152,28 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
         }
 
+        private void InitializeExporter()
+        {
+            SelectDatabaseConnectionAndInitialize(); 
+            _Exporter = new SqlDataExport(_DatabaseUtility, Query.Value);            
+        }
+
         private void RunQuery()
         {
-            PopulateExportTableName(Query.Value);
-
-            if (ExportTableName.IsValid == true)
+            if (String.IsNullOrWhiteSpace(Query.Value) == true)
             {
-                SelectDatabaseConnectionAndInitialize();
+                Query.ValidationMessage = "Query is empty";
+                Query.IsValid = false;
+            }
+            else
+            {
+                Query.IsValid = true;
 
-                _TableDescription = _DatabaseUtility.DescribeTable(ExportTableName.Value);
+                InitializeExporter();
 
-                _QueryResults.Value = _DatabaseUtility.RunQuery(Query.Value);
+                PopulateExportTableName();
+
+                _QueryResults.Value = _Exporter.QueryResults;
             }
         }
 
@@ -181,20 +194,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         }
 
         private const string TableDescriptionPropertyName = "TableDescription";
-
-        private TableDescription _TableDescription;
-        public TableDescription TableDescription
-        {
-            get
-            {
-                return _TableDescription;
-            }
-            set
-            {
-                _TableDescription = value;
-                RaisePropertyChanged(TableDescriptionPropertyName);
-            }
-        }
 
         private const string MessagePropertyName = "Message";
 
@@ -228,7 +227,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private void CreateInsertScript()
         {
             if (ExportTableName.IsValid == true &&
-                _TableDescription != null &&
                 QueryResults.Value != null)
             {
                 var script = GetInsertScript();
@@ -261,7 +259,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private void CreateMergeIntoScript()
         {
             if (ExportTableName.IsValid == true &&
-                _TableDescription != null &&
                 QueryResults.Value != null)
             {
                 var script = GetMergeIntoScript();
@@ -278,16 +275,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
         }
 
-        private void PopulateExportTableName(string query)
+        private void PopulateExportTableName()
         {
-            var queryWithoutNewLines = query.Replace(Environment.NewLine, " ");
+            var tableName = _Exporter.ExportTableName;
 
-            const string queryTokenForFromStatement = " from ";
-
-            var fromPosition = queryWithoutNewLines.IndexOf(queryTokenForFromStatement,
-                StringComparison.InvariantCultureIgnoreCase);
-
-            if (fromPosition == -1)
+            if (String.IsNullOrWhiteSpace(tableName) == true ||
+                tableName == "(table name not found)")
             {
                 this.ExportTableName.Value = "(table name not found)";
                 this.ExportTableName.IsValid = false;
@@ -296,37 +289,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else
             {
-                StringBuilder builder = new StringBuilder();
-
-                bool foundFirstChar = false;
-
-                int fromStatementLength = queryTokenForFromStatement.Length;
-
-                for (int index = fromPosition + fromStatementLength; index < queryWithoutNewLines.Length; index++)
-                {
-                    if (foundFirstChar == false)
-                    {
-                        while (queryWithoutNewLines[index] == ' ')
-                        {
-                            index++;
-                        }
-
-                        foundFirstChar = true;
-                    }
-
-                    if (queryWithoutNewLines[index] == ' ')
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        builder.Append(queryWithoutNewLines[index]);
-                    }
-                }
-
-                var tableName = builder.ToString().Trim();
-
-                this.ExportTableName.Value = tableName.ToString();
+                this.ExportTableName.Value = tableName;
                 this.ExportTableName.IsValid = true;
                 this.ExportTableName.IsEnabled = false;
             }
@@ -353,338 +316,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private string GetInsertScript()
         {
-            StringBuilder builder = new StringBuilder();
-
-            string identityColumnName = _TableDescription.GetIdentityColumnName();
-
-            var tableName = ExportTableName.Value;
-
-            if (identityColumnName != null && GenerateIdentityInsert.Value == true)
-            {
-                builder.Append("SET IDENTITY_INSERT ");
-                builder.Append(tableName);
-                builder.Append(" ON");
-                builder.Append(Environment.NewLine);
-                builder.Append(Environment.NewLine);
-            }
-
-            StringBuilder insertCommand = null;
-
-            DataTable resultsToExportDataTable = this.QueryResults.Value;
-
-            foreach (DataRow resultRow in resultsToExportDataTable.Rows)
-            {
-                insertCommand = new StringBuilder();
-
-                insertCommand.Append("INSERT INTO ");
-                insertCommand.Append(tableName);
-                insertCommand.Append(" ");
-                insertCommand.Append(Environment.NewLine);
-                insertCommand.Append("(");
-
-                bool needsComma = false;
-
-                foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-                {
-                    if (resultColumn.DataType == typeof(byte[]))
-                    {
-                        // skip byte arrays & concurrency columns
-                        continue;
-                    }
-
-                    if (resultColumn.ColumnName != identityColumnName ||
-                        (resultColumn.ColumnName == identityColumnName &&
-                        GenerateIdentityInsert.Value == true))
-                    {
-                        if (needsComma == true)
-                        {
-                            insertCommand.Append(", ");
-                            insertCommand.Append(Environment.NewLine);
-                        }
-
-                        insertCommand.Append(resultColumn.ColumnName);
-                        needsComma = true;
-                    }
-                }
-
-                insertCommand.Append(")");
-                insertCommand.Append(Environment.NewLine);
-
-                insertCommand.Append("VALUES (");
-                insertCommand.Append(Environment.NewLine);
-
-                needsComma = false;
-
-                foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-                {
-                    if (resultColumn.DataType == typeof(byte[]))
-                    {
-                        // skip byte arrays & concurrency columns
-                        continue;
-                    }
-
-                    if (resultColumn.ColumnName != identityColumnName ||
-                        (resultColumn.ColumnName == identityColumnName &&
-                        GenerateIdentityInsert.Value == true))
-                    {
-                        if (needsComma == true)
-                        {
-                            insertCommand.Append(", ");
-                            insertCommand.Append(Environment.NewLine);
-                        }
-
-                        if (resultRow[resultColumn.ColumnName] == DBNull.Value)
-                        {
-                            insertCommand.Append("NULL");
-                        }
-                        else if (resultColumn.DataType == typeof(bool))
-                        {
-                            bool valueAsBool = (bool)resultRow[resultColumn.ColumnName];
-
-                            if (valueAsBool == true)
-                            {
-                                insertCommand.Append("1");
-                            }
-                            else
-                            {
-                                insertCommand.Append("0");
-                            }
-                        }
-                        else if (resultColumn.DataType == typeof(string) ||
-                            resultColumn.DataType == typeof(Guid) ||
-                            resultColumn.DataType == typeof(DateTime))
-                        {
-                            insertCommand.Append("'");
-                            insertCommand.Append(resultRow[resultColumn.ColumnName].ToString().Replace("'", "''"));
-                            insertCommand.Append("'");
-                        }
-                        else
-                        {
-                            insertCommand.Append(resultRow[resultColumn.ColumnName].ToString());
-                        }
-
-                        needsComma = true;
-                    }
-                }
-
-                insertCommand.Append(")");
-                insertCommand.Append(Environment.NewLine);
-
-                insertCommand.Append(Environment.NewLine);
-
-                builder.Append(insertCommand.ToString());
-            }
-
-            return builder.ToString();
+            return _Exporter.GetInsertScript(GenerateIdentityInsert.Value);
         }
 
         private string GetMergeIntoScript()
         {
-            StringBuilder builder = new StringBuilder();
-
-            var tableName = ExportTableName.Value;
-            DataTable resultsToExportDataTable = this.QueryResults.Value;
-
-            var primaryKeyColumnName = _TableDescription.PrimaryKeyColumnName;
-
-            builder.AppendLine($"SET IDENTITY_INSERT {tableName} ON");
-            builder.AppendLine("GO");
-            builder.AppendLine();
-            builder.AppendLine($"MERGE INTO {tableName} AS Target");
-            builder.AppendLine($"USING(");
-            builder.AppendLine($"    VALUES");
-
-            var lastResultRow = resultsToExportDataTable.Rows[resultsToExportDataTable.Rows.Count - 1];
-
-            bool needsComma = false;
-
-            foreach (DataRow resultRow in resultsToExportDataTable.Rows)
-            {
-                var values = new CodeBuilder();
-
-                values.IncreaseIndent();
-
-                values.AppendLine("(");
-
-                values.IncreaseIndent();
-
-                needsComma = false;
-
-                foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-                {
-                    if (resultColumn.DataType == typeof(byte[]))
-                    {
-                        // skip byte arrays & concurrency columns
-                        continue;
-                    }
-
-                    if (needsComma == true)
-                    {
-                        values.Append(", ");
-                        values.NewLine();
-                    }
-
-                    needsComma = true;
-
-                    if (resultRow[resultColumn.ColumnName] == DBNull.Value)
-                    {
-                        values.Append("NULL");
-                    }
-                    else if (resultColumn.DataType == typeof(bool))
-                    {
-                        bool valueAsBool = (bool)resultRow[resultColumn.ColumnName];
-
-                        if (valueAsBool == true)
-                        {
-                            values.Append("1");
-                        }
-                        else
-                        {
-                            values.Append("0");
-                        }
-                    }
-                    else if (resultColumn.DataType == typeof(string) ||
-                        resultColumn.DataType == typeof(Guid) ||
-                        resultColumn.DataType == typeof(DateTime))
-                    {
-                        values.Append("'");
-                        values.Append(resultRow[resultColumn.ColumnName].ToString().Replace("'", "''"));
-                        values.Append("'");
-                    }
-                    else
-                    {
-                        values.Append(resultRow[resultColumn.ColumnName].ToString());
-                    }
-                }
-
-                values.NewLine();
-
-                values.DecreaseIndent();
-
-                if (resultRow != lastResultRow)
-                {
-                    values.AppendLine("),");
-                }
-                else
-                {
-                    values.AppendLine(")");
-                }
-
-                values.DecreaseIndent();
-
-                builder.Append(values.ToString());
-            }
-
-            builder.AppendLine(")");
-
-            builder.AppendLine("AS Source (");
-
-            needsComma = false;
-
-            builder.Append("\t");
-
-            foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-            {
-                if (resultColumn.DataType == typeof(byte[]))
-                {
-                    // skip byte arrays & concurrency columns
-                    continue;
-                }
-
-                if (needsComma == true)
-                {
-                    builder.Append(", ");
-                }
-
-                needsComma = true;
-                builder.Append(resultColumn.ColumnName);
-            }
-
-            builder.AppendLine();
-            builder.AppendLine(")");
-
-            builder.AppendLine($"ON Target.{primaryKeyColumnName} = Source.{primaryKeyColumnName}");
-            builder.AppendLine("WHEN MATCHED THEN UPDATE SET");
-
-            needsComma = false;
-
-            foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-            {
-                if (resultColumn.DataType == typeof(byte[]))
-                {
-                    // skip byte arrays & concurrency columns
-                    continue;
-                }
-                else if (resultColumn.ColumnName == primaryKeyColumnName)
-                {
-                    // don't try to update the value for the primary key
-                    continue;
-                }
-
-                if (needsComma == true)
-                {
-                    builder.AppendLine(", ");
-                }
-
-                needsComma = true;
-                builder.Append("\t");
-                builder.Append(resultColumn.ColumnName);
-                builder.Append(" = Source.");
-                builder.Append(resultColumn.ColumnName);
-            }
-
-            builder.AppendLine();
-
-            builder.AppendLine("WHEN NOT MATCHED BY TARGET THEN");
-
-            needsComma = false;
-            builder.Append("\t");
-            builder.Append("INSERT (");
-            foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-            {
-                if (resultColumn.DataType == typeof(byte[]))
-                {
-                    // skip byte arrays & concurrency columns
-                    continue;
-                }
-
-                if (needsComma == true)
-                {
-                    builder.Append(", ");
-                }
-
-                needsComma = true;
-                builder.Append(resultColumn.ColumnName);
-            }
-
-            builder.AppendLine(")");
-
-            needsComma = false;
-            builder.Append("\t");
-            builder.Append("VALUES (");
-            foreach (DataColumn resultColumn in resultsToExportDataTable.Columns)
-            {
-                if (resultColumn.DataType == typeof(byte[]))
-                {
-                    // skip byte arrays & concurrency columns
-                    continue;
-                }
-
-                if (needsComma == true)
-                {
-                    builder.Append(", ");
-                }
-
-                needsComma = true;
-                builder.Append(resultColumn.ColumnName);
-            }
-
-            builder.AppendLine(")");
-
-            builder.AppendLine("WHEN NOT MATCHED BY SOURCE THEN DELETE;");
-            builder.AppendLine("GO");
-
-            return builder.ToString();
+            return _Exporter.GetMergeIntoScript();
         }
 
         private ICommand _SaveScriptCommand;
