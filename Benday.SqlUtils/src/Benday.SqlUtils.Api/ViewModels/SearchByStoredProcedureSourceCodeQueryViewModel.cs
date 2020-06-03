@@ -12,7 +12,12 @@ namespace Benday.SqlUtils.Core.ViewModels
         {
             get
             {
-                return @"select distinct params.specific_catalog, params.specific_schema, params.specific_name 
+
+//                return @"SELECT SPECIFIC_SCHEMA as [Schema], SPECIFIC_NAME as [Name],
+//PARAMETER_NAME as [Parameter Name], DATA_TYPE as [Data Type], CHARACTER_MAXIMUM_LENGTH as [Length], PARAMETER_MODE as [Parameter Mode]
+
+                return @"select distinct params.specific_catalog as [Database Name], params.specific_schema as [Schema], params.specific_name 
+as [Name]
 from INFORMATION_SCHEMA.PARAMETERS params
 join
 sysobjects so

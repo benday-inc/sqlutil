@@ -118,6 +118,26 @@ namespace Benday.SqlUtils.WpfUi
             _ResultGrid.ContextMenu.Items.Add(descTable);
         }
 
+        private void AddDescribeStoredProcedureToContextMenu(string columnName)
+        {
+            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+
+            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(columnName) == false)
+            {
+                return;
+            }
+
+            var name = selectedItem[columnName];
+
+            var descTable = new MenuItem();
+
+            descTable.Header = $"Describe stored procedure: '{name}'";
+            descTable.Tag = name;
+            descTable.Click += DescribeStoredProcedure_Click;
+
+            _ResultGrid.ContextMenu.Items.Add(descTable);
+        }
+
         private void DescribeTable_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
@@ -134,6 +154,24 @@ namespace Benday.SqlUtils.WpfUi
 
                 dialog.ShowDialog();
             }                    
+        }
+
+        private void DescribeStoredProcedure_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+
+            if (menuItem != null &&
+                menuItem.Tag != null &&
+                String.IsNullOrWhiteSpace(menuItem.Tag.ToString()) == false)
+            {
+                var dialog = new StoredProcedureDescriptionWindow();
+
+                var connectionString = _Context.DatabaseConnections.SelectedItem.ConnectionString;
+
+                dialog.DescribeStoredProcedure(connectionString, menuItem.Tag.ToString());
+
+                dialog.ShowDialog();
+            }
         }
 
         private void AddCopyValueToClipboardContextMenu(string valueColumnName)
@@ -164,15 +202,17 @@ namespace Benday.SqlUtils.WpfUi
 
         private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
         {
-
+            AddDescribeStoredProcedureToContextMenu("name");
         }
+
         private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
         {
-
+            AddDescribeStoredProcedureToContextMenu("name");
         }
+        
         private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
         {
-
+            AddDescribeStoredProcedureToContextMenu("name");
         }
 
     }

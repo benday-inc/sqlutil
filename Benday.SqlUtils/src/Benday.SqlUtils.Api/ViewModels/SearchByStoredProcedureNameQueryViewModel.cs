@@ -13,7 +13,7 @@ namespace Benday.SqlUtils.Core.ViewModels
             get
             {
                 return @"SELECT 
-SPECIFIC_SCHEMA, SPECIFIC_NAME
+SPECIFIC_SCHEMA as [Schema], SPECIFIC_NAME as [Name]
 FROM INFORMATION_SCHEMA.ROUTINES
 WHERE 
 SPECIFIC_NAME LIKE @STORED_PROCEDURE_NAME";
