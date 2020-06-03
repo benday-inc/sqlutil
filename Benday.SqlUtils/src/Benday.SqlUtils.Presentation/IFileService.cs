@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Benday.SqlUtils.Api
+namespace Benday.SqlUtils.Presentation
 {
     public interface IFileService
     {

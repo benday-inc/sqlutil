@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Benday.SqlUtils.Core;
 
-namespace Benday.SqlUtils.Core.ViewModels
+namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class DatabaseConnectionViewModel : ViewModelBase, ISelectableItem, IStoredDatabaseConnectionString
     {

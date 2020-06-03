@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Benday.SqlUtils.Core;
 
-namespace Benday.SqlUtils.Core
+namespace Benday.SqlUtils.Presentation
 {
     public class DatabaseConnectionStringRepository : IDatabaseConnectionStringRepository
     {
@@ -110,7 +111,7 @@ namespace Benday.SqlUtils.Core
         }
 
         private void AdaptXElementToStoredDatabaseConnectionString(
-            XElement fromValue, 
+            XElement fromValue,
             StoredDatabaseConnectionString toValue)
         {
             toValue.ConnectionString = fromValue.AttributeValue("connectionstring");

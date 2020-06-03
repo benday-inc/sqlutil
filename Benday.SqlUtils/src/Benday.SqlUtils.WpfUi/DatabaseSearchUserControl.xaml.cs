@@ -1,5 +1,4 @@
-﻿using Benday.SqlUtils.Api;
-using Benday.SqlUtils.Core.ViewModels;
+﻿using Benday.SqlUtils.Presentation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;

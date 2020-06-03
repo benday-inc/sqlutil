@@ -13,10 +13,8 @@
 */
 
 using Benday.SqlUtils.Api;
-using Benday.SqlUtils.Api.ViewModels;
-using Benday.SqlUtils.Core;
-using Benday.SqlUtils.Core.ViewModels;
-
+using Benday.SqlUtils.Presentation;
+using Benday.SqlUtils.Presentation.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
 
 namespace Benday.SqlUtils.WpfUi.ViewModel

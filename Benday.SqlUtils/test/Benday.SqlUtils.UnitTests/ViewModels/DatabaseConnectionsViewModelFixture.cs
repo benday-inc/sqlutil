@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Benday.SqlUtils.Core.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using Benday.Presentation.UnitTests;
+using Benday.SqlUtils.Presentation.ViewModels;
 
 namespace Benday.SqlUtils.UnitTests.ViewModels
 {

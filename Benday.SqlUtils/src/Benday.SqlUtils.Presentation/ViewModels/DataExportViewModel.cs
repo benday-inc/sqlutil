@@ -1,6 +1,4 @@
 ﻿using Benday.Presentation;
-using Benday.SqlUtils.Core;
-using Benday.SqlUtils.Core.ViewModels;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -8,8 +6,9 @@ using System.Data;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Benday.SqlUtils.Api;
 
-namespace Benday.SqlUtils.Api.ViewModels
+namespace Benday.SqlUtils.Presentation.ViewModels
 {
 
     public class DataExportViewModel : DatabaseUtilityViewModelBase

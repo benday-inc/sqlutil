@@ -1,4 +1,4 @@
-﻿using Benday.SqlUtils.Core;
+﻿using Benday.SqlUtils.Presentation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

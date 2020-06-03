@@ -3,8 +3,9 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Linq;
 using System.Windows.Input;
+using Benday.SqlUtils.Core;
 
-namespace Benday.SqlUtils.Core.ViewModels
+namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseUtilityViewModelBase : ViewModelBase
     {

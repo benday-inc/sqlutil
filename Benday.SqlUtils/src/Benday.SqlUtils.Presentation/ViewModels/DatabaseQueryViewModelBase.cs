@@ -1,12 +1,12 @@
-﻿
-using Benday.Presentation;
+﻿using Benday.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using Benday.SqlUtils.Core;
 
-namespace Benday.SqlUtils.Core.ViewModels
+namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseQueryViewModelBase : ViewModelBase
     {

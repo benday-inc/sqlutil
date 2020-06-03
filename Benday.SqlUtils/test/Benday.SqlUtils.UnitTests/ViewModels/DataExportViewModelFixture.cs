@@ -1,5 +1,5 @@
 ﻿using Benday.SqlUtils.Api;
-using Benday.SqlUtils.Api.ViewModels;
+using Benday.SqlUtils.Presentation.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
