@@ -18,5 +18,9 @@ namespace Benday.SqlUtils.ConsoleUi
         public static readonly string ArgumentValueScriptType_Insert = "insert";
         public static readonly string ArgumentValueScriptType_IdentityInsert = "identityinsert";
         public static readonly string ArgumentValueScriptType_MergeInto = "mergeinto";
+
+        public const string ArgumentNameWaitBeforeExit = "wait";
+        public const string ArgumentNameQuiet = "quiet";
+        public const string ArgumentNameVerbose = "verbose";
     }
 }
