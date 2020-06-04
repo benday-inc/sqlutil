@@ -39,7 +39,7 @@ namespace Benday.SqlUtils.ConsoleUi
             base.DisplayUsage(builder);
 
             string usageString =
-                String.Format("{0} {1} /{0}:server /{1}:database /{2}:query /{3}:script-type [/{4}:username] [/{5}:password] [/{6}:filename]",
+                String.Format("{0} {1} /{2}:server /{3}:database /{4}:query /{5}:script-type [/{6}:username] [/{7}:password] [/{8}:filename]",
                 Constants.ExeName,
                 CommandArgumentName,
                 Constants.ArgumentNameServerName,
@@ -158,6 +158,11 @@ namespace Benday.SqlUtils.ConsoleUi
 
                 connString.Username = Arguments[Constants.ArgumentNameUserName];
                 connString.Password = Arguments[Constants.ArgumentNamePassword];
+            }
+
+            if (ArgNameExists(Constants.ArgumentNameVerbose) == true)
+            {
+                WriteLine(String.Format("Connection string: {0}", connString.ConnectionString));
             }
 
             var databaseUtil = new SqlServerDatabaseUtility();
