@@ -1,0 +1,114 @@
+﻿<UserControl
+    x:Class="Benday.SqlUtils.WpfUi.DatabaseSearchUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Benday.SqlUtils.WpfUi"
+    xmlns:ctrls="clr-namespace:Benday.SqlUtils.WpfUi.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    d:DesignWidth="1100" DataContextChanged="UserControl_DataContextChanged">
+
+    <UserControl.DataContext>
+        <Binding
+            Mode="OneWay"
+            Path="Search"
+            Source="{StaticResource Locator}" />
+    </UserControl.DataContext>
+
+    <Grid Style="{DynamicResource DialogGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ctrls:ComboBoxField
+                Grid.Column="0" 
+                DataContext="{Binding DatabaseConnections}"
+                LabelText="Connection" />
+            <Button Grid.Column="1"
+                    Width="{StaticResource DefaultFieldControlHeight}"
+                    Height="{StaticResource DefaultFieldControlHeight}"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding RefreshConnectionsCommand}"
+                    Margin="{StaticResource DefaultFieldMargin}" FontFamily="Wingdings 3"
+                    Content="P" FontSize="22"
+                    ></Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" OnEnterKey="TextboxField_OnEnterKey" />
+
+                <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}" OnEnterKey="TextboxField_OnEnterKey" />
+
+                <ctrls:ComboBoxField LabelText="Match Method" 
+                                     DataContext="{Binding SearchStringMethod}"
+            />
+                <Button Command="{Binding SearchCommand, Mode=OneWay}"
+                        Content="Search"
+                        Margin="{StaticResource SpacedSeparatedControlMargin}"
+                        Style="{StaticResource FieldButtonStyle}"/>
+
+                <Button Command="{Binding DebugCommand, Mode=OneWay}"
+                        Visibility="Collapsed"
+                        Content="Debug"
+                        Margin="{StaticResource SpacedSeparatedControlMargin}"
+                        Style="{StaticResource FieldButtonStyle}"/>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="2">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+
+                <DataGrid x:Name="_ResultGrid"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    DataContext="{Binding Result, Mode=TwoWay}"
+                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                    ItemsSource="{Binding Results, Mode=TwoWay}" >
+                    <DataGrid.ContextMenu>
+                        <ContextMenu Opened="ContextMenu_Opened">
+                            
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                </DataGrid>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Height="Auto"
+                    DataContext="{Binding Result, Mode=TwoWay}"
+                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                    Content="{Binding ProgressMessage, Mode=TwoWay}"
+                    Margin="{StaticResource DefaultFieldMargin}" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+</UserControl>

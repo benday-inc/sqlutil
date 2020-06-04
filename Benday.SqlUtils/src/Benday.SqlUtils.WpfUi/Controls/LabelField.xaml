@@ -1,0 +1,50 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Benday.SqlUtils.WpfUi.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Benday.Presentation.ValueConverters"
+    xmlns:ValueConverters="clr-namespace:Benday.Presentation.ValueConverters;assembly=Benday.Presentation"
+    x:Class="Benday.SqlUtils.WpfUi.Controls.LabelField"
+    mc:Ignorable="d" d:DesignHeight="80" d:DesignWidth="440" FontFamily="Segoe UI"
+    >
+
+    <UserControl.Resources>
+        <ValueConverters:SmartValueConverter x:Key="SmartValueConverter"/>
+    </UserControl.Resources>
+    <UserControl.Visibility>
+        <Binding Converter="{StaticResource VisibilityValueConverterInstance}" Path="IsVisible"/>
+    </UserControl.Visibility>
+
+    <Grid x:Name="LayoutRoot" >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock 
+				x:Name="_Label" 
+				Grid.Column="0" 
+				Text="LABEL TEXT" 
+				VerticalAlignment="Top" 
+				Margin="6,4,4,1" 
+				TextWrapping="Wrap"
+                Style="{StaticResource FieldLabelStyle}" />
+            <TextBlock 
+				Text="{Binding ValidationMessage}"
+                Style="{StaticResource FieldErrorStyle}" 
+				Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}"
+				Foreground="Red"
+				Margin="4"
+                />
+            <TextBlock 
+				Grid.Column="1" 
+				Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay}" 
+				Height="20" 
+				HorizontalAlignment="Stretch" 
+				VerticalAlignment="Top" 
+				Margin="6,4,4,4" 
+				FontSize="12" />
+        </StackPanel>
+    </Grid>
+</UserControl>
