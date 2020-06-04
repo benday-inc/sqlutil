@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Benday.SqlUtils.Core
+namespace Benday.SqlUtils.Api
 {
     public static class XmlUtilityExtensionMethods
     {

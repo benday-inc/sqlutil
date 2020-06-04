@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Benday.SqlUtils.Api;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Benday.SqlUtils.Core;
 
 namespace Benday.SqlUtils.UnitTests
 {

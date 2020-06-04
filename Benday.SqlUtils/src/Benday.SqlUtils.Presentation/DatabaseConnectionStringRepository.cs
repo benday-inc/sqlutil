@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Benday.SqlUtils.Core;
+using Benday.SqlUtils.Api;
 
 namespace Benday.SqlUtils.Presentation
 {

@@ -1,4 +1,5 @@
 ﻿using Benday.Presentation;
+using Benday.SqlUtils.Api;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Benday.SqlUtils.Core;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
@@ -106,7 +106,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             var returnValues = new List<SelectableItem>();
 
-            returnValues.Add(new SelectableItem(true, 
+            returnValues.Add(new SelectableItem(true,
                 Constants.SearchStringMethodContains));
             returnValues.Add(new SelectableItem(false,
                 Constants.SearchStringMethodExact));

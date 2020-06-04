@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Benday.SqlUtils.Core
+namespace Benday.SqlUtils.Api
 {
     public static class Constants
     {

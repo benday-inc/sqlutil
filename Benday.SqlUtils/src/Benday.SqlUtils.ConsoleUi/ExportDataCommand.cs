@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Benday.SqlUtils.Api;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Benday.SqlUtils.ConsoleUi
@@ -39,12 +42,12 @@ namespace Benday.SqlUtils.ConsoleUi
                 String.Format("{0} {1} /{0}:server /{1}:database /{2}:query /{3}:script-type [/{4}:username] [/{5}:password] [/{6}:filename]",
                 Constants.ExeName,
                 CommandArgumentName,
-                Constants.ArgumentNameServerName, 
+                Constants.ArgumentNameServerName,
                 Constants.ArgumentNameDatabaseName,
-                Constants.ArgumentNameQuery, 
-                Constants.ArgumentNameScriptType, 
-                Constants.ArgumentNameUserName, 
-                Constants.ArgumentNamePassword, 
+                Constants.ArgumentNameQuery,
+                Constants.ArgumentNameScriptType,
+                Constants.ArgumentNameUserName,
+                Constants.ArgumentNamePassword,
                 Constants.ArgumentNameFilename);
 
             builder.AppendLine(usageString);
@@ -62,6 +65,60 @@ namespace Benday.SqlUtils.ConsoleUi
         }
 
         protected override void AfterValidateArguments()
+        {
+            VerifyScriptTypeArguments();
+            VerifyLoginArguments();
+        }
+
+        private void VerifyLoginArguments()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) == false)
+            {
+                if (ArgNameExists(Constants.ArgumentNameUserName) == false ||
+                    ArgNameExists(Constants.ArgumentNamePassword) == false)
+                {
+                    // bad
+                    var message = String.Format(
+                        "Arguments for '{0}' and '{1}' is required when not running on Windows.",
+                        Constants.ArgumentNameUserName, Constants.ArgumentNamePassword);
+
+                    WriteLine(message);
+                    throw new MissingArgumentException(message);
+                }
+            }
+            else if (ArgNameExists(Constants.ArgumentNameUserName) == false &&
+                ArgNameExists(Constants.ArgumentNamePassword) == false)
+            {
+                // good
+            }
+            else if (ArgNameExists(Constants.ArgumentNameUserName) == true &&
+                ArgNameExists(Constants.ArgumentNamePassword) == true)
+            {
+                // good
+            }
+            else if (ArgNameExists(Constants.ArgumentNameUserName) == false)
+            {
+                // bad
+                var message = String.Format(
+                    "Argument for '{0}' is required if '{1}' argument is supplied.",
+                    Constants.ArgumentNameUserName, Constants.ArgumentNamePassword);
+
+                WriteLine(message);
+                throw new MissingArgumentException(message);
+            }
+            else if (ArgNameExists(Constants.ArgumentNamePassword) == false)
+            {
+                // bad
+                var message = String.Format(
+                    "Argument for '{0}' is required if '{1}' argument is supplied.",
+                    Constants.ArgumentNamePassword, Constants.ArgumentNameUserName);
+
+                WriteLine(message);
+                throw new MissingArgumentException(message);
+            }
+        }
+
+        private void VerifyScriptTypeArguments()
         {
             var scriptType = Arguments[Constants.ArgumentNameScriptType];
 
@@ -84,15 +141,51 @@ namespace Benday.SqlUtils.ConsoleUi
             }
         }
 
-        
         public string GetResult()
         {
-            return null;
+            var connString = new DatabaseConnectionString();
+
+            connString.Database = Arguments[Constants.ArgumentNameDatabaseName];
+            connString.Server = Arguments[Constants.ArgumentNameServerName];
+
+            if (Arguments.ContainsKey(Constants.ArgumentNameUserName) == false)
+            {
+                connString.UseIntegratedSecurity = true;
+            }
+            else
+            {
+                connString.UseIntegratedSecurity = false;
+
+                connString.Username = Arguments[Constants.ArgumentNameUserName];
+                connString.Password = Arguments[Constants.ArgumentNamePassword];
+            }
+
+            var databaseUtil = new SqlServerDatabaseUtility();
+
+            databaseUtil.Initialize(connString.ConnectionString);
+
+            var exporter = new SqlDataExport(databaseUtil, Arguments[Constants.ArgumentNameQuery]);
+
+            if (Arguments[Constants.ArgumentNameScriptType] == Constants.ArgumentValueScriptType_IdentityInsert)
+            {
+                return exporter.GetInsertScript(true);
+            }
+            else if (Arguments[Constants.ArgumentNameScriptType] == Constants.ArgumentValueScriptType_Insert)
+            {
+                return exporter.GetInsertScript(false);
+            }
+            else if (Arguments[Constants.ArgumentNameScriptType] == Constants.ArgumentValueScriptType_MergeInto)
+            {
+                return exporter.GetMergeIntoScript();
+            }
+            else
+            {
+                throw new InvalidOperationException("Unsuppored script type.");
+            }
         }
 
         public override void Run()
         {
-            /*
             if (ArgNameExists(Constants.ArgumentNameFilename) == false)
             {
                 WriteLine();
@@ -112,7 +205,7 @@ namespace Benday.SqlUtils.ConsoleUi
 
                 if (String.IsNullOrWhiteSpace(result) == true)
                 {
-                    WriteLine("Could not locate the build definition.");
+                    WriteLine("Problem generating the script.");
                 }
                 else
                 {
@@ -120,11 +213,10 @@ namespace Benday.SqlUtils.ConsoleUi
 
                     if (ArgNameExists(Constants.ArgumentNameQuiet) == false)
                     {
-                        WriteLine(String.Format("Build definition written to '{0}'.", info.FullName));
+                        WriteLine(String.Format("Script written to '{0}'.", info.FullName));
                     }
                 }
             }
-            */
         }
     }
 }

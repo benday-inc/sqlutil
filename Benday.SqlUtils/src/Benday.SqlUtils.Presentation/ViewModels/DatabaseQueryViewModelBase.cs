@@ -1,10 +1,10 @@
 ﻿using Benday.Presentation;
+using Benday.SqlUtils.Api;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Benday.SqlUtils.Core;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
