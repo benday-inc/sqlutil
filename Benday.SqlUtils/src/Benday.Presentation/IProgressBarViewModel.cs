@@ -7,5 +7,6 @@ namespace Benday.Presentation
     {
         bool IsProgressBarVisible { get; set; }
         string ProgressBarMessage { get; set; }
+        bool IsCancelable { get; set; }
     }
 }
