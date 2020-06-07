@@ -10,16 +10,16 @@ namespace Benday.Presentation.UnitTests
         public ProgressBarViewModelTester(IProgressBarViewModel viewModel) :
             base(viewModel)
         {
-            m_ViewModelInstance = viewModel;
+            _ViewModelInstance = viewModel;
 
             IsVisibleValues = new List<bool>();
             MessageValues = new List<string>();
         }
 
-        private IProgressBarViewModel m_ViewModelInstance;
+        private IProgressBarViewModel _ViewModelInstance;
         public IProgressBarViewModel ViewModelInstance
         {
-            get { return m_ViewModelInstance; }
+            get { return _ViewModelInstance; }
         }
 
         protected override void OnPropertyChangedEvent(object sender, PropertyChangedEventArgs e)
