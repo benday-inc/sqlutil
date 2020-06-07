@@ -32,9 +32,9 @@ namespace Benday.SqlUtils.WpfUi.Controls
 
                 if (value == true)
                 {
-                    m_progressBar.SetBinding(ProgressBar.IsIndeterminateProperty, new Binding());
-                    m_progressBar.IsIndeterminate = false;
-                    m_progressBar.Visibility = System.Windows.Visibility.Collapsed;
+                    _ProgressBar.SetBinding(ProgressBar.IsIndeterminateProperty, new Binding());
+                    _ProgressBar.IsIndeterminate = false;
+                    _ProgressBar.Visibility = System.Windows.Visibility.Collapsed;
                 }
             }
         }

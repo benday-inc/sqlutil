@@ -11,7 +11,7 @@
         <Border>
             <StackPanel >
                 <TextBlock Text="{Binding ProgressBarMessage}" Margin="4,40,4,4"  HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <ProgressBar x:Name="m_progressBar" Margin="6" Height="20" IsIndeterminate="{Binding IsProgressBarVisible}" />
+                <ProgressBar x:Name="_ProgressBar" Margin="6" Height="20" IsIndeterminate="{Binding IsProgressBarVisible}" />
             </StackPanel>
         </Border>
     </Grid>
