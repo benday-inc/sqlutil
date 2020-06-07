@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -77,7 +78,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 {
                     counter++;
                     Progress.ProgressBarMessage = $"progress update {counter}";
-                    Task.Delay(1000);
+                    Thread.Sleep(1000);
                 }
             }
             catch(Exception ex)
