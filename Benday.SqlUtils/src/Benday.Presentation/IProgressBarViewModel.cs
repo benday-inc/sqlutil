@@ -1,12 +1,19 @@
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Benday.Presentation
 {
-    public interface IProgressBarViewModel : IViewModelBase
+    public interface IProgressBarViewModel : INotifyPropertyChanged
     {
         bool IsProgressBarVisible { get; set; }
         string ProgressBarMessage { get; set; }
         bool IsCancelable { get; set; }
+
+        ICommand CancelOperationCommand { get; }
+
+        event EventHandler OnCancelRequested;
     }
 }

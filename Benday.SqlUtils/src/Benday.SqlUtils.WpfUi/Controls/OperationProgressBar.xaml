@@ -15,6 +15,7 @@
                 <ProgressBar x:Name="_ProgressBar" Margin="6" Height="20" 
                              IsIndeterminate="{Binding IsProgressBarVisible}" />
                 <Button x:Name="_CancelButton" Content="Cancel" Margin="6" Width="80" 
+                        Command="{Binding CancelOperationCommand}"
                         Visibility="{Binding IsCancelable, Converter={StaticResource VisibilityValueConverterInstance}}"/>
             </StackPanel>
         </Border>
