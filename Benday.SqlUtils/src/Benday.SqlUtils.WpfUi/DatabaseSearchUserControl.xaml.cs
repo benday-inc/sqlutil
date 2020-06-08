@@ -88,25 +88,47 @@ namespace Benday.SqlUtils.WpfUi
                 }
             }
         }
+
         private void PopulateContextMenu(SearchByColumnNameQueryViewModel search)
         {
             AddDescribeTableToContextMenu("TABLE_NAME");
         }
+
         private void PopulateContextMenu(SearchByTableNameQueryViewModel search)
         {
             AddDescribeTableToContextMenu("TABLE_NAME");
         }
+        private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
+        {
+            AddDescribeTableToContextMenu("TABLE NAME");
+            AddCopyValueToClipboardContextMenu("QUERY");
+        }
+
+        private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
+        {
+            AddDescribeStoredProcedureToContextMenu("name");
+        }
+
+        private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
+        {
+            AddDescribeStoredProcedureToContextMenu("name");
+        }
+
+        private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
+        {
+            AddDescribeStoredProcedureToContextMenu("name");
+        }
 
         private void AddDescribeTableToContextMenu(string tableNameColumn)
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            var selectedItem = _ResultGrid.SelectedItem as ITableName;
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(tableNameColumn) == false)
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var tableName = selectedItem[tableNameColumn];
+            var tableName = selectedItem.TableName;
 
             var descTable = new MenuItem();
 
@@ -191,27 +213,6 @@ namespace Benday.SqlUtils.WpfUi
             copyToClipboard.Click += (s, e) => { Clipboard.SetText(copyToClipboard.Tag as string); };
 
             _ResultGrid.ContextMenu.Items.Add(copyToClipboard);
-        }
-
-        private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
-        {
-            AddDescribeTableToContextMenu("TABLE NAME");
-            AddCopyValueToClipboardContextMenu("QUERY");
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
         }
 
         private void _ResultGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
