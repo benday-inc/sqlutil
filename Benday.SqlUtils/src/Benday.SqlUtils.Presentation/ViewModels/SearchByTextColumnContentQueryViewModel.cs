@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
@@ -46,12 +47,15 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             return args;
         }
 
+        private object _SyncLock = new object();
+
         public override void Execute()
         {
             IsVisible = true;
 
             var dataset = new DataSet();
 
+            /*
             var results = new DataTable();
 
             results.TableName = "Results";
@@ -63,8 +67,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             results.Columns.Add("COLUMN NAME", typeof(string));
             results.Columns.Add("RECORD COUNT", typeof(int));
             results.Columns.Add("QUERY", typeof(string));
+            */
 
-            Results = results;
+            Results = new System.Collections.ObjectModel.ObservableCollection<object>();
+
+            BindingOperations.EnableCollectionSynchronization(Results, _SyncLock);
 
             FindTextInColumn(true);
         }
@@ -150,6 +157,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 string template =
                     "select count(*) as recordCount from [{0}].[{1}] where [{2}] like '%{3}%'";
 
+                string message = null;
+
                 using (SqlConnection connection = GetSqlConnection())
                 {
                     connection.Open();
@@ -167,11 +176,13 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                             break;
                         }
 
-                        ProgressInfo.ProgressBarMessage =
-                            "Searching [" + row["table_schema"].ToString() + "]." +
+                        message = "Searching [" + row["table_schema"].ToString() + "]." +
                             "[" + row["table_name"].ToString() + "].[" +
                             row["column_name"].ToString() + "]...";
 
+                        Console.WriteLine(message);
+                        ProgressInfo.ProgressBarMessage = message;
+                            
                         query = String.Format(
                             template, row["table_schema"], row["table_name"], row["column_name"],
                             GetArgumentValue("SEARCH_TEXT"));
@@ -181,10 +192,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                         if (recordCount > 0)
                         {
-                            AddRow(row, recordCount, query);
+                            // AddRow(row, recordCount, query);
 
-                            //Dispatcher.CurrentDispatcher.BeginInvoke(
-                            //    new Action(() => AddRow(row, recordCount, query)));
+                            Console.WriteLine("** Adding row for {0}", query);
+                            
+                            Results.Add(new TextQueryResultRow(row, query, recordCount));
                         }
                     }
                 }
@@ -371,6 +383,7 @@ order by c.table_name, c.column_name
             }
         }
 
+        /*
         private void AddRow(DataRow row, int recordCount, string query)
         {
             try
@@ -396,7 +409,25 @@ order by c.table_name, c.column_name
                 Console.WriteLine("*** AddRow() error: {0}", ex);
             }
         }
+        */
 
+        public class TextQueryResultRow
+        {            
+            public TextQueryResultRow(DataRow fromValue, string query, int recordCount)
+            {
+                Schema = fromValue["table_schema"].ToString();
+                Table = fromValue["table_name"].ToString();
+                Column = fromValue["column_name"].ToString();
+                Records = recordCount;
+                Query = query;
+            }
+
+            public string Schema { get; set; }
+            public string Table { get; set; }
+            public string Column { get; set; }
+            public int Records { get; set; }
+            public string Query { get; set; }
+        }
 
 
         public DataTable ExecuteCommand(SqlCommand command)

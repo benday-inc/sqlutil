@@ -60,7 +60,8 @@ order by specific_name";
                 }
             }
 
-            base.Results = results.Tables[0];
+            //todo: fix this
+            // base.Results = results.Tables[0];
 
             IsVisible = true;
 

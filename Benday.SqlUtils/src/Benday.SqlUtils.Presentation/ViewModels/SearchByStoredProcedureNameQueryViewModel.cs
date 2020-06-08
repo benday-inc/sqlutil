@@ -48,10 +48,12 @@ SPECIFIC_NAME LIKE @STORED_PROCEDURE_NAME";
                 }
             }
 
-            base.Results = results.Tables[0];
+            // base.Results = results.Tables[0];
+
+            //todo: fix this
+            base.Results = new System.Collections.ObjectModel.ObservableCollection<object>();
 
             IsVisible = true;
-
         }
     }
 }

@@ -45,7 +45,9 @@ from information_schema.columns where column_name like @COLUMN_NAME ORDER BY COL
                 }
             }
 
-            base.Results = results.Tables[0];
+            // base.Results = results.Tables[0];
+            //todo: fix this
+            base.Results = new System.Collections.ObjectModel.ObservableCollection<object>();
 
             IsVisible = true;
         }

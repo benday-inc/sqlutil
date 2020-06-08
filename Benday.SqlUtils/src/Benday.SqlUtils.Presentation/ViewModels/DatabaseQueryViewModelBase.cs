@@ -2,6 +2,7 @@
 using Benday.SqlUtils.Api;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -50,9 +51,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         protected const string ResultsPropertyName = "Results";
 
-        private DataTable _Results;
+        private ObservableCollection<object> _Results;
 
-        public DataTable Results
+        public ObservableCollection<object> Results
         {
             get
             {

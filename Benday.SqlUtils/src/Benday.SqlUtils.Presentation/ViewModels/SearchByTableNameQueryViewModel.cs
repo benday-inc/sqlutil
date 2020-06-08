@@ -47,7 +47,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 }
             }
 
-            base.Results = results.Tables[0];
+            //todo: fix this
+            // base.Results = results.Tables[0];
 
             IsVisible = true;
 

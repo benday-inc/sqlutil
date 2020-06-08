@@ -48,7 +48,9 @@ ORDER BY SPECIFIC_NAME, ORDINAL_POSITION";
                 }
             }
 
-            base.Results = results.Tables[0];
+            //todo:fix this
+            // base.Results = results.Tables[0];
+            
 
             IsVisible = true;
 
