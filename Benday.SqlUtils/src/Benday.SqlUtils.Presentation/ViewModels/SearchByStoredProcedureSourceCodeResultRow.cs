@@ -2,7 +2,7 @@
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class SearchByStoredProcedureSourceCodeResultRow
+    public class SearchByStoredProcedureSourceCodeResultRow : IStoredProcedureName
     {
         public SearchByStoredProcedureSourceCodeResultRow(DataRow fromValue)
         {

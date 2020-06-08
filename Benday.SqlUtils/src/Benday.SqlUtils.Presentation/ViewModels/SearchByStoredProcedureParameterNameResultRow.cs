@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class SearchByStoredProcedureParameterNameResultRow
+    public class SearchByStoredProcedureParameterNameResultRow : IStoredProcedureName
     {
         public SearchByStoredProcedureParameterNameResultRow(DataRow fromValue)
         {

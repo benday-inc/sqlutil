@@ -91,35 +91,35 @@ namespace Benday.SqlUtils.WpfUi
 
         private void PopulateContextMenu(SearchByColumnNameQueryViewModel search)
         {
-            AddDescribeTableToContextMenu("TABLE_NAME");
+            AddDescribeTableToContextMenu();
         }
 
         private void PopulateContextMenu(SearchByTableNameQueryViewModel search)
         {
-            AddDescribeTableToContextMenu("TABLE_NAME");
+            AddDescribeTableToContextMenu();
         }
         private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
         {
-            AddDescribeTableToContextMenu("TABLE NAME");
+            AddDescribeTableToContextMenu();
             AddCopyValueToClipboardContextMenu("QUERY");
         }
 
         private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
         {
-            AddDescribeStoredProcedureToContextMenu("name");
+            AddDescribeStoredProcedureToContextMenu();
         }
 
         private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
         {
-            AddDescribeStoredProcedureToContextMenu("name");
+            AddDescribeStoredProcedureToContextMenu();
         }
 
         private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
         {
-            AddDescribeStoredProcedureToContextMenu("name");
+            AddDescribeStoredProcedureToContextMenu();
         }
 
-        private void AddDescribeTableToContextMenu(string tableNameColumn)
+        private void AddDescribeTableToContextMenu()
         {
             var selectedItem = _ResultGrid.SelectedItem as ITableName;
 
@@ -139,16 +139,16 @@ namespace Benday.SqlUtils.WpfUi
             _ResultGrid.ContextMenu.Items.Add(descTable);
         }
 
-        private void AddDescribeStoredProcedureToContextMenu(string columnName)
+        private void AddDescribeStoredProcedureToContextMenu()
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            var selectedItem = _ResultGrid.SelectedItem as IStoredProcedureName;
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(columnName) == false)
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var name = selectedItem[columnName];
+            var name = selectedItem.Name;
 
             var descTable = new MenuItem();
 
