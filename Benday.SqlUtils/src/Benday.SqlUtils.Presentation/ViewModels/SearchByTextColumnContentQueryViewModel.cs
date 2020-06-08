@@ -158,7 +158,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                     foreach (DataRow row in textColumnsDataTable.Rows)
                     {
-                        Thread.Sleep(250);
+                        Thread.Sleep(100);
 
                         if (_StopSearchRequested == true)
                         {
@@ -181,10 +181,10 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                         if (recordCount > 0)
                         {
-                            // AddRow(row, recordCount, query);
+                            AddRow(row, recordCount, query);
 
-                            Dispatcher.CurrentDispatcher.BeginInvoke(
-                                new Action(() => AddRow(row, recordCount, query)));
+                            //Dispatcher.CurrentDispatcher.BeginInvoke(
+                            //    new Action(() => AddRow(row, recordCount, query)));
                         }
                     }
                 }
@@ -373,15 +373,28 @@ order by c.table_name, c.column_name
 
         private void AddRow(DataRow row, int recordCount, string query)
         {
-            var tempRow = Results.NewRow();
+            try
+            {
+                Console.WriteLine("AddRow(): preparing row...");
+                var tempRow = Results.NewRow();
 
-            tempRow["table schema"] = row["table_schema"];
-            tempRow["table name"] = row["table_name"];
-            tempRow["column name"] = row["column_name"];
-            tempRow["record count"] = recordCount;
-            tempRow["query"] = query;
+                tempRow["table schema"] = row["table_schema"];
+                tempRow["table name"] = row["table_name"];
+                tempRow["column name"] = row["column_name"];
+                tempRow["record count"] = recordCount;
+                tempRow["query"] = query;
 
-            Results.Rows.Add(tempRow);
+
+                Console.WriteLine("AddRow(): adding row...");
+                Results.Rows.Add(tempRow);
+                RaisePropertyChanged(ResultsPropertyName);
+
+                Console.WriteLine("AddRow(): row added");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("*** AddRow() error: {0}", ex);
+            }
         }
 
 
