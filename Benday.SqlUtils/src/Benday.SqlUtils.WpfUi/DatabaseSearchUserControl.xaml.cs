@@ -197,14 +197,14 @@ namespace Benday.SqlUtils.WpfUi
 
         private void AddCopyValueToClipboardContextMenu(string valueColumnName)
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            var selectedItem = _ResultGrid.SelectedItem as TextQueryResultRow;
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(valueColumnName) == false)
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var value = selectedItem[valueColumnName];
+            var value = selectedItem.Query;
 
             var copyToClipboard = new MenuItem();
 
