@@ -152,7 +152,7 @@ namespace Benday.SqlUtils.WpfUi
                 dialog.DescribeTable(connectionString, menuItem.Tag.ToString());
 
                 dialog.ShowDialog();
-            }                    
+            }
         }
 
         private void DescribeStoredProcedure_Click(object sender, RoutedEventArgs e)
@@ -208,11 +208,27 @@ namespace Benday.SqlUtils.WpfUi
         {
             AddDescribeStoredProcedureToContextMenu("name");
         }
-        
+
         private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
         {
             AddDescribeStoredProcedureToContextMenu("name");
         }
 
+        private void _ResultGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var columnNameMap = new Dictionary<string, string>();
+
+            columnNameMap.Add("ParameterName", "Parameter Name");
+            columnNameMap.Add("DataType", "Data Type");
+            columnNameMap.Add("ValueLength", "Value Length");
+            columnNameMap.Add("ParameterMode", "Parameter Mode");
+            columnNameMap.Add("FieldLength", "Field Length");
+            columnNameMap.Add("Records", "Record Count");
+
+            if (columnNameMap.ContainsKey(e.PropertyName) == true)
+            {
+                e.Column.Header = columnNameMap[e.PropertyName];
+            }
+        }
     }
 }

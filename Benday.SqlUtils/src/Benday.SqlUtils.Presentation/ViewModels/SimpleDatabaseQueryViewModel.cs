@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -57,10 +58,21 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 }
             }
 
-            // base.Results = results.Tables[0];
-            // todo: fix thiss
+            base.Results = ToModels(results.Tables[0]);
 
             IsVisible = true;
+        }
+
+        private ObservableCollection<object> ToModels(DataTable dataTable)
+        {
+            var returnValue = new ObservableCollection<object>();
+
+            foreach (DataRow item in dataTable.Rows)
+            {
+                returnValue.Add(item);
+            }
+
+            return returnValue;
         }
 
         protected override List<string> GetRequiredArguments()

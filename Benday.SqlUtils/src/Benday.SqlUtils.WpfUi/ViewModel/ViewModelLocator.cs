@@ -96,7 +96,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
 
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            
         }
     }
 }

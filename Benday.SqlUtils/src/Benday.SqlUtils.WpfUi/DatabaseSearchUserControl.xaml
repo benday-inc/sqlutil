@@ -88,6 +88,7 @@
                     Grid.ColumnSpan="2"
                     DataContext="{Binding Result, Mode=TwoWay}"
                     Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                          AutoGeneratingColumn="_ResultGrid_AutoGeneratingColumn"
                     ItemsSource="{Binding Results, Mode=TwoWay}" >
                     <DataGrid.ContextMenu>
                         <ContextMenu Opened="ContextMenu_Opened">

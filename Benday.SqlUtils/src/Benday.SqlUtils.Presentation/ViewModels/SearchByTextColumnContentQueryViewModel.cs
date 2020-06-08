@@ -53,22 +53,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             IsVisible = true;
 
-            var dataset = new DataSet();
-
-            /*
-            var results = new DataTable();
-
-            results.TableName = "Results";
-
-            dataset.Tables.Add(results);
-
-            results.Columns.Add("TABLE SCHEMA", typeof(string));
-            results.Columns.Add("TABLE NAME", typeof(string));
-            results.Columns.Add("COLUMN NAME", typeof(string));
-            results.Columns.Add("RECORD COUNT", typeof(int));
-            results.Columns.Add("QUERY", typeof(string));
-            */
-
             Results = new System.Collections.ObjectModel.ObservableCollection<object>();
 
             BindingOperations.EnableCollectionSynchronization(Results, _SyncLock);
@@ -167,8 +151,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                     foreach (DataRow row in textColumnsDataTable.Rows)
                     {
-                        Thread.Sleep(100);
-
                         if (_StopSearchRequested == true)
                         {
                             // a stop has been requested
