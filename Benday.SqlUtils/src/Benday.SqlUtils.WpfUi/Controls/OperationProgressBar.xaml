@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     xmlns:helpers="clr-namespace:Benday.SqlUtils.WpfUi.Controls"
     d:DesignHeight="130" d:DesignWidth="400" 
-             Visibility="{Binding IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}}">
+             Visibility="{Binding IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}, FallbackValue={x:Static Visibility.Collapsed}}">
     <Grid x:Name="LayoutRoot" Background="White">
         <Border>
             <StackPanel >

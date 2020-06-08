@@ -293,10 +293,10 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 query.SetArgumentValue("SEARCH_TEXT", SearchByValue.Value);
 
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
-                
-                query.Execute();
 
                 Result = query;
+
+                query.Execute();
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureName)
             {
@@ -359,6 +359,5 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(ResultPropertyName);
             }
         }
-
     }
 }

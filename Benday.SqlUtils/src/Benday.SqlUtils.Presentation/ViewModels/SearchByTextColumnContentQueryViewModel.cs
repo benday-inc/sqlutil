@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Benday.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,6 +12,18 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchByTextColumnContentQueryViewModel : DatabaseQueryViewModelBase
     {
+        public SearchByTextColumnContentQueryViewModel()
+        {
+            _ProgressInfo.IsCancelable = true;
+            _ProgressInfo.OnCancelRequested += _ProgressInfo_OnCancelRequested;
+            _ProgressInfo.IsProgressBarVisible = false;
+        }
+
+        private void _ProgressInfo_OnCancelRequested(object sender, EventArgs e)
+        {
+            _StopSearchRequested = true;
+        }        
+
         protected override string SqlQueryTemplate
         {
             get
@@ -53,14 +66,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             Results = results;
 
-            FindTextInColumn(false);
+            FindTextInColumn(true);
         }
 
         private void FindTextInColumn(bool runAsync)
         {
-            ProgressMessage = "Starting search...";
-
-            IsStopSearchButtonVisible = true;
+            ProgressInfo.ProgressBarMessage = "Starting search...";
 
             IsSearchRunning = true;
 
@@ -68,7 +79,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 // ThreadPool.QueueUserWorkItem(new WaitCallback(FindTextInColumn), results);
 
-                Task.Run(() => FindTextInColumn()).Wait();
+                Task.Run(() => FindTextInColumn());
             }
             else
             {
@@ -91,9 +102,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 tableName = String.Empty;
             }
 
-            //DataTable resultsDataTable = tempDataTable as DataTable;
-
-            ProgressMessage = String.Empty;
+            ProgressInfo.IsProgressBarVisible = true;
+            ProgressInfo.ProgressBarMessage = "Starting search...";
             _StopSearchRequested = false;
 
             try
@@ -146,17 +156,18 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                     int recordCount = 0;
 
-                    object[] vals = new object[5];
-
                     foreach (DataRow row in textColumnsDataTable.Rows)
                     {
+                        Thread.Sleep(250);
+
                         if (_StopSearchRequested == true)
                         {
                             // a stop has been requested
+                            ProgressInfo.ProgressBarMessage = "Search canceled.";
                             break;
                         }
 
-                        ProgressMessage =
+                        ProgressInfo.ProgressBarMessage =
                             "Searching [" + row["table_schema"].ToString() + "]." +
                             "[" + row["table_name"].ToString() + "].[" +
                             row["column_name"].ToString() + "]...";
@@ -170,21 +181,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                         if (recordCount > 0)
                         {
-                            AddRow(row, recordCount, query);
+                            // AddRow(row, recordCount, query);
 
-                            //Dispatcher.CurrentDispatcher.BeginInvoke(
-                            //    new Action(() => AddRow(row, recordCount, query)));
+                            Dispatcher.CurrentDispatcher.BeginInvoke(
+                                new Action(() => AddRow(row, recordCount, query)));
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ProgressMessage = ex.ToString();
+                ProgressInfo.ProgressBarMessage = ex.ToString();
             }
             finally
             {
-                ProgressMessage = "Search complete.";
+                ProgressInfo.ProgressBarMessage = "Search complete.";
+                ProgressInfo.IsProgressBarVisible = false;
                 IsSearchRunning = false;
                 RaisePropertyChanged(ResultsPropertyName);
             }
@@ -205,22 +217,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 _IsSearchRunning = value;
                 RaisePropertyChanged(IsSearchRunningPropertyName);
-            }
-        }
-
-        private const string ProgressMessagePropertyName = "ProgressMessage";
-
-        private string _ProgressMessage;
-        public string ProgressMessage
-        {
-            get
-            {
-                return _ProgressMessage;
-            }
-            set
-            {
-                _ProgressMessage = value;
-                RaisePropertyChanged(ProgressMessagePropertyName);
             }
         }
 
@@ -372,22 +368,6 @@ order by c.table_name, c.column_name
                 command.Connection = connection;
 
                 return (int)command.ExecuteScalar();
-            }
-        }
-
-        private const string IsStopSearchButtonVisiblePropertyName = "IsStopSearchButtonVisible";
-
-        private bool _IsStopSearchButtonVisible;
-        public bool IsStopSearchButtonVisible
-        {
-            get
-            {
-                return _IsStopSearchButtonVisible;
-            }
-            set
-            {
-                _IsStopSearchButtonVisible = value;
-                RaisePropertyChanged(IsStopSearchButtonVisiblePropertyName);
             }
         }
 

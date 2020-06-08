@@ -10,6 +10,28 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseQueryViewModelBase : ViewModelBase
     {
+        public DatabaseQueryViewModelBase()
+        {
+            _ProgressInfo = new ProgressBarViewModel();
+            _ProgressInfo.IsProgressBarVisible = false;
+        }
+
+        private const string ProgressInfoPropertyName = "ProgressInfo";
+
+        protected ProgressBarViewModel _ProgressInfo;
+        public ProgressBarViewModel ProgressInfo
+        {
+            get
+            {
+                return _ProgressInfo;
+            }
+            set
+            {
+                _ProgressInfo = value;
+                RaisePropertyChanged(ProgressInfoPropertyName);
+            }
+        }
+
         private const string IsVisiblePropertyName = "IsVisible";
 
         private bool _IsVisible;
