@@ -41,13 +41,24 @@
                     Content="P" FontSize="22"
                     ></Button>
         </Grid>
-        <ctrls:OperationProgressBar DataContext="{Binding Result.ProgressInfo}" />
+
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <Canvas Grid.ColumnSpan="3" Panel.ZIndex="1" 
+                    Background="White"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Visibility="{Binding Result.ProgressInfo.IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <ctrls:OperationProgressBar 
+                Background="White"
+                DataContext="{Binding Result.ProgressInfo}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            </Canvas>
             <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" OnEnterKey="TextboxField_OnEnterKey" />
@@ -92,7 +103,7 @@
                     ItemsSource="{Binding Results, Mode=TwoWay}" >
                     <DataGrid.ContextMenu>
                         <ContextMenu Opened="ContextMenu_Opened">
-                            
+
                         </ContextMenu>
                     </DataGrid.ContextMenu>
 
