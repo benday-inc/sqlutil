@@ -73,6 +73,14 @@ namespace Benday.SqlUtils.WpfUi
         {
             _CurrentControl.Content = _Controls[controlName];
 
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp != null)
+            {
+                temp.Telemetry.TrackEvent("SelectControl", "ControlName", controlName);
+                temp.Telemetry.Flush();
+            }
+
             var selectedButton = _MenuButtons[controlName];
 
             if (selectedButton == _ButtonSearchByName)
@@ -136,7 +144,7 @@ namespace Benday.SqlUtils.WpfUi
 
             if (temp != null)
             {
-                temp.Telemetry.TrackEvent("MainWindow closing");
+                temp.Telemetry.TrackEvent("MainWindow closing", "RunningTimeInSeconds", temp.RunningTimeInSeconds.ToString());
                 temp.Telemetry.Flush();
             }
         }

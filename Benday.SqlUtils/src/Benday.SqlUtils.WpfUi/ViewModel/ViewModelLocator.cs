@@ -52,10 +52,24 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
             
+            _AppStartTime = DateTime.UtcNow;
+
             SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
             SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
             SimpleIoc.Default.Register<DataExportViewModel>();
+        }
+
+        private DateTime _AppStartTime;
+
+        public double RunningTimeInSeconds
+        {
+            get
+            {
+                var duration = DateTime.UtcNow - _AppStartTime;
+
+                return duration.TotalSeconds;
+            }
         }
 
         private DatabaseConnectionsViewModel _ConnectionsEditor;

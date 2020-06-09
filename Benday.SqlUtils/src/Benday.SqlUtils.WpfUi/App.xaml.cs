@@ -33,13 +33,7 @@ namespace Benday.SqlUtils.WpfUi
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            var duration = DateTime.UtcNow - _AppStartTime;
-
-            LocatorInstance.Telemetry.TrackEvent("Shutdown", "SessionDurationInSeconds", duration.TotalSeconds.ToString());
-            LocatorInstance.Telemetry.Flush();
         }
-
-        private DateTime _AppStartTime = DateTime.UtcNow;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
