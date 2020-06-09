@@ -9,7 +9,7 @@
         Height="600"
         Width="800"
         FontSize="18"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Benday.SqlUtils.WpfUi.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -127,6 +128,17 @@ namespace Benday.SqlUtils.WpfUi
         private void _ButtonAbout_Click(object sender, RoutedEventArgs e)
         {
             SelectControl("About");
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp != null)
+            {
+                temp.TelemetryClient.TrackEvent("MainWindow closing");
+                temp.TelemetryClient.Flush();
+            }
         }
     }
 }

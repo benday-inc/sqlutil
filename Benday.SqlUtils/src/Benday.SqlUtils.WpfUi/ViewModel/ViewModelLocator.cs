@@ -16,6 +16,8 @@ using Benday.SqlUtils.Api;
 using Benday.SqlUtils.Presentation;
 using Benday.SqlUtils.Presentation.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Benday.SqlUtils.WpfUi.ViewModel
 {
@@ -63,7 +65,6 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             }
         }
 
-
         private SearchViewModel _Search;
         public SearchViewModel Search
         {
@@ -91,6 +92,36 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                         new FileService());
                 }
                 return _DataExport;
+            }
+        }
+
+        private ConfigurationInfo _Configuration;
+        public ConfigurationInfo Configuration
+        {
+            get
+            {
+                if (_Configuration == null)
+                {
+                    _Configuration = new ConfigurationInfo();
+                }
+
+                return _Configuration;
+            }
+        }
+
+        private TelemetryClient _TelemetryClient;
+        public TelemetryClient TelemetryClient
+        {
+            get
+            {
+                if (_TelemetryClient == null)
+                {
+                    var config = TelemetryConfiguration.CreateDefault();
+
+                    _TelemetryClient = new TelemetryClient(config);
+                }
+
+                return _TelemetryClient;
             }
         }
 
