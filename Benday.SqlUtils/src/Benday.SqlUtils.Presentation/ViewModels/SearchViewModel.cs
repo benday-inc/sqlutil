@@ -13,8 +13,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchViewModel : DatabaseUtilityViewModelBase
     {
-        public SearchViewModel(IDatabaseConnectionStringRepository repository) : 
-            base(repository)
+        public SearchViewModel(IDatabaseConnectionStringRepository repository,
+            ITelemetryService telemetry) : 
+            base(repository, telemetry)
         {
             
         }

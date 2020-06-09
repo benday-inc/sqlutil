@@ -136,8 +136,8 @@ namespace Benday.SqlUtils.WpfUi
 
             if (temp != null)
             {
-                temp.TelemetryClient.TrackEvent("MainWindow closing");
-                temp.TelemetryClient.Flush();
+                temp.Telemetry.TrackEvent("MainWindow closing");
+                temp.Telemetry.Flush();
             }
         }
     }

@@ -9,18 +9,37 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseUtilityViewModelBase : ViewModelBase
     {
-        public DatabaseUtilityViewModelBase(IDatabaseConnectionStringRepository repository)
+        private ITelemetryService _Telemetry;
+
+        public DatabaseUtilityViewModelBase(
+            IDatabaseConnectionStringRepository repository, 
+            ITelemetryService telemetry)
         {
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException("telemetry", "Argument cannot be null.");
+            }
+
             if (repository == null)
                 throw new ArgumentNullException(nameof(repository),
                     $"{nameof(repository)} is null.");
 
             _Repository = repository;
+            _Telemetry = telemetry;
 
             InitializeProperties();
 
             OnInitialize();
         }
+
+        public ITelemetryService Telemetry
+        {
+            get
+            {
+                return _Telemetry;
+            }
+        }
+        
 
         protected virtual void OnInitialize()
         {

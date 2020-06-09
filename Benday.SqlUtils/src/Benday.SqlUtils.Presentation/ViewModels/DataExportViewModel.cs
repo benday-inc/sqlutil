@@ -21,8 +21,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
             IDatabaseUtility queryExecuter,
-            IFileService fileDialogService) :
-                    base(repository)
+            IFileService fileDialogService,
+            ITelemetryService telemetry) :
+                    base(repository, telemetry)
         {
             if (queryExecuter == null)
             {

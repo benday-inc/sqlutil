@@ -22,7 +22,9 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector;
 using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using System;
+using System.Globalization;
 using System.IO;
+using System.Windows;
 
 namespace Benday.SqlUtils.WpfUi.ViewModel
 {
@@ -78,7 +80,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_Search == null)
                 {
                     _Search = new SearchViewModel(
-                        new DatabaseConnectionStringRepository());
+                        new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _Search;
             }
@@ -94,7 +96,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                     _DataExport = new DataExportViewModel(
                         new DatabaseConnectionStringRepository(),
                         new SqlServerDatabaseUtility(), 
-                        new FileService());
+                        new FileService(), Telemetry);
                 }
                 return _DataExport;
             }
@@ -114,12 +116,12 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             }
         }
 
-        private TelemetryClient _TelemetryClient;
-        public TelemetryClient TelemetryClient
+        private ITelemetryService _Telemetry;
+        public ITelemetryService Telemetry
         {
             get
             {
-                if (_TelemetryClient == null)
+                if (_Telemetry == null)
                 {
                     var config = TelemetryConfiguration.CreateDefault();
 
@@ -128,10 +130,47 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                       string.Format(@"\.NET CLR Memory({0})\# GC Handles", System.AppDomain.CurrentDomain.FriendlyName), "GC Handles"));
                     perfCollectorModule.Initialize(config);
 
-                    _TelemetryClient = new TelemetryClient(config);
+                    var client = new TelemetryClient(config);
+
+                    _Telemetry = new AppInsightsTelemetryService(client);
+
+                    if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsUserId) == true)
+                    {
+                        SqlUtilSettings.Default.AppInsightsUserId = Guid.NewGuid().ToString();
+                        SqlUtilSettings.Default.Save();
+                    }
+
+                    bool isFirstUserSession = false;
+
+                    if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsUserSessionIsFirst) == true)
+                    {
+                        isFirstUserSession = true;
+
+                        SqlUtilSettings.Default.AppInsightsUserSessionIsFirst = "false";
+                        SqlUtilSettings.Default.Save();
+                    }
+
+                    client.Context.User.Id = SqlUtilSettings.Default.AppInsightsUserId;
+
+                    var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+                    client.Context.GlobalProperties.Add("OSVersion", Environment.OSVersion.ToString());
+                    client.Context.GlobalProperties.Add("AppName", System.AppDomain.CurrentDomain.FriendlyName);
+                    client.Context.GlobalProperties.Add("AppVersion", assembly.FullName);
+                    client.Context.GlobalProperties.Add("CurrentCulture", CultureInfo.CurrentCulture.ToString());
+
+                    client.Context.GlobalProperties.Add("TimeZone", TimeZoneInfo.Local.ToString());
+
+                    client.Context.GlobalProperties.Add("IsFirstTimeUsingApp", isFirstUserSession.ToString());
+
+                    client.Context.GlobalProperties.Add("PrimaryScreenWidth", SystemParameters.PrimaryScreenWidth.ToString());
+                    client.Context.GlobalProperties.Add("PrimaryScreenHeight", SystemParameters.PrimaryScreenHeight.ToString());
+
+                    client.Context.Session.Id = Guid.NewGuid().ToString();
+                    client.Context.Session.IsFirst = isFirstUserSession;
                 }
 
-                return _TelemetryClient;
+                return _Telemetry;
             }
         }
 
