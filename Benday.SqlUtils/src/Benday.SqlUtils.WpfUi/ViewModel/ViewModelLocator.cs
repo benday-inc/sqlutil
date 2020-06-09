@@ -17,7 +17,12 @@ using Benday.SqlUtils.Presentation;
 using Benday.SqlUtils.Presentation.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector;
+using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
+using System;
+using System.IO;
 
 namespace Benday.SqlUtils.WpfUi.ViewModel
 {
@@ -118,13 +123,39 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 {
                     var config = TelemetryConfiguration.CreateDefault();
 
-                    _TelemetryClient = new TelemetryClient(config);
+                    var perfCollectorModule = new PerformanceCollectorModule();
+                    perfCollectorModule.Counters.Add(new PerformanceCounterCollectionRequest(
+                      string.Format(@"\.NET CLR Memory({0})\# GC Handles", System.AppDomain.CurrentDomain.FriendlyName), "GC Handles"));
+                    perfCollectorModule.Initialize(config);
 
+                    _TelemetryClient = new TelemetryClient(config);
                 }
 
                 return _TelemetryClient;
             }
         }
+
+        private string _ApplicationAppDataPath;
+        public string ApplicationAppDataPath
+        {
+            get
+            {
+                if (_ApplicationAppDataPath == null)
+                {
+                    _ApplicationAppDataPath = Path.Combine(
+                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                     System.AppDomain.CurrentDomain.FriendlyName);
+
+                    if (Directory.Exists(_ApplicationAppDataPath) == false)
+                    {
+                        Directory.CreateDirectory(_ApplicationAppDataPath);
+                    }
+                }
+
+                return _ApplicationAppDataPath;
+            }
+        }
+        
 
         public static void Cleanup()
         {
