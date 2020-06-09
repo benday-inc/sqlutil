@@ -34,5 +34,17 @@ namespace Benday.SqlUtils.WpfUi {
                 this["AppInsightsUserId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AppInsightsUserSessionIsFirst {
+            get {
+                return ((string)(this["AppInsightsUserSessionIsFirst"]));
+            }
+            set {
+                this["AppInsightsUserSessionIsFirst"] = value;
+            }
+        }
     }
 }
