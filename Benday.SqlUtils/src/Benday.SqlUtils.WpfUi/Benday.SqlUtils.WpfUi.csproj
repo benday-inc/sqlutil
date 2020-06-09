@@ -35,4 +35,19 @@
     <Resource Include="bdc_logo_960x180.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="SqlUtilSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SqlUtilSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SqlUtilSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SqlUtilSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>
