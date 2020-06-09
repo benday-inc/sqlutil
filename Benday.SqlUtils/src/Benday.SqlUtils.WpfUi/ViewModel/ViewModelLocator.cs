@@ -119,6 +119,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                     var config = TelemetryConfiguration.CreateDefault();
 
                     _TelemetryClient = new TelemetryClient(config);
+
                 }
 
                 return _TelemetryClient;
