@@ -139,10 +139,12 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 {
                     var config = TelemetryConfiguration.CreateDefault();
 
+                    /*
                     var perfCollectorModule = new PerformanceCollectorModule();
                     perfCollectorModule.Counters.Add(new PerformanceCounterCollectionRequest(
                       string.Format(@"\.NET CLR Memory({0})\# GC Handles", System.AppDomain.CurrentDomain.FriendlyName), "GC Handles"));
                     perfCollectorModule.Initialize(config);
+                    */
 
                     var client = new TelemetryClient(config);
 

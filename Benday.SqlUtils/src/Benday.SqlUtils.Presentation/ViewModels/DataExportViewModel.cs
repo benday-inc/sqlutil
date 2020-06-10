@@ -171,7 +171,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Query.IsValid = true;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(DataExportViewModel)}.{nameof(RunQuery)}()");
+                    $"Data Export - Run Query");
 
                 InitializeExporter();
 
@@ -321,7 +321,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private string GetInsertScript()
         {
             Telemetry.TrackEvent(
-                $"{nameof(DataExportViewModel)}.{nameof(GetInsertScript)}()",
+                $"Data Export - Create Insert Script",
                 "GenerateIdentityInsert", GenerateIdentityInsert.Value.ToString());
 
             return _Exporter.GetInsertScript(GenerateIdentityInsert.Value);
@@ -330,7 +330,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private string GetMergeIntoScript()
         {
             Telemetry.TrackEvent(
-                $"{nameof(DataExportViewModel)}.{nameof(GetMergeIntoScript)}()");
+                $"Data Export - Create Merge Into Script");
 
             return _Exporter.GetMergeIntoScript();
         }
