@@ -245,5 +245,17 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
         {
             
         }
+        public bool IsFirstRun()
+        {
+            var value = SqlUtilSettings.Default.IsFirstRunOfApp;
+
+            if (value == true)
+            {
+                SqlUtilSettings.Default.IsFirstRunOfApp = false;
+                SqlUtilSettings.Default.Save();
+            }
+
+            return value;
+        }
     }
 }

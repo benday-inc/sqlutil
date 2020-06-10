@@ -58,5 +58,17 @@ namespace Benday.SqlUtils.WpfUi {
                 this["AppInsightsTelemetryEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsFirstRunOfApp {
+            get {
+                return ((bool)(this["IsFirstRunOfApp"]));
+            }
+            set {
+                this["IsFirstRunOfApp"] = value;
+            }
+        }
     }
 }

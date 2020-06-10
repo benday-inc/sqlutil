@@ -1,4 +1,5 @@
 ﻿using Benday.SqlUtils.WpfUi.ViewModel;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,14 +73,14 @@ namespace Benday.SqlUtils.WpfUi
         {
             SetTelemetry(false);
         }
-
+                
         private void SetTelemetry(bool value)
         {
             var temp = TryFindResource("Locator") as ViewModelLocator;
 
             if (temp == null)
             {
-                MessageBox.Show("Could not change telemetry value because view model was null.");                
+                MessageBox.Show("Could not change telemetry value because view model was null.");
             }
             else
             {
@@ -98,6 +99,18 @@ namespace Benday.SqlUtils.WpfUi
             else
             {
                 _CheckboxSendTelemetry.IsChecked = temp.IsTelemetryEnabled();
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(
+                "Reset your settings and close the app?", 
+                "Reset settings?", 
+                MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel) == MessageBoxResult.OK)
+            {
+                SqlUtilSettings.Default.Reset();
+                System.Windows.Application.Current.Shutdown();
             }
         }
     }

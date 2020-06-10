@@ -51,6 +51,29 @@ namespace Benday.SqlUtils.WpfUi
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp == null)
+            {
+                throw new InvalidOperationException("Could not load view model locator");
+            }
+            else
+            {
+                if (temp.IsFirstRun() == true)
+                {
+                    var result = MessageBox.Show("Thanks for trying this app.  FYI, we capture anonymous feature usage data to help monitor and improve this product.  We don't collect any details about your database or the text of the queries you run.  You ok with this?  You can change this later and view our privacy policy on the About tab." + Environment.NewLine + "Click 'yes' to share telemetry or 'no' to not share telemetry.", "Telemetry / Privacy", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        temp.SetTelemetry(true);
+                    }
+                    else
+                    {
+                        temp.SetTelemetry(false);
+                    }
+                }
+            }
+
             _Controls = new Dictionary<string, UserControl>();
             _MenuButtons = new Dictionary<string, Button>();
 
@@ -148,5 +171,6 @@ namespace Benday.SqlUtils.WpfUi
                 temp.Telemetry.Flush();
             }
         }
+
     }
 }
