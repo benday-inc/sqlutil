@@ -9,5 +9,6 @@ namespace Benday.SqlUtils.Api
         void TrackEvent(string name, params string[] args);
         void TrackException(Exception ex, params string[] args);
         void Flush();
+        void SetTelemetry(bool value);
     }
 }

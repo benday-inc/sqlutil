@@ -130,6 +130,24 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             }
         }
 
+        public bool IsTelemetryEnabled()
+        {
+            if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsTelemetryEnabled) == true)
+            {
+                SqlUtilSettings.Default.AppInsightsTelemetryEnabled = true.ToString().ToLower();
+                SqlUtilSettings.Default.Save();
+                return true;
+            }
+            else if (SqlUtilSettings.Default.AppInsightsTelemetryEnabled == true.ToString().ToLower())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private ITelemetryService _Telemetry;
         public ITelemetryService Telemetry
         {
@@ -137,6 +155,8 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             {
                 if (_Telemetry == null)
                 {
+                    var enabled = IsTelemetryEnabled();
+
                     var config = TelemetryConfiguration.CreateDefault();
 
                     /*
@@ -145,6 +165,8 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                       string.Format(@"\.NET CLR Memory({0})\# GC Handles", System.AppDomain.CurrentDomain.FriendlyName), "GC Handles"));
                     perfCollectorModule.Initialize(config);
                     */
+
+                    config.DisableTelemetry = !enabled;
 
                     var client = new TelemetryClient(config);
 
@@ -210,7 +232,14 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 return _ApplicationAppDataPath;
             }
         }
-        
+
+        public void SetTelemetry(bool value)
+        {
+            Telemetry.TrackEvent($"Set Telemetry - {value}");
+            SqlUtilSettings.Default.AppInsightsTelemetryEnabled = value.ToString().ToLower();
+            SqlUtilSettings.Default.Save();
+            Telemetry.SetTelemetry(value);
+        }        
 
         public static void Cleanup()
         {

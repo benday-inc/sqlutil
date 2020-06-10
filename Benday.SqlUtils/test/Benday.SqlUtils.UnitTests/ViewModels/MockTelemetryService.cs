@@ -24,5 +24,9 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         {
 
         }
+        public void SetTelemetry(bool value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
