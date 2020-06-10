@@ -80,7 +80,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_ConnectionsEditor == null)
                 {
                     _ConnectionsEditor = new DatabaseConnectionsViewModel(
-                        new DatabaseConnectionStringRepository());
+                        new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _ConnectionsEditor;
             }

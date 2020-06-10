@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Benday.SqlUtils.WpfUi.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -36,6 +37,13 @@ namespace Benday.SqlUtils.WpfUi
                 FileName = value,
                 UseShellExecute = true
             };
+
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp != null)
+            {
+                temp.Telemetry.TrackEvent($"About - Click - {value}");
+            }
 
             System.Diagnostics.Process.Start(info);
         }

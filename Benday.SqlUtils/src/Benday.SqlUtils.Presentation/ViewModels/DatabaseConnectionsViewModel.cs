@@ -13,8 +13,17 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class DatabaseConnectionsViewModel : ViewModelBase
     {
-        private DatabaseConnectionsViewModel()
+        private ITelemetryService _TelemetryService;
+
+        private DatabaseConnectionsViewModel(ITelemetryService telemetryService)
         {
+            if (telemetryService == null)
+            {
+                throw new ArgumentNullException("telemetryService", "Argument cannot be null.");
+            }
+
+            _TelemetryService = telemetryService;
+
             _Connections = new SelectableCollectionViewModel<DatabaseConnectionViewModel>();
 
             _Connections.OnItemSelected += _Connections_OnItemSelected;
@@ -28,7 +37,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private IDatabaseConnectionStringRepository _Repository;
 
         public DatabaseConnectionsViewModel(
-            IDatabaseConnectionStringRepository repository) : this()
+            IDatabaseConnectionStringRepository repository, ITelemetryService telemetryService) : 
+            this(telemetryService)
         {
             if (repository == null)
                 throw new ArgumentNullException(nameof(repository), $"{nameof(repository)} is null.");
@@ -97,6 +107,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 var saveThis = sender as IStoredDatabaseConnectionString;
 
+                _TelemetryService.TrackEvent("Database Connections - Save");
+
                 _Repository.Save(saveThis);
             }
         }
@@ -112,6 +124,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             Connections.Add(temp);
 
             temp.IsSelected = true;
+
+            _TelemetryService.TrackEvent("Database Connections - Add");
         }
 
         private ICommand _DeleteConnectionCommand;
@@ -138,6 +152,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 _Repository.Delete(removeThis);
                 Connections.Items.Remove(removeThis);
                 IsConnectionEditorEnabled = false;
+
+                _TelemetryService.TrackEvent("Database Connections - Delete");
             }
         }
 
