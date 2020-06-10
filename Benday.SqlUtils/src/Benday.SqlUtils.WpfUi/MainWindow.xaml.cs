@@ -77,7 +77,7 @@ namespace Benday.SqlUtils.WpfUi
 
             if (temp != null)
             {
-                temp.Telemetry.TrackEvent("SelectControl", "ControlName", controlName);
+                temp.Telemetry.TrackEvent($"SelectControl - {controlName}");
                 temp.Telemetry.Flush();
             }
 

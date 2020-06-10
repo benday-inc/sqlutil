@@ -276,7 +276,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value, 
                     "MatchMethod", SearchStringMethod.SelectedItem.Value);
 
@@ -294,7 +294,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value,
                     "MatchMethod", SearchStringMethod.SelectedItem.Value);
 
@@ -315,7 +315,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value,
                     "MatchMethod", SearchStringMethod.SelectedItem.Value, 
                     "ColumnNameHasValue", HasValue(SearchByColumnName.Value),
@@ -336,7 +336,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value,
                     "MatchMethod", SearchStringMethod.SelectedItem.Value,
                     "StoredProcedureNameHasValue", HasValue(SearchByValue.Value));
@@ -355,7 +355,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value,
                     "MatchMethod", SearchStringMethod.SelectedItem.Value,
                     "StoredProcedureParameterNameHasValue", HasValue(SearchByValue.Value));
@@ -374,7 +374,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 Result = query;
 
                 Telemetry.TrackEvent(
-                    $"{nameof(SearchViewModel)}.{nameof(Search)}()",
+                    $"Search - {SearchType.SelectedItem.Value}",
                     "SearchType", SearchType.SelectedItem.Value,
                     "MatchMethod", SearchStringMethod.SelectedItem.Value,
                     "SearchTextHasValue", HasValue(SearchByValue.Value));
