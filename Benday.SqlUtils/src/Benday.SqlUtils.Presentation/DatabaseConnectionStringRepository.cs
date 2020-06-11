@@ -34,7 +34,7 @@ namespace Benday.SqlUtils.Presentation
 
                     _ConnectionsFilePath = Path.Combine(appdata, 
                         "Benjamin Day Consulting, Inc.", 
-                        "SQL Server Utilities", 
+                        "Shovel", 
                         "connections.xml");
                 }
                 return _ConnectionsFilePath;
