@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="ec4b675f-3591-4116-b75b-3ca346f3a49d"
-    Publisher="CN=benday-self-signed"
-    Version="1.0.0.0" />
+    Name="BenjaminDayConsultingInc.SQLDataShovel"
+    Publisher="CN=EF9A1AE6-FDF6-47F2-B542-8DC9E294B083"
+    Version="1.0.10.0" />
 
   <Properties>
     <DisplayName>Shovel</DisplayName>
-    <PublisherDisplayName>Benjamin Day Consulting, Inc.</PublisherDisplayName>
+    <PublisherDisplayName>Benjamin Day Consulting Inc</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 

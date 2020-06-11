@@ -33,6 +33,7 @@
     <Company>Benjamin Day Consulting, Inc.</Company>
     <PackageId>Benday.Shovel.WpfUi</PackageId>
     <PackageIcon>bdc_mark_large.jpg</PackageIcon>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
