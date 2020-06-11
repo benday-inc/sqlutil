@@ -16,7 +16,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel>
-            <Label Content="Data Shovel" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="Shovel" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Label Content="Database utilities for SQL Server" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Label Content="by" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
         </StackPanel>

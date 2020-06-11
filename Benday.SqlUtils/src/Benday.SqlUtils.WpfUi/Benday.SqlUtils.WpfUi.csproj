@@ -3,6 +3,10 @@
   <ItemGroup>
     <None Remove="ApplicationInsights.config" />
     <None Remove="bdc_logo_960x180.png" />
+    <None Include="bdc_mark_large.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -22,9 +26,13 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>bdc-mark-icon.ico</ApplicationIcon>
     <Authors>Benjamin Day</Authors>
-    <Product>Data Shovel</Product>
+    <Product>Shovel</Product>
     <AssemblyName>Benday.DataShovel.WpfUi</AssemblyName>
-    <Description>Database utilities for SQL Server</Description>
+    <Description>Shovel: Database utilities for SQL Server</Description>
+    <Copyright>2020</Copyright>
+    <Company>Benjamin Day Consulting, Inc.</Company>
+    <PackageId>Benday.Shovel.WpfUi</PackageId>
+    <PackageIcon>bdc_mark_large.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
