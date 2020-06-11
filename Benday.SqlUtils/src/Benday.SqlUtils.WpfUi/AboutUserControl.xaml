@@ -16,7 +16,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel>
-            <Label Content="SQL Server Utilities" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="Data Shovel" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="Database utilities for SQL Server" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Label Content="by" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
         </StackPanel>
 
@@ -43,7 +44,7 @@
                     <MenuItem Header="Reset Settings" Click="MenuItem_Click" ></MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <Label Content="June 2020 Release" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="June 2020 Release (v1.0)" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </StackPanel>
         <StackPanel Grid.Row="4">
             <CheckBox x:Name="_CheckboxSendTelemetry" Content="Send Anonymous Telemetry" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="_CheckboxSendTelemetry_Checked" Unchecked="_CheckboxSendTelemetry_Unchecked" />

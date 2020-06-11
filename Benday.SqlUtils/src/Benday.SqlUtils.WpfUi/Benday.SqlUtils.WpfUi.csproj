@@ -22,7 +22,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>bdc-mark-icon.ico</ApplicationIcon>
     <Authors>Benjamin Day</Authors>
-    <Product>SQL Server Utilities</Product>
+    <Product>Data Shovel</Product>
+    <AssemblyName>Benday.DataShovel.WpfUi</AssemblyName>
+    <Description>Database utilities for SQL Server</Description>
   </PropertyGroup>
 
   <ItemGroup>
