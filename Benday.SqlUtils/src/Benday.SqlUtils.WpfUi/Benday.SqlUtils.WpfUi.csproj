@@ -24,7 +24,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>bdc-mark-icon.ico</ApplicationIcon>
+    <ApplicationIcon>shovel-400-400.ico</ApplicationIcon>
     <Authors>Benjamin Day</Authors>
     <Product>Shovel</Product>
     <AssemblyName>Benday.DataShovel.WpfUi</AssemblyName>

@@ -10,14 +10,14 @@ namespace Benday.SqlUtils.UnitTests
     [TestClass]
     public class ImageFixture
     {
-        // [TestMethod]
+        [TestMethod]
         public void CreateIcon()
         {
-            var img = System.Drawing.Image.FromFile(@"C:\Users\benday\OneDrive - Benjamin Day Consulting, Inc\projects\logos\bdc_mark_256_256_transparent.png");
+            var img = System.Drawing.Image.FromFile(@"C:\code\repos\sql-server-utils\Benday.SqlUtils\src\Benday.SqlUtils.WpfUi\shovel-400-400.png");
 
             var icon = IconFromImage(img);
 
-            var filename = @"C:\Users\benday\OneDrive - Benjamin Day Consulting, Inc\projects\logos\bdc-mark-icon.ico";
+            var filename = @"C:\code\repos\sql-server-utils\Benday.SqlUtils\src\Benday.SqlUtils.WpfUi\shovel-400-400.ico";
 
             using (var stream = new FileStream(filename, FileMode.OpenOrCreate))
             {
