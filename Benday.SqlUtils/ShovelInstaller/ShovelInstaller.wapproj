@@ -56,7 +56,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <EntryPointProjectUniqueName>..\src\Benday.SqlUtils.WpfUi\Benday.SqlUtils.WpfUi.csproj</EntryPointProjectUniqueName>
-    <PackageCertificateThumbprint>33E9AF5D5D70AF8FA2DB7C352368353B951D08DC</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>BF3CCFBC309C28DDBEA86C754FE2E2B3689A083F</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
