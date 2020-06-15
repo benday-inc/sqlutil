@@ -7,8 +7,10 @@
     <FontFamily x:Key="LabelFontFamily">Segoe UI</FontFamily>
 
     <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
+    <Brush x:Key="FieldFontColor">Gray</Brush>
 
     <system:Double x:Key="LabelFontSize">15</system:Double>
+    <system:Double x:Key="ButtonFontSize">13</system:Double>
 
     <system:Double x:Key="DefaultFieldControlHeight">32</system:Double>
 
@@ -217,7 +219,7 @@
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
         <Setter Property="Width" Value="140" />
         <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />

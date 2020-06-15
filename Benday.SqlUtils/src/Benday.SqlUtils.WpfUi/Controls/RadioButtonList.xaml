@@ -18,7 +18,7 @@
                             TextWrapping="Wrap"   
                             Margin="0"
                             Style="{StaticResource FieldLabelContentStyle}"
-                            Text="{Binding Text, Converter={StaticResource ToUpperCaseValueConverterInstance}}" />
+                            Text="{Binding Text}" />
                     </RadioButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -14,9 +14,7 @@ namespace Benday.SqlUtils.WpfUi.Controls
 
             if (target != null && tempValue != null)
             {
-                string newValueToUpper = tempValue.ToUpper();
-                
-                target.SetLabelText(newValueToUpper);
+                target.SetLabelText(tempValue);
             }
         }
 
