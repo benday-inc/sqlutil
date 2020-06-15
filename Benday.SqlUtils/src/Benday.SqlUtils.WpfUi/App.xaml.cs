@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Benday.SqlUtils.WpfUi.ViewModel;
+using Microsoft.ApplicationInsights.DataContracts;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,5 +16,33 @@ namespace Benday.SqlUtils.WpfUi
     /// </summary>
     public partial class App : Application
     {
+        private ViewModelLocator _LocatorInstance;
+        public ViewModelLocator LocatorInstance
+        {
+            get
+            {
+                if (_LocatorInstance == null)
+                {
+                    _LocatorInstance = FindResource("Locator") as ViewModelLocator;
+                }
+
+                return _LocatorInstance;
+            }
+        }
+
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            LocatorInstance.Telemetry.TrackEvent("Startup");
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            LocatorInstance.Telemetry.TrackException(e.Exception, nameof(Application_DispatcherUnhandledException));
+        }
     }
 }

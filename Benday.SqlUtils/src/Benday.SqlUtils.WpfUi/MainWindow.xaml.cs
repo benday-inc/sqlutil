@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Benday.SqlUtils.WpfUi.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,29 @@ namespace Benday.SqlUtils.WpfUi
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp == null)
+            {
+                throw new InvalidOperationException("Could not load view model locator");
+            }
+            else
+            {
+                if (temp.IsFirstRun() == true)
+                {
+                    var result = MessageBox.Show("Thanks for trying this app.  FYI, we capture anonymous feature usage data to help monitor and improve this product.  We don't collect any details about your database or the text of the queries you run.  You ok with this?  You can change this later and view our privacy policy on the About tab." + Environment.NewLine + "Click 'yes' to share telemetry or 'no' to not share telemetry.", "Telemetry / Privacy", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        temp.SetTelemetry(true);
+                    }
+                    else
+                    {
+                        temp.SetTelemetry(false);
+                    }
+                }
+            }
+
             _Controls = new Dictionary<string, UserControl>();
             _MenuButtons = new Dictionary<string, Button>();
 
@@ -71,6 +95,14 @@ namespace Benday.SqlUtils.WpfUi
         private void SelectControl(string controlName)
         {
             _CurrentControl.Content = _Controls[controlName];
+
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp != null)
+            {
+                temp.Telemetry.TrackEvent($"SelectControl - {controlName}");
+                temp.Telemetry.Flush();
+            }
 
             var selectedButton = _MenuButtons[controlName];
 
@@ -128,5 +160,17 @@ namespace Benday.SqlUtils.WpfUi
         {
             SelectControl("About");
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var temp = TryFindResource("Locator") as ViewModelLocator;
+
+            if (temp != null)
+            {
+                temp.Telemetry.TrackEvent("MainWindow closing", "RunningTimeInSeconds", temp.RunningTimeInSeconds.ToString());
+                temp.Telemetry.Flush();
+            }
+        }
+
     }
 }

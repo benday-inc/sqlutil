@@ -5,26 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Benday.SqlUtils.WpfUi"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" >
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel>
-            <Label Content="SQL Server Utilities" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="Shovel" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label Content="Database utilities for SQL Server" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Label Content="by" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
         </StackPanel>
 
         <Image Grid.Row="1" Margin="10" MouseDown="Image_MouseDown" Source="/bdc_logo_960x180.png" />
         <StackPanel Grid.Row="2" >
-            <Label Content="https://www.benday.com" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Label_MouseDown" />
-            <Label Content="info@benday.com" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" MouseDown="Label_MouseDown_1" />
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Label_MouseDown">
+                <TextBlock Text="https://www.benday.com" FontSize="24" Foreground="Blue" >
+                    <TextBlock.TextDecorations>
+                        <TextDecoration/>
+                    </TextBlock.TextDecorations>
+                </TextBlock>
+            </Label>
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Label_MouseDown_1">
+                <TextBlock Text="info@benday.com" FontSize="24" Foreground="Blue" >
+                    <TextBlock.TextDecorations>
+                        <TextDecoration/>
+                    </TextBlock.TextDecorations>
+                </TextBlock>
+            </Label>
         </StackPanel>
         <StackPanel Grid.Row="3" >
-            <Label Content="June 2020 Release" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Reset Settings" Click="MenuItem_Click" ></MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <Label x:Name="_LabelVersion" Content="June 2020 Release (v1.0)" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </StackPanel>
+        <StackPanel Grid.Row="4">
+            <CheckBox x:Name="_CheckboxSendTelemetry" Content="Send Anonymous Telemetry" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="_CheckboxSendTelemetry_Checked" Unchecked="_CheckboxSendTelemetry_Unchecked" />
+            <Label x:Name="_LabelViewPrivacyPolicy" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="_LabelViewPrivacyPolicy_MouseDown" >
+                <TextBlock Text="Privacy Policy" Foreground="Blue" >
+                    <TextBlock.TextDecorations>
+                        <TextDecoration/>
+                    </TextBlock.TextDecorations>
+                </TextBlock>
+            </Label>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

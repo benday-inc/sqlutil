@@ -2,6 +2,7 @@
 using Benday.SqlUtils.Api;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,6 +11,28 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseQueryViewModelBase : ViewModelBase
     {
+        public DatabaseQueryViewModelBase()
+        {
+            _ProgressInfo = new ProgressBarViewModel();
+            _ProgressInfo.IsProgressBarVisible = false;
+        }
+
+        private const string ProgressInfoPropertyName = "ProgressInfo";
+
+        protected ProgressBarViewModel _ProgressInfo;
+        public ProgressBarViewModel ProgressInfo
+        {
+            get
+            {
+                return _ProgressInfo;
+            }
+            set
+            {
+                _ProgressInfo = value;
+                RaisePropertyChanged(ProgressInfoPropertyName);
+            }
+        }
+
         private const string IsVisiblePropertyName = "IsVisible";
 
         private bool _IsVisible;
@@ -28,9 +51,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         protected const string ResultsPropertyName = "Results";
 
-        private DataTable _Results;
+        private ObservableCollection<object> _Results;
 
-        public DataTable Results
+        public ObservableCollection<object> Results
         {
             get
             {

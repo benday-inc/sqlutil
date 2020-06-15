@@ -1,16 +1,30 @@
-﻿using System;
+﻿using Benday.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchByTextColumnContentQueryViewModel : DatabaseQueryViewModelBase
     {
+        public SearchByTextColumnContentQueryViewModel()
+        {
+            _ProgressInfo.IsCancelable = true;
+            _ProgressInfo.OnCancelRequested += _ProgressInfo_OnCancelRequested;
+            _ProgressInfo.IsProgressBarVisible = false;
+        }
+
+        private void _ProgressInfo_OnCancelRequested(object sender, EventArgs e)
+        {
+            _StopSearchRequested = true;
+        }        
+
         protected override string SqlQueryTemplate
         {
             get
@@ -33,42 +47,28 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             return args;
         }
 
+        private object _SyncLock = new object();
+
         public override void Execute()
         {
             IsVisible = true;
 
-            var dataset = new DataSet();
+            Results = new System.Collections.ObjectModel.ObservableCollection<object>();
 
-            var results = new DataTable();
+            BindingOperations.EnableCollectionSynchronization(Results, _SyncLock);
 
-            results.TableName = "Results";
-
-            dataset.Tables.Add(results);
-
-            results.Columns.Add("TABLE SCHEMA", typeof(string));
-            results.Columns.Add("TABLE NAME", typeof(string));
-            results.Columns.Add("COLUMN NAME", typeof(string));
-            results.Columns.Add("RECORD COUNT", typeof(int));
-            results.Columns.Add("QUERY", typeof(string));
-
-            Results = results;
-
-            FindTextInColumn(false);
+            FindTextInColumn(true);
         }
 
         private void FindTextInColumn(bool runAsync)
         {
-            ProgressMessage = "Starting search...";
-
-            IsStopSearchButtonVisible = true;
+            ProgressInfo.ProgressBarMessage = "Starting search...";
 
             IsSearchRunning = true;
 
             if (runAsync == true)
             {
-                // ThreadPool.QueueUserWorkItem(new WaitCallback(FindTextInColumn), results);
-
-                Task.Run(() => FindTextInColumn()).Wait();
+                Task.Run(() => FindTextInColumn());
             }
             else
             {
@@ -91,9 +91,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 tableName = String.Empty;
             }
 
-            //DataTable resultsDataTable = tempDataTable as DataTable;
-
-            ProgressMessage = String.Empty;
+            ProgressInfo.IsProgressBarVisible = true;
+            ProgressInfo.ProgressBarMessage = "Starting search...";
             _StopSearchRequested = false;
 
             try
@@ -140,27 +139,30 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 string template =
                     "select count(*) as recordCount from [{0}].[{1}] where [{2}] like '%{3}%'";
 
+                string message = null;
+
                 using (SqlConnection connection = GetSqlConnection())
                 {
                     connection.Open();
 
                     int recordCount = 0;
 
-                    object[] vals = new object[5];
-
                     foreach (DataRow row in textColumnsDataTable.Rows)
                     {
                         if (_StopSearchRequested == true)
                         {
                             // a stop has been requested
+                            ProgressInfo.ProgressBarMessage = "Search canceled.";
                             break;
                         }
 
-                        ProgressMessage =
-                            "Searching [" + row["table_schema"].ToString() + "]." +
+                        message = "Searching [" + row["table_schema"].ToString() + "]." +
                             "[" + row["table_name"].ToString() + "].[" +
                             row["column_name"].ToString() + "]...";
 
+                        Console.WriteLine(message);
+                        ProgressInfo.ProgressBarMessage = message;
+                            
                         query = String.Format(
                             template, row["table_schema"], row["table_name"], row["column_name"],
                             GetArgumentValue("SEARCH_TEXT"));
@@ -170,21 +172,23 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                         if (recordCount > 0)
                         {
-                            AddRow(row, recordCount, query);
+                            // AddRow(row, recordCount, query);
 
-                            //Dispatcher.CurrentDispatcher.BeginInvoke(
-                            //    new Action(() => AddRow(row, recordCount, query)));
+                            Console.WriteLine("** Adding row for {0}", query);
+                            
+                            Results.Add(new TextQueryResultRow(row, query, recordCount));
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ProgressMessage = ex.ToString();
+                ProgressInfo.ProgressBarMessage = ex.ToString();
             }
             finally
             {
-                ProgressMessage = "Search complete.";
+                ProgressInfo.ProgressBarMessage = "Search complete.";
+                ProgressInfo.IsProgressBarVisible = false;
                 IsSearchRunning = false;
                 RaisePropertyChanged(ResultsPropertyName);
             }
@@ -205,22 +209,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 _IsSearchRunning = value;
                 RaisePropertyChanged(IsSearchRunningPropertyName);
-            }
-        }
-
-        private const string ProgressMessagePropertyName = "ProgressMessage";
-
-        private string _ProgressMessage;
-        public string ProgressMessage
-        {
-            get
-            {
-                return _ProgressMessage;
-            }
-            set
-            {
-                _ProgressMessage = value;
-                RaisePropertyChanged(ProgressMessagePropertyName);
             }
         }
 
@@ -374,37 +362,6 @@ order by c.table_name, c.column_name
                 return (int)command.ExecuteScalar();
             }
         }
-
-        private const string IsStopSearchButtonVisiblePropertyName = "IsStopSearchButtonVisible";
-
-        private bool _IsStopSearchButtonVisible;
-        public bool IsStopSearchButtonVisible
-        {
-            get
-            {
-                return _IsStopSearchButtonVisible;
-            }
-            set
-            {
-                _IsStopSearchButtonVisible = value;
-                RaisePropertyChanged(IsStopSearchButtonVisiblePropertyName);
-            }
-        }
-
-        private void AddRow(DataRow row, int recordCount, string query)
-        {
-            var tempRow = Results.NewRow();
-
-            tempRow["table schema"] = row["table_schema"];
-            tempRow["table name"] = row["table_name"];
-            tempRow["column name"] = row["column_name"];
-            tempRow["record count"] = recordCount;
-            tempRow["query"] = query;
-
-            Results.Rows.Add(tempRow);
-        }
-
-
 
         public DataTable ExecuteCommand(SqlCommand command)
         {

@@ -1,7 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <ItemGroup>
+    <None Remove="ApplicationInsights.config" />
     <None Remove="bdc_logo_960x180.png" />
+    <None Include="bdc_mark_large.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -13,15 +24,43 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>bdc-mark-icon.ico</ApplicationIcon>
+    <ApplicationIcon>shovel-400-400.ico</ApplicationIcon>
+    <Authors>Benjamin Day</Authors>
+    <Product>Shovel</Product>
+    <AssemblyName>Benday.DataShovel.WpfUi</AssemblyName>
+    <Description>Shovel: Database utilities for SQL Server</Description>
+    <Copyright>2020</Copyright>
+    <Company>Benjamin Day Consulting, Inc.</Company>
+    <PackageId>Benday.Shovel.WpfUi</PackageId>
+    <PackageIcon>bdc_mark_large.jpg</PackageIcon>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.14.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.PerfCounterCollector" Version="2.14.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer" Version="2.14.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="2.14.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="bdc_logo_960x180.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SqlUtilSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SqlUtilSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SqlUtilSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SqlUtilSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

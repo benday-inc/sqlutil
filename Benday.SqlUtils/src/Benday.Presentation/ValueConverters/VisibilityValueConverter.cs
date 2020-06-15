@@ -13,7 +13,16 @@ namespace Benday.Presentation.ValueConverters
     {        
         protected override object ConvertTo(object value, Type targetType)
         {
-            bool valueAsBoolean = (bool)value;
+            bool valueAsBoolean = false;
+
+            if (value is bool)
+            {
+                valueAsBoolean = (bool)value;
+            }
+            else if (value != null)
+            {
+                Boolean.TryParse(value.ToString(), out valueAsBoolean);
+            }
 
             if (valueAsBoolean == true)
             {

@@ -13,8 +13,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchViewModel : DatabaseUtilityViewModelBase
     {
-        public SearchViewModel(IDatabaseConnectionStringRepository repository) : 
-            base(repository)
+        public SearchViewModel(IDatabaseConnectionStringRepository repository,
+            ITelemetryService telemetry) : 
+            base(repository, telemetry)
         {
             
         }
@@ -250,6 +251,13 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             Console.WriteLine();
         }
 
+        private string HasValue(string value)
+        {
+            var returnValue = !String.IsNullOrWhiteSpace(value);
+
+            return returnValue.ToString();
+        }
+
         private void Search()
         {
             if (SearchType.SelectedItem == null)
@@ -267,6 +275,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                 Result = query;
 
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value, 
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value);
+
                 query.Execute();
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeColumnName)
@@ -279,6 +292,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
                 Result = query;
+
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value,
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value);
 
                 query.Execute();
             }
@@ -293,10 +311,18 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 query.SetArgumentValue("SEARCH_TEXT", SearchByValue.Value);
 
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
-                
-                query.Execute();
 
                 Result = query;
+
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value,
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value, 
+                    "ColumnNameHasValue", HasValue(SearchByColumnName.Value),
+                    "TableNameHasValue", HasValue(SearchByTableName.Value),
+                    "SearchTextHasValue", HasValue(SearchByValue.Value));
+
+                query.Execute();
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureName)
             {
@@ -308,6 +334,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
                 Result = query;
+
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value,
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value,
+                    "StoredProcedureNameHasValue", HasValue(SearchByValue.Value));
 
                 query.Execute();
             }
@@ -322,6 +354,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                 Result = query;
 
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value,
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value,
+                    "StoredProcedureParameterNameHasValue", HasValue(SearchByValue.Value));
+
                 query.Execute();
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureSourceCode)
@@ -334,6 +372,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
                 Result = query;
+
+                Telemetry.TrackEvent(
+                    $"Search - {SearchType.SelectedItem.Value}",
+                    "SearchType", SearchType.SelectedItem.Value,
+                    "MatchMethod", SearchStringMethod.SelectedItem.Value,
+                    "SearchTextHasValue", HasValue(SearchByValue.Value));
 
                 query.Execute();
             }
@@ -359,6 +403,5 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(ResultPropertyName);
             }
         }
-
     }
 }

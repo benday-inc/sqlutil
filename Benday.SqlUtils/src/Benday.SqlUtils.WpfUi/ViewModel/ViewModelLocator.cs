@@ -16,6 +16,15 @@ using Benday.SqlUtils.Api;
 using Benday.SqlUtils.Presentation;
 using Benday.SqlUtils.Presentation.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector;
+using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Windows;
 
 namespace Benday.SqlUtils.WpfUi.ViewModel
 {
@@ -43,10 +52,24 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
             
+            _AppStartTime = DateTime.UtcNow;
+
             SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
             SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
             SimpleIoc.Default.Register<DataExportViewModel>();
+        }
+
+        private DateTime _AppStartTime;
+
+        public double RunningTimeInSeconds
+        {
+            get
+            {
+                var duration = DateTime.UtcNow - _AppStartTime;
+
+                return duration.TotalSeconds;
+            }
         }
 
         private DatabaseConnectionsViewModel _ConnectionsEditor;
@@ -57,12 +80,11 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_ConnectionsEditor == null)
                 {
                     _ConnectionsEditor = new DatabaseConnectionsViewModel(
-                        new DatabaseConnectionStringRepository());
+                        new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _ConnectionsEditor;
             }
         }
-
 
         private SearchViewModel _Search;
         public SearchViewModel Search
@@ -72,7 +94,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_Search == null)
                 {
                     _Search = new SearchViewModel(
-                        new DatabaseConnectionStringRepository());
+                        new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _Search;
             }
@@ -88,15 +110,152 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                     _DataExport = new DataExportViewModel(
                         new DatabaseConnectionStringRepository(),
                         new SqlServerDatabaseUtility(), 
-                        new FileService());
+                        new FileService(), Telemetry);
                 }
                 return _DataExport;
             }
         }
 
+        private ConfigurationInfo _Configuration;
+        public ConfigurationInfo Configuration
+        {
+            get
+            {
+                if (_Configuration == null)
+                {
+                    _Configuration = new ConfigurationInfo();
+                }
+
+                return _Configuration;
+            }
+        }
+
+        public bool IsTelemetryEnabled()
+        {
+            if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsTelemetryEnabled) == true)
+            {
+                SqlUtilSettings.Default.AppInsightsTelemetryEnabled = true.ToString().ToLower();
+                SqlUtilSettings.Default.Save();
+                return true;
+            }
+            else if (SqlUtilSettings.Default.AppInsightsTelemetryEnabled == true.ToString().ToLower())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private ITelemetryService _Telemetry;
+        public ITelemetryService Telemetry
+        {
+            get
+            {
+                if (_Telemetry == null)
+                {
+                    var enabled = IsTelemetryEnabled();
+
+                    var config = TelemetryConfiguration.CreateDefault();
+
+                    /*
+                    var perfCollectorModule = new PerformanceCollectorModule();
+                    perfCollectorModule.Counters.Add(new PerformanceCounterCollectionRequest(
+                      string.Format(@"\.NET CLR Memory({0})\# GC Handles", System.AppDomain.CurrentDomain.FriendlyName), "GC Handles"));
+                    perfCollectorModule.Initialize(config);
+                    */
+
+                    config.DisableTelemetry = !enabled;
+
+                    var client = new TelemetryClient(config);
+
+                    _Telemetry = new AppInsightsTelemetryService(client);
+
+                    if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsUserId) == true)
+                    {
+                        SqlUtilSettings.Default.AppInsightsUserId = Guid.NewGuid().ToString();
+                        SqlUtilSettings.Default.Save();
+                    }
+
+                    bool isFirstUserSession = false;
+
+                    if (String.IsNullOrWhiteSpace(SqlUtilSettings.Default.AppInsightsUserSessionIsFirst) == true)
+                    {
+                        isFirstUserSession = true;
+
+                        SqlUtilSettings.Default.AppInsightsUserSessionIsFirst = "false";
+                        SqlUtilSettings.Default.Save();
+                    }
+
+                    client.Context.User.Id = SqlUtilSettings.Default.AppInsightsUserId;
+
+                    var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+                    client.Context.GlobalProperties.Add("OSVersion", Environment.OSVersion.ToString());
+                    client.Context.GlobalProperties.Add("AppName", System.AppDomain.CurrentDomain.FriendlyName);
+                    client.Context.GlobalProperties.Add("AppVersion", assembly.FullName);
+                    client.Context.GlobalProperties.Add("CurrentCulture", CultureInfo.CurrentCulture.ToString());
+
+                    client.Context.GlobalProperties.Add("TimeZone", TimeZoneInfo.Local.ToString());
+
+                    client.Context.GlobalProperties.Add("IsFirstTimeUsingApp", isFirstUserSession.ToString());
+
+                    client.Context.GlobalProperties.Add("PrimaryScreenWidth", SystemParameters.PrimaryScreenWidth.ToString());
+                    client.Context.GlobalProperties.Add("PrimaryScreenHeight", SystemParameters.PrimaryScreenHeight.ToString());
+
+                    client.Context.Session.Id = Guid.NewGuid().ToString();
+                    client.Context.Session.IsFirst = isFirstUserSession;
+                }
+
+                return _Telemetry;
+            }
+        }
+
+        private string _ApplicationAppDataPath;
+        public string ApplicationAppDataPath
+        {
+            get
+            {
+                if (_ApplicationAppDataPath == null)
+                {
+                    _ApplicationAppDataPath = Path.Combine(
+                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                     System.AppDomain.CurrentDomain.FriendlyName);
+
+                    if (Directory.Exists(_ApplicationAppDataPath) == false)
+                    {
+                        Directory.CreateDirectory(_ApplicationAppDataPath);
+                    }
+                }
+
+                return _ApplicationAppDataPath;
+            }
+        }
+
+        public void SetTelemetry(bool value)
+        {
+            Telemetry.TrackEvent($"Set Telemetry - {value}");
+            SqlUtilSettings.Default.AppInsightsTelemetryEnabled = value.ToString().ToLower();
+            SqlUtilSettings.Default.Save();
+            Telemetry.SetTelemetry(value);
+        }        
+
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            
+        }
+        public bool IsFirstRun()
+        {
+            var value = SqlUtilSettings.Default.IsFirstRunOfApp;
+
+            if (value == true)
+            {
+                SqlUtilSettings.Default.IsFirstRunOfApp = false;
+                SqlUtilSettings.Default.Save();
+            }
+
+            return value;
         }
     }
 }

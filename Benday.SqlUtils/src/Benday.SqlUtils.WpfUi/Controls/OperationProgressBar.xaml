@@ -5,13 +5,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:helpers="clr-namespace:Benday.SqlUtils.WpfUi.Controls"
-    d:DesignHeight="100" d:DesignWidth="400" 
-             Visibility="{Binding IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}}">
+    d:DesignHeight="130" d:DesignWidth="400" 
+             Visibility="{Binding IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}, FallbackValue={x:Static Visibility.Collapsed}}">
     <Grid x:Name="LayoutRoot" Background="White">
         <Border>
             <StackPanel >
-                <TextBlock Text="{Binding ProgressBarMessage}" Margin="4,40,4,4"  HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <ProgressBar x:Name="m_progressBar" Margin="6" Height="20" IsIndeterminate="{Binding IsProgressBarVisible}" />
+                <TextBlock Text="{Binding ProgressBarMessage}" Margin="4,40,4,4" 
+                           HorizontalAlignment="Center" TextWrapping="Wrap" />
+                <ProgressBar x:Name="_ProgressBar" Margin="6" Height="20" 
+                             IsIndeterminate="{Binding IsProgressBarVisible}" />
+                <Button x:Name="_CancelButton" Content="Cancel" Margin="6" Width="80" 
+                        Command="{Binding CancelOperationCommand}"
+                        Visibility="{Binding IsCancelable, Converter={StaticResource VisibilityValueConverterInstance}}"/>
             </StackPanel>
         </Border>
     </Grid>

@@ -88,25 +88,47 @@ namespace Benday.SqlUtils.WpfUi
                 }
             }
         }
+
         private void PopulateContextMenu(SearchByColumnNameQueryViewModel search)
         {
-            AddDescribeTableToContextMenu("TABLE_NAME");
+            AddDescribeTableToContextMenu();
         }
+
         private void PopulateContextMenu(SearchByTableNameQueryViewModel search)
         {
-            AddDescribeTableToContextMenu("TABLE_NAME");
+            AddDescribeTableToContextMenu();
+        }
+        private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
+        {
+            AddDescribeTableToContextMenu();
+            AddCopyValueToClipboardContextMenu("QUERY");
         }
 
-        private void AddDescribeTableToContextMenu(string tableNameColumn)
+        private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            AddDescribeStoredProcedureToContextMenu();
+        }
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(tableNameColumn) == false)
+        private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
+        {
+            AddDescribeStoredProcedureToContextMenu();
+        }
+
+        private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
+        {
+            AddDescribeStoredProcedureToContextMenu();
+        }
+
+        private void AddDescribeTableToContextMenu()
+        {
+            var selectedItem = _ResultGrid.SelectedItem as ITableName;
+
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var tableName = selectedItem[tableNameColumn];
+            var tableName = selectedItem.TableName;
 
             var descTable = new MenuItem();
 
@@ -117,16 +139,16 @@ namespace Benday.SqlUtils.WpfUi
             _ResultGrid.ContextMenu.Items.Add(descTable);
         }
 
-        private void AddDescribeStoredProcedureToContextMenu(string columnName)
+        private void AddDescribeStoredProcedureToContextMenu()
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            var selectedItem = _ResultGrid.SelectedItem as IStoredProcedureName;
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(columnName) == false)
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var name = selectedItem[columnName];
+            var name = selectedItem.Name;
 
             var descTable = new MenuItem();
 
@@ -152,7 +174,7 @@ namespace Benday.SqlUtils.WpfUi
                 dialog.DescribeTable(connectionString, menuItem.Tag.ToString());
 
                 dialog.ShowDialog();
-            }                    
+            }
         }
 
         private void DescribeStoredProcedure_Click(object sender, RoutedEventArgs e)
@@ -175,14 +197,14 @@ namespace Benday.SqlUtils.WpfUi
 
         private void AddCopyValueToClipboardContextMenu(string valueColumnName)
         {
-            var selectedItem = _ResultGrid.SelectedItem as DataRowView;
+            var selectedItem = _ResultGrid.SelectedItem as TextQueryResultRow;
 
-            if (selectedItem == null || selectedItem.Row.Table.Columns.Contains(valueColumnName) == false)
+            if (selectedItem == null)
             {
                 return;
             }
 
-            var value = selectedItem[valueColumnName];
+            var value = selectedItem.Query;
 
             var copyToClipboard = new MenuItem();
 
@@ -193,26 +215,21 @@ namespace Benday.SqlUtils.WpfUi
             _ResultGrid.ContextMenu.Items.Add(copyToClipboard);
         }
 
-        private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
+        private void _ResultGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            AddDescribeTableToContextMenu("TABLE NAME");
-            AddCopyValueToClipboardContextMenu("QUERY");
-        }
+            var columnNameMap = new Dictionary<string, string>();
 
-        private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
-        }
+            columnNameMap.Add("ParameterName", "Parameter Name");
+            columnNameMap.Add("DataType", "Data Type");
+            columnNameMap.Add("ValueLength", "Value Length");
+            columnNameMap.Add("ParameterMode", "Parameter Mode");
+            columnNameMap.Add("FieldLength", "Field Length");
+            columnNameMap.Add("Records", "Record Count");
 
-        private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
+            if (columnNameMap.ContainsKey(e.PropertyName) == true)
+            {
+                e.Column.Header = columnNameMap[e.PropertyName];
+            }
         }
-        
-        private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu("name");
-        }
-
     }
 }

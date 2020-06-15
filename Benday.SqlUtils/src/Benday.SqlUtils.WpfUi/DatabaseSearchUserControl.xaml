@@ -41,12 +41,28 @@
                     Content="P" FontSize="22"
                     ></Button>
         </Grid>
-        <Grid Grid.Row="1">
+
+
+        <Grid x:Name="_SearchGrid" Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <Canvas Grid.ColumnSpan="3" Panel.ZIndex="1" 
+                    Width="{Binding ElementName=_SearchGrid, Path=ActualWidth}"
+      Height="{Binding ElementName=_SearchGrid, Path=ActualHeight}"
+                    Background="White"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Visibility="{Binding Result.ProgressInfo.IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <ctrls:OperationProgressBar 
+                Background="White"
+                DataContext="{Binding Result.ProgressInfo}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Width="{Binding ElementName=_SearchGrid, Path=ActualWidth}"
+      Height="{Binding ElementName=_SearchGrid, Path=ActualHeight}"
+                    />
+            </Canvas>
             <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" OnEnterKey="TextboxField_OnEnterKey" />
@@ -87,10 +103,11 @@
                     Grid.ColumnSpan="2"
                     DataContext="{Binding Result, Mode=TwoWay}"
                     Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                    ItemsSource="{Binding Results, Mode=TwoWay}" >
+                          AutoGeneratingColumn="_ResultGrid_AutoGeneratingColumn"
+                    ItemsSource="{Binding Results, Mode=TwoWay}">
                     <DataGrid.ContextMenu>
                         <ContextMenu Opened="ContextMenu_Opened">
-                            
+
                         </ContextMenu>
                     </DataGrid.ContextMenu>
 
@@ -103,9 +120,9 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Height="Auto"
-                    DataContext="{Binding Result, Mode=TwoWay}"
-                    Visibility="{Binding Path=IsVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                    Content="{Binding ProgressMessage, Mode=TwoWay}"
+                    DataContext="{Binding Result.ProgressInfo, Mode=TwoWay}"
+                    Visibility="{Binding Path=IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
+                    Content="{Binding ProgressBarMessage, Mode=TwoWay}"
                     Margin="{StaticResource DefaultFieldMargin}" />
             </Grid>
         </Grid>

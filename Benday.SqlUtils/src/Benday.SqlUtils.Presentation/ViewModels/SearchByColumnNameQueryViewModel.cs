@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -26,6 +27,18 @@ from information_schema.columns where column_name like @COLUMN_NAME ORDER BY COL
             return args;
         }
 
+        private ObservableCollection<object> ToModels(DataTable dataTable)
+        {
+            var returnValue = new ObservableCollection<object>();
+
+            foreach (DataRow item in dataTable.Rows)
+            {
+                returnValue.Add(new SearchByNameResultRow(item));
+            }
+
+            return returnValue;
+        }
+
         public override void Execute()
         {
             IsVisible = false;
@@ -45,7 +58,7 @@ from information_schema.columns where column_name like @COLUMN_NAME ORDER BY COL
                 }
             }
 
-            base.Results = results.Tables[0];
+            base.Results = ToModels(results.Tables[0]);
 
             IsVisible = true;
         }

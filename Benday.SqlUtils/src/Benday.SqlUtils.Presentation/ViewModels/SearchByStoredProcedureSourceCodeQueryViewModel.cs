@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,10 +13,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             get
             {
-
-//                return @"SELECT SPECIFIC_SCHEMA as [Schema], SPECIFIC_NAME as [Name],
-//PARAMETER_NAME as [Parameter Name], DATA_TYPE as [Data Type], CHARACTER_MAXIMUM_LENGTH as [Length], PARAMETER_MODE as [Parameter Mode]
-
                 return @"select distinct params.specific_catalog as [Database Name], params.specific_schema as [Schema], params.specific_name 
 as [Name]
 from INFORMATION_SCHEMA.PARAMETERS params
@@ -60,10 +57,21 @@ order by specific_name";
                 }
             }
 
-            base.Results = results.Tables[0];
+            base.Results = ToModels(results.Tables[0]);
 
             IsVisible = true;
+        }
 
+        private ObservableCollection<object> ToModels(DataTable dataTable)
+        {
+            var returnValue = new ObservableCollection<object>();
+
+            foreach (DataRow item in dataTable.Rows)
+            {
+                returnValue.Add(new SearchByStoredProcedureSourceCodeResultRow(item));
+            }
+
+            return returnValue;
         }
     }
 }

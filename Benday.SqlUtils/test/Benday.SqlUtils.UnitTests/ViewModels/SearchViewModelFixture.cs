@@ -28,7 +28,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 if (_SystemUnderTest == null)
                 {
                     _SystemUnderTest = new SearchViewModel(
-                        DatabaseConnectionStringRepositoryInstance);
+                        DatabaseConnectionStringRepositoryInstance, new MockTelemetryService());
                 }
 
                 return _SystemUnderTest;

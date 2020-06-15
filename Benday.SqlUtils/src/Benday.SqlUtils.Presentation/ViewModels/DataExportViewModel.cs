@@ -21,8 +21,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         public DataExportViewModel(
             IDatabaseConnectionStringRepository repository,
             IDatabaseUtility queryExecuter,
-            IFileService fileDialogService) :
-                    base(repository)
+            IFileService fileDialogService,
+            ITelemetryService telemetry) :
+                    base(repository, telemetry)
         {
             if (queryExecuter == null)
             {
@@ -168,6 +169,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             else
             {
                 Query.IsValid = true;
+
+                Telemetry.TrackEvent(
+                    $"Data Export - Run Query");
 
                 InitializeExporter();
 
@@ -316,11 +320,18 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private string GetInsertScript()
         {
+            Telemetry.TrackEvent(
+                $"Data Export - Create Insert Script",
+                "GenerateIdentityInsert", GenerateIdentityInsert.Value.ToString());
+
             return _Exporter.GetInsertScript(GenerateIdentityInsert.Value);
         }
 
         private string GetMergeIntoScript()
         {
+            Telemetry.TrackEvent(
+                $"Data Export - Create Merge Into Script");
+
             return _Exporter.GetMergeIntoScript();
         }
 

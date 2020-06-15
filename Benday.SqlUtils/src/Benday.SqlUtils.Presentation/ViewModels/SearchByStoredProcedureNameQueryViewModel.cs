@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -48,10 +49,21 @@ SPECIFIC_NAME LIKE @STORED_PROCEDURE_NAME";
                 }
             }
 
-            base.Results = results.Tables[0];
+            base.Results = ToModels(results.Tables[0]);
 
             IsVisible = true;
+        }
+        
+        private ObservableCollection<object> ToModels(DataTable dataTable)
+        {
+            var returnValue = new ObservableCollection<object>();
 
+            foreach (DataRow item in dataTable.Rows)
+            {
+                returnValue.Add(new SearchByStoredProcedureNameResultRow(item));
+            }
+
+            return returnValue;
         }
     }
 }
