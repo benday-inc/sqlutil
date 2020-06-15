@@ -9,10 +9,11 @@
     <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
     <Brush x:Key="FieldFontColor">Gray</Brush>
 
+
     <Brush x:Key="MenuButtonColorSelected">Gray</Brush>
     <Brush x:Key="MenuButtonColorUnselected">LightGray</Brush>
 
-    <system:Double x:Key="LabelFontSize">15</system:Double>
+
     <system:Double x:Key="ButtonFontSize">13</system:Double>
 
     <system:Double x:Key="DefaultFieldControlHeight">32</system:Double>
@@ -22,6 +23,12 @@
     <Thickness x:Key="DefaultFieldMargin">4</Thickness>
 
     <Thickness x:Key="SpacedSeparatedControlMargin">18,18,4,4</Thickness>
+
+    <FontWeight x:Key="LabelFontWeight">Medium</FontWeight>
+    <Brush x:Key="LabelFontColor">DarkSlateGray</Brush>
+    <system:Double x:Key="LabelFontSize">15</system:Double>
+
+    <Brush x:Key="ButtonFontColor">DarkSlateGray</Brush>
 
     <Style x:Key="MenuStackPanel" TargetType="{x:Type StackPanel}">
         <Style.Resources>
@@ -129,10 +136,10 @@
     </Style>
 
     <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource ResourceKey=FieldFontColor}" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=LabelFontColor}" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ResourceKey=LabelFontWeight}" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -219,7 +226,7 @@
     </Style>
 
     <Style x:Key="FieldButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource ResourceKey=FieldFontColor}" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=ButtonFontColor}" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}" />
