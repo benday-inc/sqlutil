@@ -56,9 +56,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="Select Data" Grid.Row="1" Grid.Column="0" >
+            <GroupBox 
+                Style="{StaticResource FieldGroupboxStyle}"
+                Header="Select Data" Grid.Row="1" Grid.Column="0" >
                 <Grid Style="{DynamicResource DialogGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -103,7 +105,9 @@
                 Grid.Column="1"
                 ShowsPreview="True"
                 Width="5" />
-            <GroupBox Header="Export Data" Grid.Row="1" 
+            <GroupBox 
+                Style="{StaticResource FieldGroupboxStyle}"
+                Header="Export Data" Grid.Row="1" 
                       Grid.Column="2">
 
                 <Grid Grid.Row="1" Grid.Column="1">
