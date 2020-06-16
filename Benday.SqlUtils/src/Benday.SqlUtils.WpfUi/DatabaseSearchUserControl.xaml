@@ -91,7 +91,6 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -112,18 +111,6 @@
                     </DataGrid.ContextMenu>
 
                 </DataGrid>
-
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Height="Auto"
-                    DataContext="{Binding Result.ProgressInfo, Mode=TwoWay}"
-                    Visibility="{Binding Path=IsProgressBarVisible, Converter={StaticResource VisibilityValueConverterInstance}}"
-                    Content="{Binding ProgressBarMessage, Mode=TwoWay}"
-                    Margin="{StaticResource DefaultFieldMargin}" />
             </Grid>
         </Grid>
     </Grid>
