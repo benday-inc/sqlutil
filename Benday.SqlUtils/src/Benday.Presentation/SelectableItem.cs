@@ -18,7 +18,7 @@ namespace Benday.Presentation
         /// <param name="isSelected"></param>
         /// <param name="text"></param>
         public SelectableItem(bool isSelected, string text)
-            : this(isSelected, text, text)
+            : this(isSelected, text, text, text)
         {
 
         }
@@ -29,11 +29,12 @@ namespace Benday.Presentation
         /// <param name="isSelected"></param>
         /// <param name="text"></param>
         /// <param name="value"></param>
-        public SelectableItem(bool isSelected, string text, string value)
+        public SelectableItem(bool isSelected, string text, string value, string tooltipText)
         {
             _IsSelected = isSelected;
             _Text = text;
             _Value = value;
+            _TooltipText = tooltipText;
         }
 
         public SelectableItem(bool isSelected, string text, int value)
@@ -115,5 +116,22 @@ namespace Benday.Presentation
                 RaisePropertyChanged(IdPropertyName);
             }
         }
+
+        private const string TooltipTextPropertyName = "TooltipText";
+
+        private string _TooltipText;
+        public string TooltipText
+        {
+            get
+            {
+                return _TooltipText;
+            }
+            set
+            {
+                _TooltipText = value;
+                RaisePropertyChanged(TooltipTextPropertyName);
+            }
+        }
+        
     }
 }

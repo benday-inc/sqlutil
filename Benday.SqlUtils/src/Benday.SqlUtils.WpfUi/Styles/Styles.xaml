@@ -7,7 +7,7 @@
     <FontFamily x:Key="LabelFontFamily">Segoe UI</FontFamily>
 
     <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
-    <Brush x:Key="FieldFontColor">Gray</Brush>
+    <Brush x:Key="FieldFontColor">DarkSlateGray</Brush>
 
 
     <Brush x:Key="MenuButtonColorSelected">Gray</Brush>

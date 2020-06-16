@@ -11,7 +11,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton 
-                         
+                         ToolTip="{Binding TooltipText}"
                         Style="{StaticResource FieldRadioButtonList}"
                         IsChecked="{Binding IsSelected, Mode=TwoWay}" GotFocus="RadioButton_GotFocus">
                         <TextBlock 
