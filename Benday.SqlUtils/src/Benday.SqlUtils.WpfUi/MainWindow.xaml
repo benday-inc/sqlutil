@@ -21,7 +21,6 @@
             Grid.Row="0" 
             Orientation="Horizontal" 
                     Style="{DynamicResource MenuStackPanel}">
-            <Rectangle />
             <Button x:Name="_ButtonSearchByName" Content="Search" 
                     Style="{StaticResource MenuButtonSelected}"
                     Click="_ButtonSearchByName_Click" />

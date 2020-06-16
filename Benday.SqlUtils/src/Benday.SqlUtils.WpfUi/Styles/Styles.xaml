@@ -7,8 +7,14 @@
     <FontFamily x:Key="LabelFontFamily">Segoe UI</FontFamily>
 
     <FontFamily x:Key="FieldFontFamily">Segoe UI</FontFamily>
+    <Brush x:Key="FieldFontColor">DarkSlateGray</Brush>
 
-    <system:Double x:Key="LabelFontSize">15</system:Double>
+
+    <Brush x:Key="MenuButtonColorSelected">Gray</Brush>
+    <Brush x:Key="MenuButtonColorUnselected">LightGray</Brush>
+
+
+    <system:Double x:Key="ButtonFontSize">13</system:Double>
 
     <system:Double x:Key="DefaultFieldControlHeight">32</system:Double>
 
@@ -17,6 +23,12 @@
     <Thickness x:Key="DefaultFieldMargin">4</Thickness>
 
     <Thickness x:Key="SpacedSeparatedControlMargin">18,18,4,4</Thickness>
+
+    <FontWeight x:Key="LabelFontWeight">Medium</FontWeight>
+    <Brush x:Key="LabelFontColor">DarkSlateGray</Brush>
+    <system:Double x:Key="LabelFontSize">15</system:Double>
+
+    <Brush x:Key="ButtonFontColor">DarkSlateGray</Brush>
 
     <Style x:Key="MenuStackPanel" TargetType="{x:Type StackPanel}">
         <Style.Resources>
@@ -32,8 +44,8 @@
     </Style>
 
     <Style x:Key="MenuButtonBase" TargetType="Button">
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Margin" Value="8,6,8,8" />
         <Setter Property="Template">
             <Setter.Value>
@@ -47,7 +59,11 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="Red" />
+                <Setter Property="Foreground" Value="{StaticResource ResourceKey=MenuButtonColorSelected}" />
+                <!--
+                <Setter Property="BorderThickness" Value="0,0,0,20" />
+                <Setter Property="BorderBrush" Value="Blue" />
+                -->
             </Trigger>
             <!--<Trigger Property="">
                         
@@ -58,15 +74,30 @@
     <Style x:Key="MenuButtonUnselected" TargetType="Button"
            BasedOn="{StaticResource MenuButtonBase}">
 
-        <Setter Property="Foreground" Value="LightGray" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=MenuButtonColorUnselected}" />
 
     </Style>
 
     <Style x:Key="MenuButtonSelected"
            BasedOn="{StaticResource MenuButtonBase}"
            TargetType="Button">
-        <Setter Property="Foreground" Value="Gray" />
-
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=MenuButtonColorSelected}" />
+        <Setter Property="BorderBrush" Value="SlateBlue" />
+        <Setter Property="BorderThickness" Value="0,0,0,4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                            Padding="0,0,0,2"
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 
@@ -105,18 +136,26 @@
     </Style>
 
     <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=LabelFontColor}" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ResourceKey=LabelFontWeight}" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="FieldGroupboxStyle" TargetType="GroupBox">
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=LabelFontColor}" />
+        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
+    </Style>
+
     <Style x:Key="FieldLabelContentStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=FieldFontColor}" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontSize" Value="{StaticResource ResourceKey=LabelFontSize}" />
         <Setter Property="FontWeight" Value="Normal" />
@@ -195,10 +234,10 @@
     </Style>
 
     <Style x:Key="FieldButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=ButtonFontColor}" />
         <Setter Property="FontFamily" Value="{StaticResource ResourceKey=LabelFontFamily}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{StaticResource LabelFontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}" />
         <Setter Property="Margin" Value="{StaticResource ResourceKey=DefaultFieldMargin}" />
         <Setter Property="Width" Value="140" />
         <Setter Property="Height" Value="{StaticResource ResourceKey=DefaultFieldControlHeight}" />

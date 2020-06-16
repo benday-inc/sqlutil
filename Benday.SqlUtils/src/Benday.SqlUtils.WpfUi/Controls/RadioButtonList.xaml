@@ -11,14 +11,14 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton 
-                         
+                         ToolTip="{Binding TooltipText}"
                         Style="{StaticResource FieldRadioButtonList}"
                         IsChecked="{Binding IsSelected, Mode=TwoWay}" GotFocus="RadioButton_GotFocus">
                         <TextBlock 
                             TextWrapping="Wrap"   
                             Margin="0"
                             Style="{StaticResource FieldLabelContentStyle}"
-                            Text="{Binding Text, Converter={StaticResource ToUpperCaseValueConverterInstance}}" />
+                            Text="{Binding Text}" />
                     </RadioButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

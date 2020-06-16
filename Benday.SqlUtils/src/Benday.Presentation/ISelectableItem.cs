@@ -9,5 +9,6 @@ namespace Benday.Presentation
         string Text { get; set; }
         string Value { get; set; }
         int Id { get; set; }
+        string TooltipText { get; set; }
     }
 }

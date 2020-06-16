@@ -360,5 +360,23 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             return temp.ConnectionString;
         }
+
+
+        private const string TooltipTextPropertyName = "TooltipText";
+
+        private string _TooltipText;
+        public string TooltipText
+        {
+            get
+            {
+                return _TooltipText;
+            }
+            set
+            {
+                _TooltipText = value;
+                RaisePropertyChanged(TooltipTextPropertyName);
+            }
+        }
+        
     }
 }

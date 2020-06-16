@@ -56,7 +56,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <EntryPointProjectUniqueName>..\src\Benday.SqlUtils.WpfUi\Benday.SqlUtils.WpfUi.csproj</EntryPointProjectUniqueName>
-    <PackageCertificateThumbprint>BF3CCFBC309C28DDBEA86C754FE2E2B3689A083F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>BBC2D462FC59961E7156F0D1DA67B90330B1D728</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
@@ -100,6 +100,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="benday-code-signing-cert.pfx" />
     <Content Include="Images\LargeTile.scale-100.png" />
     <Content Include="Images\LargeTile.scale-125.png" />
     <Content Include="Images\LargeTile.scale-150.png" />
