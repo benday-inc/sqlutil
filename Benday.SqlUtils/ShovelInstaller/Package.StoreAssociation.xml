@@ -2,7 +2,7 @@
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
   <Publisher>CN=EF9A1AE6-FDF6-47F2-B542-8DC9E294B083</Publisher>
   <PublisherDisplayName>Benjamin Day Consulting Inc</PublisherDisplayName>
-  <DeveloperAccountType>MSA</DeveloperAccountType>
+  <DeveloperAccountType>AAD</DeveloperAccountType>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />

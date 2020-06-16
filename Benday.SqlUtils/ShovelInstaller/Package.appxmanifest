@@ -9,7 +9,7 @@
   <Identity
     Name="BenjaminDayConsultingInc.SQLDataShovel"
     Publisher="CN=&quot;Benjamin Day Consulting, Inc.&quot;, O=&quot;Benjamin Day Consulting, Inc.&quot;, L=Brookline, S=Massachusetts, C=US"
-    Version="1.0.13.0" />
+    Version="1.0.19.0" />
 
   <Properties>
     <DisplayName>Shovel</DisplayName>
