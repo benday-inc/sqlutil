@@ -44,7 +44,7 @@
                     <MenuItem Header="Reset Settings" Click="MenuItem_Click" ></MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <Label x:Name="_LabelVersion" Content="June 2020 Release (v1.0)" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Label x:Name="_LabelVersion" Content="August 2021 Release (v1.1)" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </StackPanel>
         <StackPanel Grid.Row="4">
             <CheckBox x:Name="_CheckboxSendTelemetry" Content="Send Anonymous Telemetry" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="_CheckboxSendTelemetry_Checked" Unchecked="_CheckboxSendTelemetry_Unchecked" />
