@@ -7,13 +7,14 @@ using System.Windows.Input;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public abstract class DatabaseUtilityViewModelBase : ViewModelBase
+    public abstract class DatabaseUtilityViewModelBase : MessagingViewModelBase
     {
         private ITelemetryService _Telemetry;
 
         public DatabaseUtilityViewModelBase(
+            IMessageManager msgManager,
             IDatabaseConnectionStringRepository repository, 
-            ITelemetryService telemetry)
+            ITelemetryService telemetry) : base(msgManager)
         {
             if (telemetry == null)
             {

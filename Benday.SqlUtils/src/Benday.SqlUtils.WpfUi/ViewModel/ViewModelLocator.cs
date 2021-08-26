@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Benday.Presentation;
 using Benday.SqlUtils.Api;
 using Benday.SqlUtils.Presentation;
 using Benday.SqlUtils.Presentation.ViewModels;
@@ -94,9 +95,39 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_Search == null)
                 {
                     _Search = new SearchViewModel(
+                        MessageManagerInstance, 
                         new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _Search;
+            }
+        }
+
+        private IMessageManager _messageManagerInstance;
+        public IMessageManager MessageManagerInstance
+        {
+            get
+            {
+                if (_messageManagerInstance == null)
+                {
+                    const string key = "MessageManagerInstance";
+                    var temp = Application.Current.TryFindResource(key);
+
+                    if (temp == null)
+                    {
+                        throw new InvalidOperationException(
+                            $"Could not locate message manager instance with key '{key}'");
+                    }
+
+                    _messageManagerInstance = temp as IMessageManager;
+
+                    if (_messageManagerInstance == null)
+                    {
+                        throw new InvalidOperationException(
+                            $"Value for '{key}' is not an instance of '{nameof(IMessageManager)}'");
+                    }
+                }
+
+                return _messageManagerInstance;
             }
         }
 
@@ -108,6 +139,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 if (_DataExport == null)
                 {
                     _DataExport = new DataExportViewModel(
+                        MessageManagerInstance,
                         new DatabaseConnectionStringRepository(),
                         new SqlServerDatabaseUtility(), 
                         new FileService(), Telemetry);

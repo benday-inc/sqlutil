@@ -28,10 +28,26 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 if (_SystemUnderTest == null)
                 {
                     _SystemUnderTest = new SearchViewModel(
-                        DatabaseConnectionStringRepositoryInstance, new MockTelemetryService());
+                        MessageManagerInstance,
+                        DatabaseConnectionStringRepositoryInstance, 
+                        new MockTelemetryService());
                 }
 
                 return _SystemUnderTest;
+            }
+        }
+
+        private MockMessageManager _messageManagerInstance;
+        public MockMessageManager MessageManagerInstance
+        {
+            get
+            {
+                if (_messageManagerInstance == null)
+                {
+                    _messageManagerInstance = new MockMessageManager();
+                }
+
+                return _messageManagerInstance;
             }
         }
 

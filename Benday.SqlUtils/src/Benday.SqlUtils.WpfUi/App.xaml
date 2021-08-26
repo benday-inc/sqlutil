@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Benday.SqlUtils.WpfUi"
 	     xmlns:valconvs="clr-namespace:Benday.Presentation.ValueConverters;assembly=Benday.Presentation" 
+             xmlns:pres="clr-namespace:Benday.Presentation;assembly=Benday.Presentation" 
              StartupUri="MainWindow.xaml"
 	     xmlns:vm="clr-namespace:Benday.SqlUtils.WpfUi.ViewModel" 
 
@@ -20,6 +21,7 @@ xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
             <valconvs:NotVisibilityValueConverter x:Key="NotVisibilityValueConverterInstance" />
             <valconvs:ToUpperCaseValueConverter x:Key="ToUpperCaseValueConverterInstance" />
             <valconvs:ShortDateValueConverter x:Key="ShortDateValueConverterInstance" />
+            <pres:MessageBoxMessageManager x:Key="MessageManagerInstance" />
             <DataTemplate x:Key="SelectableItemTemplate">
                 <StackPanel>
                     <TextBlock Text="{Binding Description}" />

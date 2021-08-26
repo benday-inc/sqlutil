@@ -21,6 +21,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             _DatabaseConnectionStringRepositoryInstance = null;
             _DatabaseUtilityInstance = null;
             _FileDialogServiceInstance = null;
+            _messageManagerInstance = null;
         }
 
         private DataExportViewModel _SystemUnderTest;
@@ -31,12 +32,27 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 if (_SystemUnderTest == null)
                 {
                     _SystemUnderTest = new DataExportViewModel(
+                        MessageManagerInstance,
                         DatabaseConnectionStringRepositoryInstance,
                         DatabaseUtilityInstance, FileDialogServiceInstance,
                         new MockTelemetryService());
                 }
 
                 return _SystemUnderTest;
+            }
+        }
+
+        private MockMessageManager _messageManagerInstance;
+        public MockMessageManager MessageManagerInstance
+        {
+            get
+            {
+                if (_messageManagerInstance == null)
+                {
+                    _messageManagerInstance = new MockMessageManager();
+                }
+
+                return _messageManagerInstance;
             }
         }
 
