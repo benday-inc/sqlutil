@@ -26,6 +26,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             _SearchByTableName = new ViewModelField<string>();
             _SearchByColumnName = new ViewModelField<string>();
+            _SearchByColumnDataType = new ViewModelField<string>();
             _SearchByValue = new ViewModelField<string>();
             _SearchStringMethod = new SingleSelectListViewModel(GetSearchStringMethods());
             _Result = null;
@@ -77,6 +78,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             SearchByTableName.IsVisible = true;
             SearchByColumnName.IsVisible = false;
+            SearchByColumnDataType.IsVisible = false;
             SearchStringMethod.IsVisible = true;
             SearchByValue.IsVisible = false;
         }
@@ -85,6 +87,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             SearchByTableName.IsVisible = false;
             SearchByColumnName.IsVisible = true;
+            SearchByColumnDataType.IsVisible = true;
             SearchStringMethod.IsVisible = true;
             SearchByValue.IsVisible = false;
         }
@@ -93,6 +96,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             SearchByTableName.IsVisible = false;
             SearchByColumnName.IsVisible = false;
+            SearchByColumnDataType.IsVisible = false;
             SearchStringMethod.IsVisible = true;
             SearchByValue.IsVisible = true;
         }
@@ -101,6 +105,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             SearchByTableName.IsVisible = true;
             SearchByColumnName.IsVisible = true;
+            SearchByColumnDataType.IsVisible = false;
             SearchStringMethod.IsVisible = false;
             SearchByValue.IsVisible = true;
         }
@@ -134,11 +139,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             returnValues.Add(new SelectableItem(false, Constants.SearchTypeFindTextInTableColumn, Constants.SearchTypeFindTextInTableColumn, "Find text in a table column"));
 
             return returnValues;
-        }
-
-
-
-        
+        }        
 
         private const string SearchByTableNamePropertyName = "SearchByTableName";
 
@@ -171,6 +172,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(SearchByColumnNamePropertyName);
             }
         }
+
+        private const string SearchByColumnDataTypePropertyName = "SearchByColumnDataType";
+
+        private ViewModelField<string> _SearchByColumnDataType;
+        public ViewModelField<string> SearchByColumnDataType
+        {
+            get
+            {
+                return _SearchByColumnDataType;
+            }
+            set
+            {
+                _SearchByColumnDataType = value;
+                RaisePropertyChanged(SearchByColumnDataTypePropertyName);
+            }
+        }               
 
         private const string SearchByValuePropertyName = "SearchByValue";
 

@@ -165,6 +165,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             
             AssertFieldVisibility(true, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(false, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(false, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(false, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(true, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }
@@ -189,6 +190,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             AssertFieldVisibility(false, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(true, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(true, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(false, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(true, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }
@@ -204,6 +206,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             AssertFieldVisibility(false, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(false, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(false, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(true, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(true, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }
@@ -219,6 +222,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             AssertFieldVisibility(false, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(false, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(false, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(true, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(true, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }
@@ -234,6 +238,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             AssertFieldVisibility(false, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(false, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(false, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(true, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(true, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }
@@ -249,6 +254,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
             AssertFieldVisibility(true, SystemUnderTest.SearchByTableName, "SearchByTableName");
             AssertFieldVisibility(true, SystemUnderTest.SearchByColumnName, "SearchByColumnName");
+            AssertFieldVisibility(false, SystemUnderTest.SearchByColumnDataType, "SearchByColumnDataType");
             AssertFieldVisibility(true, SystemUnderTest.SearchByValue, "SearchByValue");
             AssertFieldVisibility(false, SystemUnderTest.SearchStringMethod, "SearchStringMethod");
         }

@@ -69,6 +69,7 @@
 
                 <ctrls:TextboxField LabelText="Table Name" DataContext="{Binding SearchByTableName}" OnEnterKey="TextboxField_OnEnterKey" />
                 <ctrls:TextboxField LabelText="Column Name" DataContext="{Binding SearchByColumnName}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:TextboxField LabelText="Column Data Type" DataContext="{Binding SearchByColumnDataType}" OnEnterKey="TextboxField_OnEnterKey" />
 
                 <ctrls:ComboBoxField LabelText="Match Method" 
                                      DataContext="{Binding SearchStringMethod}"
