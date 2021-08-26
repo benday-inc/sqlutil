@@ -132,7 +132,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_RunQueryCommand == null)
                 {
-                    _RunQueryCommand = new RelayCommand(RunQuery);
+                    _RunQueryCommand = new ExceptionHandlingRelayCommand(Messages, RunQuery);
                 }
 
                 return _RunQueryCommand;
@@ -223,7 +223,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_CreateInsertScriptCommand == null)
                 {
-                    _CreateInsertScriptCommand = new RelayCommand(CreateInsertScript);
+                    _CreateInsertScriptCommand = new ExceptionHandlingRelayCommand(Messages, CreateInsertScript);
                 }
 
                 return _CreateInsertScriptCommand;
@@ -255,7 +255,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_CreateMergeIntoScriptCommand == null)
                 {
-                    _CreateMergeIntoScriptCommand = new RelayCommand(CreateMergeIntoScript);
+                    _CreateMergeIntoScriptCommand = new ExceptionHandlingRelayCommand(Messages, CreateMergeIntoScript);
                 }
 
                 return _CreateMergeIntoScriptCommand;
@@ -343,7 +343,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_SaveScriptCommand == null)
                 {
-                    _SaveScriptCommand = new RelayCommand(SaveScript);
+                    _SaveScriptCommand = new ExceptionHandlingRelayCommand(Messages, SaveScript);
                 }
 
                 return _SaveScriptCommand;
@@ -389,7 +389,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_CopyGeneratedQueryToClipboardCommand == null)
                 {
-                    _CopyGeneratedQueryToClipboardCommand = new RelayCommand(CopyGeneratedQueryToClipboard);
+                    _CopyGeneratedQueryToClipboardCommand = new ExceptionHandlingRelayCommand(Messages, CopyGeneratedQueryToClipboard);
                 }
 
                 return _CopyGeneratedQueryToClipboardCommand;

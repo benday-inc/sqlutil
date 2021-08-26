@@ -10,9 +10,9 @@ using System.Windows.Input;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class DatabaseConnectionViewModel : ViewModelBase, ISelectableItem, IStoredDatabaseConnectionString
+    public class DatabaseConnectionViewModel : MessagingViewModelBase, ISelectableItem, IStoredDatabaseConnectionString
     {
-        public DatabaseConnectionViewModel()
+        public DatabaseConnectionViewModel(IMessageManager msgManager) : base(msgManager)
         {
             Id = Guid.NewGuid().ToString();
             Name = new ViewModelField<string>(String.Empty);
@@ -216,7 +216,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_CancelCommand == null)
                 {
-                    _CancelCommand = new RelayCommand(Cancel);
+                    _CancelCommand = new ExceptionHandlingRelayCommand(Messages, Cancel);
                 }
 
                 return _CancelCommand;
@@ -236,7 +236,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_SaveCommand == null)
                 {
-                    _SaveCommand = new RelayCommand(Save);
+                    _SaveCommand = new ExceptionHandlingRelayCommand(Messages, Save);
                 }
 
                 return _SaveCommand;

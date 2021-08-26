@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Windows;
 
@@ -8,9 +9,26 @@ namespace Benday.Presentation
     {
         public void ShowMessage(Exception ex)
         {
-            Trace.TraceError(ex.ToString());
+            if (ex is null)
+            {
+                Trace.TraceError("MessageBoxMessageManager got a call to ShowMesage(ex) with a null exception.");
+            }
+            else
+            {
+                Trace.TraceError(ex.ToString());
 
-            MessageBox.Show(ex.Message);
+                if (ex.InnerException != null && ex.InnerException is SqlException)
+                {
+                    MessageBox.Show(ex.InnerException.Message, 
+                        "Error", 
+                        MessageBoxButton.OK, 
+                        MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }            
         }
     }
 }

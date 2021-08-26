@@ -227,7 +227,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_SearchCommand == null)
                 {
-                    _SearchCommand = new RelayCommand(Search);
+                    _SearchCommand = new ExceptionHandlingRelayCommand(Messages, Search);
                 }
 
                 return _SearchCommand;
@@ -241,7 +241,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_DebugCommand == null)
                 {
-                    _DebugCommand = new RelayCommand(DoDebug);
+                    _DebugCommand = new ExceptionHandlingRelayCommand(Messages, DoDebug);
                 }
 
                 return _DebugCommand;

@@ -10,9 +10,10 @@ using System.Windows.Input;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class CancellableProgressBarDemoViewModel : ViewModelBase
+    public class CancellableProgressBarDemoViewModel : MessagingViewModelBase
     {
-        public CancellableProgressBarDemoViewModel()
+        public CancellableProgressBarDemoViewModel(IMessageManager msgManager) :
+            base(msgManager)
         {
             Progress = new ProgressBarViewModel();
             Progress.IsCancelable = true;
@@ -49,7 +50,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_RunCommand == null)
                 {
-                    _RunCommand = new RelayCommand(Run);
+                    _RunCommand = new ExceptionHandlingRelayCommand(Messages, Run);
                 }
 
                 return _RunCommand;

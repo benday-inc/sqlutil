@@ -75,7 +75,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             foreach (var connection in connections)
             {
-                item = new DatabaseConnectionViewModel();
+                item = new DatabaseConnectionViewModel(Messages);
                 connString = new DatabaseConnectionString();
                 connString.Load(connection.ConnectionString);
 
@@ -111,7 +111,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 if (_RefreshConnectionsCommand == null)
                 {
                     _RefreshConnectionsCommand =
-                        new RelayCommand(RefreshDatabaseConnections);
+                        new ExceptionHandlingRelayCommand(Messages, RefreshDatabaseConnections);
                 }
 
                 return _RefreshConnectionsCommand;

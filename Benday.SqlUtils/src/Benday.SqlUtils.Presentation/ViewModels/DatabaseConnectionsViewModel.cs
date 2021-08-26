@@ -11,11 +11,12 @@ using System.Windows.Input;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class DatabaseConnectionsViewModel : ViewModelBase
+    public class DatabaseConnectionsViewModel : MessagingViewModelBase
     {
         private ITelemetryService _TelemetryService;
 
-        private DatabaseConnectionsViewModel(ITelemetryService telemetryService)
+        private DatabaseConnectionsViewModel(IMessageManager msgManager, 
+            ITelemetryService telemetryService) : base(msgManager)
         {
             if (telemetryService == null)
             {
@@ -37,8 +38,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private IDatabaseConnectionStringRepository _Repository;
 
         public DatabaseConnectionsViewModel(
+            IMessageManager msgManager,
             IDatabaseConnectionStringRepository repository, ITelemetryService telemetryService) : 
-            this(telemetryService)
+            this(msgManager, telemetryService)
         {
             if (repository == null)
                 throw new ArgumentNullException(nameof(repository), $"{nameof(repository)} is null.");
@@ -89,7 +91,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_AddConnectionCommand == null)
                 {
-                    _AddConnectionCommand = new RelayCommand(AddConnection);
+                    _AddConnectionCommand = new ExceptionHandlingRelayCommand(Messages, AddConnection);
                 }
 
                 return _AddConnectionCommand;
@@ -115,7 +117,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private void AddConnection()
         {
-            var temp = new DatabaseConnectionViewModel();
+            var temp = new DatabaseConnectionViewModel(Messages);
 
             temp.Name.Value = "(new connection)";
 
@@ -136,7 +138,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 if (_DeleteConnectionCommand == null)
                 {
-                    _DeleteConnectionCommand = new RelayCommand(DeleteConnection);
+                    _DeleteConnectionCommand = new ExceptionHandlingRelayCommand(Messages, DeleteConnection);
                 }
 
                 return _DeleteConnectionCommand;
@@ -162,7 +164,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             foreach (var item in storedConnections)
             {
-                var temp = new DatabaseConnectionViewModel();
+                var temp = new DatabaseConnectionViewModel(Messages);
 
                 var connString = new DatabaseConnectionString();
 
