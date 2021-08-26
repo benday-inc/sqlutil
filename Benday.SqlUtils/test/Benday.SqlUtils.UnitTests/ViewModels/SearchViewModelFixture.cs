@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using Benday.SqlUtils.Api;
 
 namespace Benday.SqlUtils.UnitTests.ViewModels
 {
@@ -178,9 +179,9 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public void WhenSearchTypeIsSetToColumnNameThenFieldVisibilityIsCorrect()
+        public void WhenSearchTypeIsSetToColumnThenFieldVisibilityIsCorrect()
         {
-            var expectedSearchType = "Column Name";
+            var expectedSearchType = Constants.SearchTypeColumn;
 
             SystemUnderTest.SearchType.SelectByText(expectedSearchType);
 

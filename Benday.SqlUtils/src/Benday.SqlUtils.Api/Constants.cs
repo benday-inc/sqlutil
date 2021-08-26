@@ -6,7 +6,7 @@ namespace Benday.SqlUtils.Api
     public static class Constants
     {
         public const string SearchTypeTableName = "Table Name";
-        public const string SearchTypeColumnName = "Column Name";
+        public const string SearchTypeColumn = "Column Name";
         public const string SearchTypeFindTextInTableColumn = "Find Text In Any Table Column";
         public const string SearchTypeStoredProcedureName = "Stored Procedure Name";
         public const string SearchTypeStoredProcedureParameterName = "Stored Procedure Parameter Name";

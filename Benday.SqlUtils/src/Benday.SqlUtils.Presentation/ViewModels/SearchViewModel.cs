@@ -58,7 +58,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 {
                     InitializeForTableNameSearch();
                 }
-                else if (searchType == Constants.SearchTypeColumnName)
+                else if (searchType == Constants.SearchTypeColumn)
                 {
                     InitializeForColumnNameSearch();
                 }
@@ -127,7 +127,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             var returnValues = new List<SelectableItem>();
 
             returnValues.Add(new SelectableItem(true, Constants.SearchTypeTableName, Constants.SearchTypeTableName, "Find tables by name"));
-            returnValues.Add(new SelectableItem(false, Constants.SearchTypeColumnName, Constants.SearchTypeColumnName, "Find table columns by name"));
+            returnValues.Add(new SelectableItem(false, Constants.SearchTypeColumn, Constants.SearchTypeColumn, "Find table columns by name"));
             returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureName, Constants.SearchTypeStoredProcedureName, "Find stored procedures by name"));
             returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureParameterName, Constants.SearchTypeStoredProcedureParameterName, "Find stored procedures by parameter name"));
             returnValues.Add(new SelectableItem(false, Constants.SearchTypeStoredProcedureSourceCode, Constants.SearchTypeStoredProcedureSourceCode, "Find stored procedures by source code text"));
@@ -284,7 +284,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                 query.Execute();
             }
-            else if (SearchType.SelectedItem.Value == Constants.SearchTypeColumnName)
+            else if (SearchType.SelectedItem.Value == Constants.SearchTypeColumn)
             {
                 var query = new SearchByColumnNameQueryViewModel();
 
