@@ -307,6 +307,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
+                if (string.IsNullOrWhiteSpace(SearchByColumnDataType.Value) == false)
+                {
+                    query.SetArgumentValue("COLUMN_DATA_TYPE", SearchByColumnDataType.Value);
+                }
+
                 query.SetArgumentValue("COLUMN_NAME", SearchByColumnName.Value);
                 query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
