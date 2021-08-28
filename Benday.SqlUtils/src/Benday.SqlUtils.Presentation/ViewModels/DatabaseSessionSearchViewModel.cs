@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class SessionSearchViewModel : DatabaseUtilityViewModelBase
+    public class DatabaseSessionSearchViewModel : DatabaseUtilityViewModelBase
     {
-        public SessionSearchViewModel(
+        public DatabaseSessionSearchViewModel(
             IMessageManager msgManager,
             IDatabaseConnectionStringRepository repository,
             ITelemetryService telemetry) :

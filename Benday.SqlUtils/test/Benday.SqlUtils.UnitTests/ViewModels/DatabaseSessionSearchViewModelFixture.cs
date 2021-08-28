@@ -5,7 +5,7 @@ using System;
 namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     [TestClass]
-    public class SessionSearchViewModelFixture : ViewModelFixtureBase
+    public class DatabaseSessionSearchViewModelFixture : ViewModelFixtureBase
     {
         [TestInitialize]
         public void OnTestInitialize()
@@ -14,14 +14,14 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             _DatabaseConnectionStringRepositoryInstance = null;
         }
 
-        private SessionSearchViewModel _SystemUnderTest;
-        public SessionSearchViewModel SystemUnderTest
+        private DatabaseSessionSearchViewModel _SystemUnderTest;
+        public DatabaseSessionSearchViewModel SystemUnderTest
         {
             get
             {
                 if (_SystemUnderTest == null)
                 {
-                    _SystemUnderTest = new SessionSearchViewModel(
+                    _SystemUnderTest = new DatabaseSessionSearchViewModel(
                         MessageManagerInstance,
                         DatabaseConnectionStringRepositoryInstance,
                         new MockTelemetryService());
