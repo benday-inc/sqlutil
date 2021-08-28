@@ -127,13 +127,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private void Search()
         {
-            /*
-            var query = new SearchByTableNameQueryViewModel();
+            var query = new DatabaseSessionQueryViewModel();
 
             query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
-
-            query.SetArgumentValue("TABLE_NAME", SearchByTableName.Value);
-            query.MatchMethod = SearchStringMethod.SelectedItem.Value;
 
             Result = query;
 
@@ -141,7 +137,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 $"Database Session Search");
 
             query.Execute();
-            */
         }
 
         private const string ResultPropertyName = "Result";

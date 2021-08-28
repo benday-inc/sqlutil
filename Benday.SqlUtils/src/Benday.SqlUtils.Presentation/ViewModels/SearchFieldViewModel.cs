@@ -55,6 +55,32 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(SearchTypePropertyName);
             }
         }
+        public bool HasSearchFilter
+        {
+            get
+            {
+                if (SearchType.SelectedItem == null)
+                {
+                    return false;
+                }
+                else if (SearchType.SelectedItem.Text == Constants.SearchTypeBlankOrEmpty)
+                {
+                    return true;
+                }
+                else if (SearchType.SelectedItem.Text == Constants.SearchTypeNotBlankOrEmpty)
+                {
+                    return true;
+                }
+                else if (SearchType.SelectedItem.Text == Constants.SearchTypeByValue)
+                {
+                    return !string.IsNullOrWhiteSpace(Value);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         private void PopulateSearchTypes()
         {

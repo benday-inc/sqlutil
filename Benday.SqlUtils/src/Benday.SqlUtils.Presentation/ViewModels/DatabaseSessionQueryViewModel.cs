@@ -44,7 +44,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             base.Results = ToModels(results.Tables[0]);
 
             IsVisible = true;
-
         }
 
         private ObservableCollection<object> ToModels(DataTable dataTable)
@@ -53,7 +52,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             foreach (DataRow item in dataTable.Rows)
             {
-                returnValue.Add(new SearchByTableNameResultRow(item));
+                returnValue.Add(new DatabaseSessionQueryResultRow(item));
             }
 
             return returnValue;
