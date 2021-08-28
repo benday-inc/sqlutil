@@ -77,6 +77,12 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
+        public void WhenInitializedThenResultIsNull()
+        {
+            Assert.IsNull(SystemUnderTest.Result, "Result is null.");
+        }
+
+        [TestMethod]
         public void WhenInitializedThenFieldPropertiesAreNotNull()
         {
             Assert.IsNotNull(SystemUnderTest.SearchStatus, "SearchStatus is null.");

@@ -24,7 +24,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             _searchDatabaseName = new SearchFieldViewModel();
             _searchHostname = new SearchFieldViewModel();
             _searchLogin = new SearchFieldViewModel();
-            _searchStatus = new SearchFieldViewModel();            
+            _searchStatus = new SearchFieldViewModel();
+
+            _Result = null;
         }
 
         private const string SearchStatusPropertyName = "SearchStatus";
@@ -122,9 +124,41 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 return _SearchCommand;
             }
         }
+
         private void Search()
         {
-            throw new NotImplementedException();
+            /*
+            var query = new SearchByTableNameQueryViewModel();
+
+            query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+            query.SetArgumentValue("TABLE_NAME", SearchByTableName.Value);
+            query.MatchMethod = SearchStringMethod.SelectedItem.Value;
+
+            Result = query;
+
+            Telemetry.TrackEvent(
+                $"Database Session Search");
+
+            query.Execute();
+            */
+        }
+
+        private const string ResultPropertyName = "Result";
+
+        private DatabaseQueryViewModelBase _Result;
+
+        public DatabaseQueryViewModelBase Result
+        {
+            get
+            {
+                return _Result;
+            }
+            set
+            {
+                _Result = value;
+                RaisePropertyChanged(ResultPropertyName);
+            }
         }
     }
 }

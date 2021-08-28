@@ -20,5 +20,14 @@ namespace Benday.SqlUtils.Api
         public const string SearchTypeByValue = "By Value";
         public const string SearchTypeBlankOrEmpty = "Blank / Empty";
         public const string SearchTypeNotBlankOrEmpty = "Not Blank / Empty";
+
+        public const string ColumnName_SessionId = "SPID";
+        public const string ColumnName_Status = "Status";
+        public const string ColumnName_Login = "Login";
+        public const string ColumnName_HostName = "HostName";
+        public const string ColumnName_BlockedBy = "BlkBy";
+        public const string ColumnName_DatabaseName = "DBName";
+        public const string ColumnName_Command = "Command";
+        public const string ColumnName_ProgramName = "ProgramName";
     }
 }
