@@ -12,6 +12,32 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             SearchType = new SelectableCollectionViewModel<SelectableItem>();
             PopulateSearchTypes();
+            SearchType.OnItemSelected += SearchType_OnItemSelected;
+        }
+
+        private void SearchType_OnItemSelected(object sender, EventArgs e)
+        {
+            HandleSearchTypeSelected();
+        }
+
+        private void HandleSearchTypeSelected()
+        {
+            if (SearchType.Items.Count == 0 || 
+                SearchType.SelectedItem == null)
+            {
+                IsEnabled = true;
+            }
+            else
+            {
+                if (SearchType.SelectedItem.Text == Constants.SearchTypeByValue)
+                {
+                    IsEnabled = true;
+                }
+                else
+                {
+                    IsEnabled = false;
+                }
+            }
         }
 
         private const string SearchTypePropertyName = "SearchType";

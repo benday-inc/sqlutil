@@ -42,6 +42,43 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             AssertExpectedSearchType(0, Constants.SearchTypeByValue, true);
             AssertExpectedSearchType(1, Constants.SearchTypeBlankOrEmpty, false);
             AssertExpectedSearchType(2, Constants.SearchTypeNotBlankOrEmpty, false);
+
+            AssertTextboxFieldIsEnabledValueForSelectedSearchType();
+        }
+
+        [TestMethod]
+        public void SearchType_ByValue_SetsIsEnabledValue()
+        {
+            Assert.AreEqual<int>(3, SystemUnderTest.SearchType.Count, "Wrong number of items");
+
+            SystemUnderTest.SearchType.Items[0].IsSelected = true;
+            AssertTextboxFieldIsEnabledValueForSelectedSearchType();
+
+            SystemUnderTest.SearchType.Items[1].IsSelected = true;
+            AssertTextboxFieldIsEnabledValueForSelectedSearchType();
+
+            SystemUnderTest.SearchType.Items[2].IsSelected = true;
+            AssertTextboxFieldIsEnabledValueForSelectedSearchType();
+
+            SystemUnderTest.SearchType.Items[0].IsSelected = true;
+            AssertTextboxFieldIsEnabledValueForSelectedSearchType();
+        }
+
+        private void AssertTextboxFieldIsEnabledValueForSelectedSearchType()
+        {
+            var actual = SystemUnderTest.SearchType.SelectedItem;
+
+            Assert.IsNotNull(actual, "Search type selected item was null.");
+
+            var expected = false;
+
+            if (actual.Text == Constants.SearchTypeByValue)
+            {
+                expected = true;
+            }
+
+            Assert.AreEqual<bool>(expected, SystemUnderTest.IsEnabled, 
+                $"IsEnabled value was wrong when search type is '{actual.Text}'.");
         }
 
         private void AssertExpectedSearchType(
