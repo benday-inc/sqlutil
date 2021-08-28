@@ -18,6 +18,15 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         }
 
+        protected override void OnInitialize()
+        {
+            _searchBlockedBy = new SearchFieldViewModel();
+            _searchDatabaseName = new SearchFieldViewModel();
+            _searchHostname = new SearchFieldViewModel();
+            _searchLogin = new SearchFieldViewModel();
+            _searchStatus = new SearchFieldViewModel();            
+        }
+
         private const string SearchStatusPropertyName = "SearchStatus";
 
         private SearchFieldViewModel _searchStatus;
