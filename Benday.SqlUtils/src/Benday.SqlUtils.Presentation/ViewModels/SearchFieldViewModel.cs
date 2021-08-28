@@ -1,4 +1,5 @@
 ﻿using Benday.Presentation;
+using Benday.SqlUtils.Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,11 +29,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(SearchTypePropertyName);
             }
         }
+
         private void PopulateSearchTypes()
         {
-            SearchType.Add(new SelectableItem(true, "By Value"));
-            SearchType.Add(new SelectableItem(false, "Blank / Empty"));
-            SearchType.Add(new SelectableItem(true, "Not Blank / Empty"));
+            SearchType.Add(new SelectableItem(true, Constants.SearchTypeByValue));
+            SearchType.Add(new SelectableItem(false, Constants.SearchTypeBlankOrEmpty));
+            SearchType.Add(new SelectableItem(false, Constants.SearchTypeNotBlankOrEmpty));
         }
     }
 }

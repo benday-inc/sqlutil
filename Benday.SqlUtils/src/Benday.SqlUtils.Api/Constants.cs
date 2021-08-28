@@ -16,5 +16,9 @@ namespace Benday.SqlUtils.Api
         public const string SearchStringMethodExact = "Exact";
         public const string SearchStringMethodStartsWith = "Starts With";
         public const string SearchStringMethodEndsWith = "Ends With";
+
+        public const string SearchTypeByValue = "By Value";
+        public const string SearchTypeBlankOrEmpty = "Blank / Empty";
+        public const string SearchTypeNotBlankOrEmpty = "Not Blank / Empty";
     }
 }
