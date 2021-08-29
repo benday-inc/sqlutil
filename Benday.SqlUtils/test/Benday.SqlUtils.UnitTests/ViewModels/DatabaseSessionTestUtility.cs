@@ -39,10 +39,10 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         public const string ExpectedStatus = "Status Value";
         public const string ExpectedLogin = "Login Value";
         public const string ExpectedHostName = "HostName Value";
-        public const string ExpectedBlockedBy = "Blocked by Value";
-        public const string ExpectedDatabaseName = "Database name Value";
+        public const string ExpectedBlockedBy = "BlockedBy Value";
+        public const string ExpectedDatabaseName = "DatabaseName Value";
         public const string ExpectedCommand = "Command Value";
-        public const string ExpectedProgramName = "Program Name Value";
+        public const string ExpectedProgramName = "ProgramName Value";
 
         public static DataTable InitalizeAllFieldsToNull()
         {

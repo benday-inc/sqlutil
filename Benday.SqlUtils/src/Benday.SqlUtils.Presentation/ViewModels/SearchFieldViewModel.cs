@@ -2,6 +2,7 @@
 using Benday.SqlUtils.Api;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
@@ -28,6 +29,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         private void SearchType_OnItemSelected(object sender, EventArgs e)
         {
             HandleSearchTypeSelected();
+        }
+
+        public void SelectSearchType(string searchTypeText)
+        {
+            var selectThis = (from temp in SearchType.Items
+                              where temp.Text == searchTypeText
+                              select temp).FirstOrDefault();
+
+            if (selectThis == null)
+            {
+                throw new InvalidOperationException($"Search type '{searchTypeText}' not found.");
+            }
+            else
+            {
+                selectThis.IsSelected = true;
+            }            
         }
 
         private void HandleSearchTypeSelected()

@@ -16,12 +16,18 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
         public void Initialize(string connectionString)
         {
-            throw new NotImplementedException();
+            
         }
+
+        public bool WasRunCalled { get; set; }
 
         public DataSet Run(SqlCommand command)
         {
-            throw new NotImplementedException();
+            WasRunCalled = true;
+
+            return RunReturnValue;
         }
+
+        public DataSet RunReturnValue { get; set; }
     }
 }

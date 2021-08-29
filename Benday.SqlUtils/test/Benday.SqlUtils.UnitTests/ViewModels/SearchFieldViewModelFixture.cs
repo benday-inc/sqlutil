@@ -67,13 +67,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
         private void SelectSearchType(string searchTypeText)
         {
-            var selectThis = (from temp in SystemUnderTest.SearchType.Items
-                              where temp.Text == searchTypeText
-                              select temp).FirstOrDefault();
-
-            Assert.IsNotNull(selectThis, $"Search type '{searchTypeText}' does not exist");
-
-            selectThis.IsSelected = true;
+            SystemUnderTest.SelectSearchType(searchTypeText);
         }
 
         [TestMethod]

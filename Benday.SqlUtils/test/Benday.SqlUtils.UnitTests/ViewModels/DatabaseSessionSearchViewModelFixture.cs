@@ -1,4 +1,5 @@
-﻿using Benday.SqlUtils.Presentation.ViewModels;
+﻿using Benday.SqlUtils.Api;
+using Benday.SqlUtils.Presentation.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -45,6 +46,36 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 
                 return _runner;
             }
+        }
+
+        private void InitalizeAllFieldsToNull()
+        {
+            var table = DatabaseSessionTestUtility.InitalizeAllFieldsToNull();
+
+            Runner.RunReturnValue = table.DataSet;
+        }
+
+        private void InitalizeAllStringFieldsToWhitespace()
+        {
+            var table = DatabaseSessionTestUtility.InitalizeAllStringFieldsToWhitespace();
+
+            Runner.RunReturnValue = table.DataSet;
+        }
+
+        private void InitalizeAllStringFieldsToDash()
+        {
+            var table = DatabaseSessionTestUtility.InitalizeAllStringFieldsToDash();
+
+            Runner.RunReturnValue = table.DataSet;
+        }
+
+        private void InitalizeAllFieldsToValues()
+        {
+            var table = DatabaseSessionTestUtility.InitalizeAllFieldsToValues();
+
+            var row = table.Rows[0];
+
+            Runner.RunReturnValue = table.DataSet;
         }
 
         private MockMessageManager _messageManagerInstance;
@@ -139,6 +170,92 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsTrue(SystemUnderTest.SearchHostname.IsValid, "SearchHostname should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchBlockedBy.IsValid, "SearchBlockedBy should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchDatabaseName.IsValid, "SearchDatabaseName should be valid.");
+        }
+
+        [TestMethod]
+        public void Status_NotBlanks_FindsStringValues()
+        {
+            // arrange
+            InitalizeAllFieldsToValues();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeNotBlankOrEmpty);
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(1, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
+        }
+
+        [TestMethod]
+        public void Status_NotBlanks_ExcludesStringValues()
+        {
+            // arrange
+            InitalizeAllFieldsToNull();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeNotBlankOrEmpty);
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(0, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
+        }
+
+        [TestMethod]
+        public void Status_Blanks_FindsBlankValues()
+        {
+            // arrange
+            InitalizeAllStringFieldsToDash();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeBlankOrEmpty);
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(1, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
+        }
+
+        [TestMethod]
+        public void Status_Blanks_ExcludesStringValues()
+        {
+            // arrange
+            InitalizeAllFieldsToValues();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeBlankOrEmpty);
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(0, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
+        }
+
+        [TestMethod]
+        public void Status_ByValue_FindsMatchingValues()
+        {
+            // arrange
+            InitalizeAllFieldsToValues();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeByValue);
+            SystemUnderTest.SearchStatus.Value = "tatus";
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(1, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
+        }
+
+        [TestMethod]
+        public void Status_ByValue_ExcludesNonMatchingStringValues()
+        {
+            // arrange
+            InitalizeAllFieldsToValues();
+            SystemUnderTest.SearchStatus.SelectSearchType(Constants.SearchTypeByValue);
+            SystemUnderTest.SearchStatus.Value = "bogus";
+
+            // act
+            SystemUnderTest.SearchCommand.Execute(null);
+
+            // assert
+            Assert.AreEqual<int>(0, SystemUnderTest.Result.Results.Count, "Result count was wrong.");
         }
     }
 }

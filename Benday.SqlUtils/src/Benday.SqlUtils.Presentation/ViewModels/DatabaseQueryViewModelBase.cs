@@ -168,17 +168,18 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 throw new InvalidOperationException("Unknown string match method.");
             }
         }
+
         protected SqlCommand GetSqlCommand()
         {
             var command = new SqlCommand(SqlQueryTemplate);
 
-            foreach (var key in _ArgumentValues.Keys)
+            foreach (var key in ArgumentValues.Keys)
             {
                 var parameter = new SqlParameter();
 
                 parameter.ParameterName = String.Format("@{0}", key);
                 parameter.SqlDbType = SqlDbType.NVarChar;
-                parameter.Value = GetArgumentValueForMatchMethod(_ArgumentValues[key]);
+                parameter.Value = GetArgumentValueForMatchMethod(ArgumentValues[key]);
 
                 command.Parameters.Add(parameter);
             }
