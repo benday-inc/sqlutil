@@ -11,8 +11,17 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public abstract class DatabaseQueryViewModelBase : ViewModelBase
     {
-        public DatabaseQueryViewModelBase()
+        protected IQueryRunner _runner;
+
+        public DatabaseQueryViewModelBase(IQueryRunner runner)
         {
+            if (runner == null)
+            {
+                throw new ArgumentNullException(nameof(runner), $"{nameof(runner)} is null.");
+            }
+
+            _runner = runner;
+
             _ProgressInfo = new ProgressBarViewModel();
             _ProgressInfo.IsProgressBarVisible = false;
         }

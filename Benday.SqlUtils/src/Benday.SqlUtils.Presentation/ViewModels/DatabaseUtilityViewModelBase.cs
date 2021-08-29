@@ -13,7 +13,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         public DatabaseUtilityViewModelBase(
             IMessageManager msgManager,
-            IDatabaseConnectionStringRepository repository, 
+            IDatabaseConnectionStringRepository repository,             
             ITelemetryService telemetry) : base(msgManager)
         {
             if (telemetry == null)

@@ -9,6 +9,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchByStoredProcedureParameterNameQueryViewModel : DatabaseQueryViewModelBase
     {
+        public SearchByStoredProcedureParameterNameQueryViewModel(IQueryRunner runner) : base(runner)
+        {
+
+        }
+
         protected override string SqlQueryTemplate
         {
             get
@@ -34,26 +39,13 @@ ORDER BY SPECIFIC_NAME, ORDINAL_POSITION";
         {
             IsVisible = false;
 
-            DataSet results = new DataSet();
+            using var command = GetSqlCommand();
+            _runner.Initialize(ConnectionString);
+            var results = _runner.Run(command);
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (var command = GetSqlCommand())
-                {
-                    command.Connection = connection;
-
-                    using (var adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(results);
-                    }
-                }
-            }
-
-            base.Results = ToModels(results.Tables[0]);
-            
+            base.Results = ToModels(results.Tables[0]);            
 
             IsVisible = true;
-
         }
 
         private ObservableCollection<object> ToModels(DataTable dataTable)

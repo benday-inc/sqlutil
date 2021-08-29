@@ -136,7 +136,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private void Search()
         {
-            var query = new DatabaseSessionQueryViewModel();
+            var query = new DatabaseSessionQueryViewModel(new DatasetQueryRunner());
 
             query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
 {
     public class DatabaseQueryViewModelBaseTester : DatabaseQueryViewModelBase
     {
-        public DatabaseQueryViewModelBaseTester()
+        public DatabaseQueryViewModelBaseTester() :
+            base(new MockQueryRunner())
         {
             RequiredArguments = new List<string>();
         }

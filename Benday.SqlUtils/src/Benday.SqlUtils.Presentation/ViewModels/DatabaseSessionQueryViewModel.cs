@@ -10,6 +10,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class DatabaseSessionQueryViewModel : DatabaseQueryViewModelBase
     {
+        public DatabaseSessionQueryViewModel(IQueryRunner runner) : base(runner)
+        {
+
+        }
+
         protected override string SqlQueryTemplate
         {
             get
@@ -27,20 +32,9 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         {
             IsVisible = false;
 
-            DataSet results = new DataSet();
-
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (var command = GetSqlCommand())
-                {
-                    command.Connection = connection;
-
-                    using (var adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(results);
-                    }
-                }
-            }
+            using var command = GetSqlCommand();
+            _runner.Initialize(ConnectionString);
+            var results = _runner.Run(command);
 
             base.Results = ToModels(results.Tables[0]);
 

@@ -13,7 +13,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 {
     public class SearchByTextColumnContentQueryViewModel : DatabaseQueryViewModelBase
     {
-        public SearchByTextColumnContentQueryViewModel()
+        public SearchByTextColumnContentQueryViewModel(IQueryRunner runner) : base(runner)
         {
             _ProgressInfo.IsCancelable = true;
             _ProgressInfo.OnCancelRequested += _ProgressInfo_OnCancelRequested;
