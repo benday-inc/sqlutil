@@ -10,12 +10,19 @@ namespace Benday.SqlUtils.Presentation.ViewModels
     public abstract class DatabaseUtilityViewModelBase : MessagingViewModelBase
     {
         private ITelemetryService _Telemetry;
+        protected IQueryRunner _queryRunner;
 
         public DatabaseUtilityViewModelBase(
             IMessageManager msgManager,
+            IQueryRunner queryRunner, 
             IDatabaseConnectionStringRepository repository,             
             ITelemetryService telemetry) : base(msgManager)
         {
+            if (queryRunner == null)
+            {
+                throw new ArgumentNullException(nameof(queryRunner), $"{nameof(queryRunner)} is null.");
+            }
+
             if (telemetry == null)
             {
                 throw new ArgumentNullException("telemetry", "Argument cannot be null.");
@@ -25,6 +32,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 throw new ArgumentNullException(nameof(repository),
                     $"{nameof(repository)} is null.");
 
+            _queryRunner = queryRunner;
             _Repository = repository;
             _Telemetry = telemetry;
 

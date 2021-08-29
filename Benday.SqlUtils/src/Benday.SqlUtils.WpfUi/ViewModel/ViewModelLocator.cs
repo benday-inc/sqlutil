@@ -97,6 +97,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 {
                     _Search = new SearchViewModel(
                         MessageManagerInstance, 
+                        new DatasetQueryRunner(), 
                         new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _Search;
@@ -141,6 +142,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                 {
                     _DataExport = new DataExportViewModel(
                         MessageManagerInstance,
+                        new DatasetQueryRunner(),
                         new DatabaseConnectionStringRepository(),
                         new SqlServerDatabaseUtility(), 
                         new FileService(), Telemetry);

@@ -20,11 +20,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         public DataExportViewModel(
             IMessageManager msgManager, 
+            IQueryRunner queryRunner,
             IDatabaseConnectionStringRepository repository,
             IDatabaseUtility queryExecuter,
             IFileService fileDialogService,
             ITelemetryService telemetry) :
-                    base(msgManager, repository, telemetry)
+                    base(msgManager, queryRunner, repository, telemetry)
         {
             if (queryExecuter == null)
             {

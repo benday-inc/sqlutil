@@ -11,9 +11,10 @@ namespace Benday.SqlUtils.Presentation.ViewModels
     {
         public DatabaseSessionSearchViewModel(
             IMessageManager msgManager,
+            IQueryRunner queryRunner,
             IDatabaseConnectionStringRepository repository,
             ITelemetryService telemetry) :
-            base(msgManager, repository, telemetry)
+            base(msgManager, queryRunner, repository, telemetry)
         {
 
         }
@@ -136,7 +137,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private void Search()
         {
-            var query = new DatabaseSessionQueryViewModel(new DatasetQueryRunner());
+            var query = new DatabaseSessionQueryViewModel(_queryRunner);
 
             query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 

@@ -15,9 +15,10 @@ namespace Benday.SqlUtils.Presentation.ViewModels
     {
         public SearchViewModel(
             IMessageManager msgManager,
+            IQueryRunner queryRunner, 
             IDatabaseConnectionStringRepository repository,
             ITelemetryService telemetry) : 
-            base(msgManager, repository, telemetry)
+            base(msgManager, queryRunner, repository, telemetry)
         {
             
         }
@@ -285,7 +286,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeTableName)
             {
-                var query = new SearchByTableNameQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByTableNameQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
@@ -303,7 +304,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeColumn)
             {
-                var query = new SearchByColumnNameQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByColumnNameQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
@@ -326,7 +327,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeFindTextInTableColumn)
             {
-                var query = new SearchByTextColumnContentQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByTextColumnContentQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
@@ -350,7 +351,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureName)
             {
-                var query = new SearchByStoredProcedureNameQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByStoredProcedureNameQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
@@ -369,7 +370,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureParameterName)
             {
-                var query = new SearchByStoredProcedureParameterNameQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByStoredProcedureParameterNameQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 
@@ -388,7 +389,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
             else if (SearchType.SelectedItem.Value == Constants.SearchTypeStoredProcedureSourceCode)
             {
-                var query = new SearchByStoredProcedureSourceCodeQueryViewModel(new DatasetQueryRunner());
+                var query = new SearchByStoredProcedureSourceCodeQueryViewModel(_queryRunner);
 
                 query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
 

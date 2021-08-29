@@ -33,6 +33,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 {
                     _SystemUnderTest = new DataExportViewModel(
                         MessageManagerInstance,
+                        new DatasetQueryRunner(),
                         DatabaseConnectionStringRepositoryInstance,
                         DatabaseUtilityInstance, FileDialogServiceInstance,
                         new MockTelemetryService());

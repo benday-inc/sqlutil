@@ -30,6 +30,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 {
                     _SystemUnderTest = new SearchViewModel(
                         MessageManagerInstance,
+                        new DatasetQueryRunner(),
                         DatabaseConnectionStringRepositoryInstance, 
                         new MockTelemetryService());
                 }
