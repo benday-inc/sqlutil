@@ -12,6 +12,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         {
             _SystemUnderTest = null;
             _DatabaseConnectionStringRepositoryInstance = null;
+            _runner = null;
         }
 
         private DatabaseSessionSearchViewModel _SystemUnderTest;
@@ -23,12 +24,26 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 {
                     _SystemUnderTest = new DatabaseSessionSearchViewModel(
                         MessageManagerInstance,
-                        new MockQueryRunner(), 
+                        Runner,
                         DatabaseConnectionStringRepositoryInstance,
                         new MockTelemetryService());
                 }
 
                 return _SystemUnderTest;
+            }
+        }
+
+        private MockQueryRunner _runner;
+        public MockQueryRunner Runner
+        {
+            get
+            {
+                if (_runner == null)
+                {
+                    _runner = new MockQueryRunner();
+                }
+
+                return _runner;
             }
         }
 

@@ -6,6 +6,7 @@ using System.Data;
 
 namespace Benday.SqlUtils.UnitTests.ViewModels
 {
+
     [TestClass]
     public class DatabaseSessionQueryResultRowFixture
     {
@@ -24,113 +25,38 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             }
         }
 
-        private const int ExpectedSessionId = 1234;
-        private const string ExpectedStatus = "Status Value";
-        private const string ExpectedLogin = "Login Value";
-        private const string ExpectedHostName = "HostName Value";
-        private const string ExpectedBlockedBy = "Blocked by Value";
-        private const string ExpectedDatabaseName = "Database name Value";
-        private const string ExpectedCommand = "Command Value";
-        private const string ExpectedProgramName = "Program Name Value";
-
-        private DataTable GetDatabaseSessionQueryResultTable()
-        {
-            DataTable table = new DataTable();
-
-            AddColumn<int>(table, Constants.ColumnName_SessionId);
-            AddColumn<string>(table, Constants.ColumnName_Status);
-            AddColumn<string>(table, Constants.ColumnName_Login);
-            AddColumn<string>(table, Constants.ColumnName_HostName);
-            AddColumn<string>(table, Constants.ColumnName_BlockedBy);
-            AddColumn<string>(table, Constants.ColumnName_DatabaseName);
-            AddColumn<string>(table, Constants.ColumnName_Command);
-            AddColumn<string>(table, Constants.ColumnName_ProgramName);
-            return table;
-        }
-
         private void InitalizeAllFieldsToNull()
         {
-            DataTable table = GetDatabaseSessionQueryResultTable();
+            var table = DatabaseSessionTestUtility.InitalizeAllFieldsToNull();
 
-            DataRow row = table.NewRow();
-
-            foreach (DataColumn col in table.Columns)
-            {
-                row[col] = DBNull.Value;
-            }
+            var row = table.Rows[0];
 
             _SystemUnderTest = new DatabaseSessionQueryResultRow(row);
         }
 
-        private void AddColumn<T>(DataTable table, string columnName)
-        {
-            DataColumn column = new DataColumn(columnName, typeof(T));
-
-            column.AllowDBNull = true;
-
-            table.Columns.Add(column);
-        }
-
         private void InitalizeAllStringFieldsToWhitespace()
         {
-            DataTable table = GetDatabaseSessionQueryResultTable();
+            var table = DatabaseSessionTestUtility.InitalizeAllStringFieldsToWhitespace();
 
-            DataRow row = table.NewRow();
-
-            var valueString = "       ";
-
-            foreach (DataColumn col in table.Columns)
-            {
-                if (col.DataType == typeof(int))
-                {
-                    row[col] = DBNull.Value;
-                }
-                else
-                {
-                    row[col] = valueString;
-                }
-            }
+            var row = table.Rows[0];
 
             _SystemUnderTest = new DatabaseSessionQueryResultRow(row);
         }
 
         private void InitalizeAllStringFieldsToDash()
         {
-            DataTable table = GetDatabaseSessionQueryResultTable();
+            var table = DatabaseSessionTestUtility.InitalizeAllStringFieldsToDash();
 
-            DataRow row = table.NewRow();
-
-            var valueString = "  .";
-
-            foreach (DataColumn col in table.Columns)
-            {
-                if (col.DataType == typeof(int))
-                {
-                    row[col] = DBNull.Value;
-                }
-                else
-                {
-                    row[col] = valueString;
-                }
-            }
+            var row = table.Rows[0];
 
             _SystemUnderTest = new DatabaseSessionQueryResultRow(row);
         }
 
         private void InitalizeAllFieldsToValues()
         {
-            DataTable table = GetDatabaseSessionQueryResultTable();
-
-            DataRow row = table.NewRow();
-
-            row[Constants.ColumnName_SessionId] = ExpectedSessionId;
-            row[Constants.ColumnName_Status] = ExpectedStatus;
-            row[Constants.ColumnName_Login] = ExpectedLogin;
-            row[Constants.ColumnName_HostName] = ExpectedHostName;
-            row[Constants.ColumnName_BlockedBy] = ExpectedBlockedBy;
-            row[Constants.ColumnName_DatabaseName] = ExpectedDatabaseName;
-            row[Constants.ColumnName_Command] = ExpectedCommand;
-            row[Constants.ColumnName_ProgramName] = ExpectedProgramName;
+            var table = DatabaseSessionTestUtility.InitalizeAllFieldsToValues();
+            
+            var row = table.Rows[0];
 
             _SystemUnderTest = new DatabaseSessionQueryResultRow(row);
         }
@@ -158,7 +84,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<int>(ExpectedSessionId, SystemUnderTest.SessionId, "SessionId was wrong");
+            Assert.AreEqual<int>(DatabaseSessionTestUtility.ExpectedSessionId, SystemUnderTest.SessionId, "SessionId was wrong");
         }
 
         [TestMethod]
@@ -210,7 +136,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedHostName, SystemUnderTest.HostName, "Hostname was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedHostName, SystemUnderTest.HostName, "Hostname was wrong");
         }
 
         [TestMethod]
@@ -262,7 +188,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedStatus, SystemUnderTest.Status, "Status was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedStatus, SystemUnderTest.Status, "Status was wrong");
         }
 
         [TestMethod]
@@ -314,7 +240,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedLogin, SystemUnderTest.Login, "Login was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedLogin, SystemUnderTest.Login, "Login was wrong");
         }
 
         [TestMethod]
@@ -366,7 +292,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedBlockedBy, SystemUnderTest.BlockedBy, "BlockedBy was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedBlockedBy, SystemUnderTest.BlockedBy, "BlockedBy was wrong");
         }
 
         [TestMethod]
@@ -418,7 +344,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedDatabaseName, SystemUnderTest.DatabaseName, "DatabaseName was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedDatabaseName, SystemUnderTest.DatabaseName, "DatabaseName was wrong");
         }
 
         [TestMethod]
@@ -470,7 +396,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedCommand, SystemUnderTest.Command, "Command was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedCommand, SystemUnderTest.Command, "Command was wrong");
         }
 
         [TestMethod]
@@ -522,7 +448,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             InitalizeAllFieldsToValues();
 
             // assert
-            Assert.AreEqual<string>(ExpectedProgramName, SystemUnderTest.ProgramName, "ProgramName was wrong");
+            Assert.AreEqual<string>(DatabaseSessionTestUtility.ExpectedProgramName, SystemUnderTest.ProgramName, "ProgramName was wrong");
         }
     }
 }
