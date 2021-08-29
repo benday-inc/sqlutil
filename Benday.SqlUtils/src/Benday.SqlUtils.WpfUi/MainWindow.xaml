@@ -28,6 +28,10 @@
                     Style="{StaticResource MenuButtonUnselected}"
                     Content="Export Data"
                     Click="_ButtonExportData_Click"/>
+            <Button x:Name="_ButtonSessions"
+                    Style="{StaticResource MenuButtonUnselected}"
+                    Content="Sessions"
+                    Click="_ButtonSessions_Click"/>
             <Button x:Name="_ButtonEditConnections"
                     Style="{StaticResource MenuButtonUnselected}"
                     Content="Connections"

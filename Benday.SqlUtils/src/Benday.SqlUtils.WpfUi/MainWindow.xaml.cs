@@ -49,6 +49,11 @@ namespace Benday.SqlUtils.WpfUi
             SelectControl("DataExport");
         }
 
+        private void _ButtonSessions_Click(object sender, RoutedEventArgs e)
+        {
+            SelectControl("Sessions");
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var temp = TryFindResource("Locator") as ViewModelLocator;
@@ -86,6 +91,9 @@ namespace Benday.SqlUtils.WpfUi
             _Controls.Add("DataExport", new DataExportUserControl());
             _MenuButtons.Add("DataExport", _ButtonExportData);
 
+            _Controls.Add("Sessions", new DatabaseSessionUserControl());
+            _MenuButtons.Add("Sessions", _ButtonSessions);
+
             _Controls.Add("About", new AboutUserControl());
             _MenuButtons.Add("About", _ButtonAbout);
 
@@ -112,6 +120,7 @@ namespace Benday.SqlUtils.WpfUi
                 UnselectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
                 UnselectButton(_ButtonAbout);
+                UnselectButton(_ButtonSessions);
             }
             else if (selectedButton == _ButtonExportData)
             {
@@ -119,6 +128,7 @@ namespace Benday.SqlUtils.WpfUi
                 SelectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
                 UnselectButton(_ButtonAbout);
+                UnselectButton(_ButtonSessions);
             }
             else if (selectedButton == _ButtonAbout)
             {
@@ -126,6 +136,15 @@ namespace Benday.SqlUtils.WpfUi
                 UnselectButton(_ButtonExportData);
                 UnselectButton(_ButtonEditConnections);
                 SelectButton(_ButtonAbout);
+                UnselectButton(_ButtonSessions);
+            }
+            else if (selectedButton == _ButtonSessions)
+            {
+                UnselectButton(_ButtonSearchByName);
+                UnselectButton(_ButtonExportData);
+                UnselectButton(_ButtonEditConnections);
+                UnselectButton(_ButtonAbout);
+                SelectButton(_ButtonSessions);
             }
             else
             {
@@ -133,6 +152,7 @@ namespace Benday.SqlUtils.WpfUi
                 UnselectButton(_ButtonExportData);
                 SelectButton(_ButtonEditConnections);
                 UnselectButton(_ButtonAbout);
+                UnselectButton(_ButtonSessions);
             }
         }
 
