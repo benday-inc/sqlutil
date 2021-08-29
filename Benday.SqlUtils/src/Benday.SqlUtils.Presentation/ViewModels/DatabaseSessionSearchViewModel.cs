@@ -126,12 +126,12 @@ namespace Benday.SqlUtils.Presentation.ViewModels
         }
 
         private void AddFilters(DatabaseSessionQueryViewModel query)
-        {
-            if (_searchBlockedBy.HasSearchFilter == true)
-            {
-                query.SetFilter(_searchBlockedBy);
-            }
-            throw new NotImplementedException();
+        {            
+            query.SetFilter(_searchBlockedBy);
+            query.SetFilter(_searchDatabaseName);
+            query.SetFilter(_searchHostname);
+            query.SetFilter(_searchLogin);
+            query.SetFilter(_searchStatus);
         }
 
         private void Search()
