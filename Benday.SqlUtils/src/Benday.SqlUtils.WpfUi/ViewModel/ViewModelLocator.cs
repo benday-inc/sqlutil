@@ -57,6 +57,7 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
 
             SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
+            SimpleIoc.Default.Register<DatabaseSessionSearchViewModel>();
             SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
             SimpleIoc.Default.Register<DataExportViewModel>();
         }
@@ -101,6 +102,22 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                         new DatabaseConnectionStringRepository(), Telemetry);
                 }
                 return _Search;
+            }
+        }
+
+        private DatabaseSessionSearchViewModel _SessionSearch;
+        public DatabaseSessionSearchViewModel SessionSearch
+        {
+            get
+            {
+                if (_SessionSearch == null)
+                {
+                    _SessionSearch = new DatabaseSessionSearchViewModel(
+                        MessageManagerInstance,
+                        new DatasetQueryRunner(),
+                        new DatabaseConnectionStringRepository(), Telemetry);
+                }
+                return _SessionSearch;
             }
         }
 
