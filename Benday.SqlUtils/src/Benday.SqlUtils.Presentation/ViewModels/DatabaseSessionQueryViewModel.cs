@@ -57,5 +57,10 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             return returnValue;
         }
+
+        public void SetFilter(ISearchFilterable filterBy)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

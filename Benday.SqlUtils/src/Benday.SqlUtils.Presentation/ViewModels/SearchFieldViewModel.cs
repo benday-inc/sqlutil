@@ -6,13 +6,23 @@ using System.Text;
 
 namespace Benday.SqlUtils.Presentation.ViewModels
 {
-    public class SearchFieldViewModel : ViewModelField<string>
+    public class SearchFieldViewModel : ViewModelField<string>, ISearchFilterable
     {
         public SearchFieldViewModel()
         {
             SearchType = new SelectableCollectionViewModel<SelectableItem>();
             PopulateSearchTypes();
             SearchType.OnItemSelected += SearchType_OnItemSelected;
+        }
+
+        public SearchFieldViewModel(string argName) : this()
+        {
+            if (argName == null)
+            {
+                throw new ArgumentNullException("argName", "Argument cannot be null.");
+            }
+
+            ArgName = argName;
         }
 
         private void SearchType_OnItemSelected(object sender, EventArgs e)
@@ -22,7 +32,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private void HandleSearchTypeSelected()
         {
-            if (SearchType.Items.Count == 0 || 
+            if (SearchType.Items.Count == 0 ||
                 SearchType.SelectedItem == null)
             {
                 IsEnabled = true;
@@ -55,6 +65,25 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 RaisePropertyChanged(SearchTypePropertyName);
             }
         }
+
+        public SearchFilter GetSearchFilter()
+        {
+            if (HasSearchFilter == false)
+            {
+                return null;
+            }
+            else
+            {
+                return new SearchFilter(ArgName, SearchType.SelectedItem.Text, Value);
+            }
+        }
+
+        public string ArgName
+        {
+            get;
+            set;
+        }
+
         public bool HasSearchFilter
         {
             get

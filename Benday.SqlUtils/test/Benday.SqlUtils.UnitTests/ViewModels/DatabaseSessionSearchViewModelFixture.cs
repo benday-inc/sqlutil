@@ -93,6 +93,28 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsNotNull(SystemUnderTest.SearchCommand, "SearchCommand was null.");
         }
 
+        private void AssertSearchFieldArgName(ISearchFilterable filter, string expected)
+        {
+            var actual = filter.ArgName;
+
+            Assert.AreEqual<string>(expected, actual, "ArgName value was wrong.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedThenFieldPropertiesArgNamesAreSet()
+        {
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchStatus, nameof(DatabaseSessionQueryResultRow.Status));
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchLogin, nameof(DatabaseSessionQueryResultRow.Login));
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchHostname, nameof(DatabaseSessionQueryResultRow.HostName));
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchBlockedBy, nameof(DatabaseSessionQueryResultRow.BlockedBy));
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchDatabaseName, nameof(DatabaseSessionQueryResultRow.DatabaseName));
+        }
+
         [TestMethod]
         public void WhenInitializedThenFieldPropertiesAreValid()
         {

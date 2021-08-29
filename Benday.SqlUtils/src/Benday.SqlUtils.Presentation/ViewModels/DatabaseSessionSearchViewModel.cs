@@ -20,11 +20,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         protected override void OnInitialize()
         {
-            _searchBlockedBy = new SearchFieldViewModel();
-            _searchDatabaseName = new SearchFieldViewModel();
-            _searchHostname = new SearchFieldViewModel();
-            _searchLogin = new SearchFieldViewModel();
-            _searchStatus = new SearchFieldViewModel();
+            _searchBlockedBy = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.BlockedBy));
+            _searchDatabaseName = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.DatabaseName));
+            _searchHostname = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.HostName));
+            _searchLogin = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Login));
+            _searchStatus = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Status));
 
             _Result = null;
         }
@@ -125,11 +125,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             }
         }
 
+        private void AddFilters(DatabaseSessionQueryViewModel query)
+        {
+            if (_searchBlockedBy.HasSearchFilter == true)
+            {
+                query.SetFilter(_searchBlockedBy);
+            }
+            throw new NotImplementedException();
+        }
+
         private void Search()
         {
             var query = new DatabaseSessionQueryViewModel();
 
             query.ConnectionString = this.DatabaseConnections.SelectedItem.ConnectionString;
+
+            AddFilters(query);
 
             Result = query;
 
