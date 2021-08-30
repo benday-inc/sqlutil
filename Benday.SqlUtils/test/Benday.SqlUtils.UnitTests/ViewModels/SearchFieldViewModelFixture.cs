@@ -31,7 +31,14 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 return _SystemUnderTest;
             }
         }
-                
+
+        [TestMethod]
+        public void WhenInitializedIsValidIsTrue()
+        {
+            Assert.IsTrue(SystemUnderTest.IsValid, "this.IsValid");
+            Assert.IsTrue(SystemUnderTest.SearchType.IsValid, "SearchType.IsValid");
+        }
+
         [TestMethod]
         public void WhenInitializedThenSearchTypesArePopulated()
         {

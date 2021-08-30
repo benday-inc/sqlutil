@@ -64,5 +64,21 @@ namespace Benday.SqlUtils.WpfUi.Controls
 
         public static readonly DependencyProperty IsLabelVisibleProperty =
             DependencyProperty.Register("IsLabelVisible", typeof(Boolean), typeof(RadioButtonListField), new PropertyMetadata(true));
+
+        public Orientation ItemsOrientation
+        {
+            get
+            {
+                var temp = (Orientation)this.GetValue(ItemsOrientationProperty);
+                return temp;
+            }
+            set
+            {
+                this.SetValue(ItemsOrientationProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty ItemsOrientationProperty = DependencyProperty.Register(
+          "ItemsOrientation", typeof(Orientation), typeof(RadioButtonListField), new PropertyMetadata(Orientation.Vertical));
     }
 }

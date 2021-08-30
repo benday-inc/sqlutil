@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using Benday.Presentation;
+using System.Windows;
 
 namespace Benday.SqlUtils.WpfUi.Controls
 {
@@ -39,5 +40,23 @@ namespace Benday.SqlUtils.WpfUi.Controls
                 senderAsRadioButton.IsChecked = true;
             }
         }
+
+        public Orientation ItemsOrientation
+        {
+            get
+            {
+                var temp = (Orientation)this.GetValue(ItemsOrientationProperty);
+                Console.WriteLine($"*** ITEMSORIENTATION.GET ****: {temp}");
+                return temp;
+            }
+            set
+            {
+                Console.WriteLine($"*** ITEMSORIENTATION.SET ****: {value}");
+                this.SetValue(ItemsOrientationProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty ItemsOrientationProperty = DependencyProperty.Register(
+          "ItemsOrientation", typeof(Orientation), typeof(RadioButtonList), new PropertyMetadata(Orientation.Vertical));
     }
 }

@@ -28,6 +28,7 @@
             Style="{StaticResource FieldErrorStyle}" 
             Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}" 
             Margin="4"/>
-        <local:RadioButtonList Grid.Row="2" DataContext="{Binding Items}"/>
+        <local:RadioButtonList Grid.Row="2" DataContext="{Binding Items}" 
+                               ItemsOrientation="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RadioButtonListField}}, Path=ItemsOrientation}" />
     </Grid>
 </UserControl>

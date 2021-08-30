@@ -63,7 +63,7 @@
       Height="{Binding ElementName=_SearchGrid, Path=ActualHeight}"
                     />
             </Canvas>
-            <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type" DataContext="{Binding SearchType}" />
+            <ctrls:RadioButtonListField Grid.Column="0" LabelText="Search Type"  DataContext="{Binding SearchType}" />
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <ctrls:TextboxField LabelText="Search Value" DataContext="{Binding SearchByValue}" OnEnterKey="TextboxField_OnEnterKey" />
 

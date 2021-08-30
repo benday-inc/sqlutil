@@ -20,12 +20,12 @@
             Converter="{StaticResource VisibilityValueConverterInstance}" 
             Path="IsVisible"/>
     </UserControl.Visibility>
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock 
             Grid.Row="0" 
@@ -52,9 +52,8 @@
 
         <local:RadioButtonListField 
             IsLabelVisible="False"
+            ItemsOrientation="Horizontal"
             DataContext="{Binding SearchType}" Grid.Row="3" />
-
-
 
     </Grid>
 </UserControl>
