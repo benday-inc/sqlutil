@@ -47,10 +47,12 @@
 			KeyDown="TextBox_KeyDown">
         </TextBox>
 
-        <StackPanel Grid.Row="3">
-            <local:RadioButtonList>
-                
-            </local:RadioButtonList>
-        </StackPanel>
+
+        <local:RadioButtonListField 
+            IsLabelVisible="False"
+            DataContext="{Binding SearchType}" Grid.Row="3" />
+
+
+
     </Grid>
 </UserControl>

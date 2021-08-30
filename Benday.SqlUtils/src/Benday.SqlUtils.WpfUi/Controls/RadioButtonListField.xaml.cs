@@ -54,5 +54,16 @@ namespace Benday.SqlUtils.WpfUi.Controls
                 _Label.Text = value;
             }
         }
+
+
+
+        public bool IsLabelVisible
+        {
+            get { return (bool)GetValue(IsLabelVisibleProperty); }
+            set { SetValue(IsLabelVisibleProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsLabelVisibleProperty =
+            DependencyProperty.Register("IsLabelVisible", typeof(bool), typeof(RadioButtonListField), new PropertyMetadata(true));
     }
 }

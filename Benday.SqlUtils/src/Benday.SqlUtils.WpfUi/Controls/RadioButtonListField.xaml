@@ -19,6 +19,7 @@
             VerticalAlignment="Top" 
             Margin="4" 
             TextWrapping="Wrap" 
+            Visibility="{Binding IsLabelVisible, Converter={StaticResource VisibilityValueConverterInstance}}" 
             Style="{StaticResource FieldLabelStyle}"/>
 
         <TextBlock 
