@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,15 +56,13 @@ namespace Benday.SqlUtils.WpfUi.Controls
             }
         }
 
-
-
-        public bool IsLabelVisible
+        public Boolean IsLabelVisible
         {
             get { return (bool)GetValue(IsLabelVisibleProperty); }
             set { SetValue(IsLabelVisibleProperty, value); }
         }
 
         public static readonly DependencyProperty IsLabelVisibleProperty =
-            DependencyProperty.Register("IsLabelVisible", typeof(bool), typeof(RadioButtonListField), new PropertyMetadata(true));
+            DependencyProperty.Register("IsLabelVisible", typeof(Boolean), typeof(RadioButtonListField), new PropertyMetadata(true));
     }
 }
