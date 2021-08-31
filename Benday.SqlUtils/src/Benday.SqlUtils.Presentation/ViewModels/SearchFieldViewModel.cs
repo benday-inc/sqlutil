@@ -11,9 +11,11 @@ namespace Benday.SqlUtils.Presentation.ViewModels
     {
         public SearchFieldViewModel()
         {
-            SearchType = new SelectableCollectionViewModel<SelectableItem>();
+            SearchType = new SingleSelectListViewModel(new List<SelectableItem>());
             PopulateSearchTypes();
             SearchType.OnItemSelected += SearchType_OnItemSelected;
+            IsValid = true;
+            SearchType.IsValid = true;
         }
 
         public SearchFieldViewModel(string argName) : this()
@@ -69,8 +71,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
         private const string SearchTypePropertyName = "SearchType";
 
-        private SelectableCollectionViewModel<SelectableItem> _searchType;
-        public SelectableCollectionViewModel<SelectableItem> SearchType
+        private SingleSelectListViewModel _searchType;
+        public SingleSelectListViewModel SearchType
         {
             get
             {
