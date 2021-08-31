@@ -10,7 +10,7 @@
     d:DesignWidth="440" FontFamily="Segoe UI"
              xmlns:ValueConverters="clr-namespace:Benday.Presentation.ValueConverters;assembly=Benday.Presentation"
              IsEnabled="{Binding IsEnabled}"
-             d:DataContext="{d:DesignInstance vm:SearchFieldViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance vm:SearchFieldViewModel, IsDesignTimeCreatable=True}" 
     >
     <UserControl.Resources>
         <ValueConverters:SmartValueConverter x:Key="SmartValueConverter"/>
@@ -20,40 +20,31 @@
             Converter="{StaticResource VisibilityValueConverterInstance}" 
             Path="IsVisible"/>
     </UserControl.Visibility>
-    <Grid x:Name="LayoutRoot" VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <StackPanel x:Name="LayoutRoot" VerticalAlignment="Top">
         <TextBlock 
-            Grid.Row="0" 
             x:Name="_Label" 
             Text="LABEL TEXT" 
             IsEnabled="{Binding IsEnabled}"
             Style="{StaticResource FieldLabelStyle}"/>
 
         <TextBlock 
-            Grid.Row="1" 
             Text="{Binding ValidationMessage}" 
             Style="{StaticResource FieldErrorStyle}" 
             Visibility="{Binding IsValid, Converter={StaticResource NotVisibilityValueConverterInstance}}" 
             Margin="4"/>
 
         <TextBox x:Name="_Textbox" 
-			Grid.Row="2"			 
 			Text="{Binding Value, Converter={StaticResource SmartValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             IsEnabled="{Binding IsEnabled}"
 			Style="{StaticResource FieldTextboxStyle}"
 			KeyDown="TextBox_KeyDown">
         </TextBox>
 
-
         <local:RadioButtonListField 
             IsLabelVisible="False"
             ItemsOrientation="Horizontal"
-            DataContext="{Binding SearchType}" Grid.Row="3" />
+            DataContext="{Binding SearchType}" 
+            />
 
-    </Grid>
+    </StackPanel>
 </UserControl>
