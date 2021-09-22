@@ -8,8 +8,8 @@
 
   <Identity
     Name="BenjaminDayConsultingInc.SQLDataShovel"
-    Publisher="CN=benday"
-    Version="1.1.3.0" />
+    Publisher="CN=EF9A1AE6-FDF6-47F2-B542-8DC9E294B083"
+    Version="1.1.4.0" />
 
   <Properties>
     <DisplayName>Shovel</DisplayName>
