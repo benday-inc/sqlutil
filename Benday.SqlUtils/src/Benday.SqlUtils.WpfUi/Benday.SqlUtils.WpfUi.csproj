@@ -35,6 +35,7 @@
     <PackageIcon>bdc_mark_large.jpg</PackageIcon>
     <Platforms>AnyCPU;x86</Platforms>
     <Version>1.1.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
