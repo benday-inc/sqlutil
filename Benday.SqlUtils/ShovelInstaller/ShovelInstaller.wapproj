@@ -51,12 +51,12 @@
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <PropertyGroup>
     <ProjectGuid>e6ce7565-5669-4dac-ae27-900cc8db3270</ProjectGuid>
-    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.20348.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <EntryPointProjectUniqueName>..\src\Benday.SqlUtils.WpfUi\Benday.SqlUtils.WpfUi.csproj</EntryPointProjectUniqueName>
-    <PackageCertificateThumbprint>32708D259A74AC8CA3A32B7B3C57E78FA8848229</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>4817C40BEC84F5DC7A458F09CB9E45D9A4BA162B</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
