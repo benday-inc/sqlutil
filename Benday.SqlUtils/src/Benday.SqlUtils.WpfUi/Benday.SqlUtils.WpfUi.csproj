@@ -29,11 +29,12 @@
     <Product>Shovel</Product>
     <AssemblyName>Benday.DataShovel.WpfUi</AssemblyName>
     <Description>Shovel: Database utilities for SQL Server</Description>
-    <Copyright>2020</Copyright>
+    <Copyright>2021</Copyright>
     <Company>Benjamin Day Consulting, Inc.</Company>
     <PackageId>Benday.Shovel.WpfUi</PackageId>
     <PackageIcon>bdc_mark_large.jpg</PackageIcon>
     <Platforms>AnyCPU;x86</Platforms>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
