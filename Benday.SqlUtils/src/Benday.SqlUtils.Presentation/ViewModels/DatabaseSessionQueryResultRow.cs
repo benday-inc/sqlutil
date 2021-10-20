@@ -79,6 +79,26 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                 {
                     return -1;
                 }
+                else if (row.Table.Columns[columnName].DataType == typeof(string))
+                {
+                    if (row[columnName] == DBNull.Value)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        var temp = (string)row[columnName];
+
+                        if (int.TryParse(temp, out var returnValue) == true)
+                        {
+                            return returnValue;
+                        }
+                        else
+                        {
+                            return -3;
+                        }
+                    }
+                }
                 else if (row.Table.Columns[columnName].DataType != typeof(int))
                 {
                     return -2;
