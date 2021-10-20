@@ -36,6 +36,8 @@
     <Platforms>AnyCPU;x86</Platforms>
     <Version>1.1.0</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <FileVersion>1.2.0.0</FileVersion>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
