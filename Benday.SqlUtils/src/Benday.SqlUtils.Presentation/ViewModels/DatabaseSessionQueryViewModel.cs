@@ -129,7 +129,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
                     if (filter.SearchType == Constants.SearchTypeByValue)
                     {
 
-                        if (value.Contains(filter.Value) == false)
+                        if (value.Contains(filter.Value, StringComparison.CurrentCultureIgnoreCase) == false)
                         {
                             isFiltered = true;
                         }
