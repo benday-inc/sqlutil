@@ -22,22 +22,27 @@
             Orientation="Horizontal" 
                     Style="{DynamicResource MenuStackPanel}">
             <Button x:Name="_ButtonSearchByName" Content="Search" 
+                    ToolTip="Search a database schema for tables, columns, stored procedures, etc."
                     Style="{StaticResource MenuButtonSelected}"
                     Click="_ButtonSearchByName_Click" />
             <Button x:Name="_ButtonExportData"
                     Style="{StaticResource MenuButtonUnselected}"
+                    ToolTip="Export data using a SQL query as either an INSERT or an UPDATE INTO script"
                     Content="Export Data"
                     Click="_ButtonExportData_Click"/>
             <Button x:Name="_ButtonSessions"
                     Style="{StaticResource MenuButtonUnselected}"
+                    ToolTip="Get a list of current database connections"
                     Content="Sessions"
                     Click="_ButtonSessions_Click"/>
             <Button x:Name="_ButtonEditConnections"
                     Style="{StaticResource MenuButtonUnselected}"
+                    ToolTip="Edit the list of databases to use with Shovel"
                     Content="Connections"
                     Click="_ButtonEditConnections_Click"/>
             <Button x:Name="_ButtonAbout"
                     Style="{StaticResource MenuButtonUnselected}"
+                    ToolTip="Find out who wrote this amazing tool! (And/or send suggestions.)"
                     Content="About"
                     Click="_ButtonAbout_Click" />
         </StackPanel>
