@@ -63,22 +63,41 @@
       Height="{Binding ElementName=_SearchGrid, Path=ActualHeight}"
                     />
             </Canvas>
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <ctrls:SearchField LabelText="Blocked By" DataContext="{Binding SearchBlockedBy}" OnEnterKey="TextboxField_OnEnterKey" />
-                <ctrls:SearchField LabelText="Database Name" DataContext="{Binding SearchDatabaseName}" OnEnterKey="TextboxField_OnEnterKey" />
-                <ctrls:SearchField LabelText="Host Name" DataContext="{Binding SearchHostname}" OnEnterKey="TextboxField_OnEnterKey" />
-                <ctrls:SearchField LabelText="Login" DataContext="{Binding SearchLogin}" OnEnterKey="TextboxField_OnEnterKey" />
-                <ctrls:SearchField LabelText="Status" DataContext="{Binding SearchStatus}" OnEnterKey="TextboxField_OnEnterKey" />
-                
+            <Grid Grid.Column="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ctrls:SearchField 
+                    Grid.Column="1" Grid.Row="1" 
+                    LabelText="Blocked By" DataContext="{Binding SearchBlockedBy}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:SearchField 
+                    Grid.Column="1" Grid.Row="0" 
+                    LabelText="Database Name" DataContext="{Binding SearchDatabaseName}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:SearchField 
+                    Grid.Column="0" Grid.Row="1" 
+                    LabelText="Host Name" DataContext="{Binding SearchHostname}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:SearchField 
+                    Grid.Column="0" Grid.Row="0" 
+                    LabelText="Login" DataContext="{Binding SearchLogin}" OnEnterKey="TextboxField_OnEnterKey" />
+                <ctrls:SearchField 
+                    Grid.Column="0" Grid.Row="2" 
+                    LabelText="Status" DataContext="{Binding SearchStatus}" OnEnterKey="TextboxField_OnEnterKey" />
+
                 <Button Command="{Binding SearchCommand, Mode=OneWay}"
+                        Grid.Row="2" Grid.Column="1" 
                         Content="Search"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"
                         Style="{StaticResource FieldButtonStyle}"/>
-            </StackPanel>
+            </Grid>
 
         </Grid>
         <Grid Grid.Row="2">
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
