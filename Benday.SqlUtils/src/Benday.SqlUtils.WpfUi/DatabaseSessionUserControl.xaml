@@ -98,12 +98,19 @@
                 </Grid>
             </Expander>
         </Grid>
-        <Button Command="{Binding SearchCommand, Mode=OneWay}"
-                        Grid.Row="2" 
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Command="{Binding SearchCommand, Mode=OneWay}"                        
                         Content="Search"
                 ToolTip="Get the list of database connections that match the search filters"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"
                         Style="{StaticResource FieldButtonStyle}"/>
+            <Button Command="{Binding ResetFiltersCommand, Mode=OneWay}"                        
+                        Content="Reset Filters"
+                ToolTip="Reset search filters to blank"
+                        Margin="{StaticResource SpacedSeparatedControlMargin}"
+                        Style="{StaticResource FieldButtonStyle}"/>
+        </StackPanel>
+        
         <GroupBox Header="Results" Grid.Row="3">
             <Grid>
                 <Grid.RowDefinitions>
