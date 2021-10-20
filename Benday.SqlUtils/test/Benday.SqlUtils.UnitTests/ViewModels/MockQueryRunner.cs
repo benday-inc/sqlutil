@@ -28,6 +28,11 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             return RunReturnValue;
         }
 
+        public void ExecuteNonQuery(SqlCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
         public DataSet RunReturnValue { get; set; }
     }
 }

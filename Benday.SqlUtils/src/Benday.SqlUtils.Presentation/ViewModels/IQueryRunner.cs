@@ -9,5 +9,6 @@ namespace Benday.SqlUtils.Presentation.ViewModels
     {
         void Initialize(string connectionString);
         DataSet Run(SqlCommand command);
+        void ExecuteNonQuery(SqlCommand command);
     }
 }

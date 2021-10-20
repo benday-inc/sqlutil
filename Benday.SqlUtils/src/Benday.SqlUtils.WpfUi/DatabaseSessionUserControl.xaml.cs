@@ -55,30 +55,10 @@ namespace Benday.SqlUtils.WpfUi
 
                 var context = _ResultGrid.DataContext;
 
-                if (context is SearchByTableNameQueryViewModel)
+                if (context is DatabaseSessionQueryViewModel)
                 {
-                    PopulateContextMenu(context as SearchByTableNameQueryViewModel);
-                }
-                else if (context is SearchByColumnNameQueryViewModel)
-                {
-                    PopulateContextMenu(context as SearchByColumnNameQueryViewModel);
-                }
-                else if (context is SearchByTextColumnContentQueryViewModel)
-                {
-                    PopulateContextMenu(context as SearchByTextColumnContentQueryViewModel);
-                }
-                else if (context is SearchByStoredProcedureNameQueryViewModel)
-                {
-                    PopulateContextMenu(context as SearchByStoredProcedureNameQueryViewModel);
-                }
-                else if (context is SearchByStoredProcedureParameterNameQueryViewModel)
-                {
-                    PopulateContextMenu(context as SearchByStoredProcedureParameterNameQueryViewModel);
-                }
-                else if (context is SearchByStoredProcedureSourceCodeQueryViewModel)
-                {
-                    PopulateContextMenu(context as SearchByStoredProcedureSourceCodeQueryViewModel);
-                }
+                    PopulateContextMenu();
+                }                
                 else
                 {
                     return;
@@ -86,131 +66,48 @@ namespace Benday.SqlUtils.WpfUi
             }
         }
 
-        private void PopulateContextMenu(SearchByColumnNameQueryViewModel search)
+        private void PopulateContextMenu()
         {
             AddDescribeTableToContextMenu();
-        }
-
-        private void PopulateContextMenu(SearchByTableNameQueryViewModel search)
-        {
-            AddDescribeTableToContextMenu();
-        }
-        private void PopulateContextMenu(SearchByTextColumnContentQueryViewModel search)
-        {
-            AddDescribeTableToContextMenu();
-            AddCopyValueToClipboardContextMenu("QUERY");
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu();
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureParameterNameQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu();
-        }
-
-        private void PopulateContextMenu(SearchByStoredProcedureSourceCodeQueryViewModel search)
-        {
-            AddDescribeStoredProcedureToContextMenu();
         }
 
         private void AddDescribeTableToContextMenu()
         {
-            var selectedItem = _ResultGrid.SelectedItem as ITableName;
+            var selectedItem = _ResultGrid.SelectedItem as DatabaseSessionQueryResultRow;
 
             if (selectedItem == null)
             {
                 return;
             }
 
-            var tableName = selectedItem.TableName;
+            var sessionId = selectedItem.SessionId;
 
-            var descTable = new MenuItem();
+            var killSession = new MenuItem();
 
-            descTable.Header = $"Describe table: '{tableName}'";
-            descTable.Tag = tableName;
-            descTable.Click += DescribeTable_Click;
+            killSession.Header = $"Kill session '{sessionId}'";
+            killSession.Tag = sessionId;
+            killSession.Click += KillSession_Click;
 
-            _ResultGrid.ContextMenu.Items.Add(descTable);
+            _ResultGrid.ContextMenu.Items.Add(killSession);
         }
 
-        private void AddDescribeStoredProcedureToContextMenu()
-        {
-            var selectedItem = _ResultGrid.SelectedItem as IStoredProcedureName;
 
-            if (selectedItem == null)
-            {
-                return;
-            }
 
-            var name = selectedItem.Name;
-
-            var descTable = new MenuItem();
-
-            descTable.Header = $"Describe stored procedure: '{name}'";
-            descTable.Tag = name;
-            descTable.Click += DescribeStoredProcedure_Click;
-
-            _ResultGrid.ContextMenu.Items.Add(descTable);
-        }
-
-        private void DescribeTable_Click(object sender, RoutedEventArgs e)
+        private void KillSession_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
+            var context = _ResultGrid.DataContext as DatabaseSessionQueryViewModel;
 
-            if (menuItem != null &&
+            if (context != null && 
+                menuItem != null &&
                 menuItem.Tag != null &&
                 String.IsNullOrWhiteSpace(menuItem.Tag.ToString()) == false)
             {
-                var dialog = new TableDescriptionWindow();
-
-                var connectionString = _Context.DatabaseConnections.SelectedItem.ConnectionString;
-
-                dialog.DescribeTable(connectionString, menuItem.Tag.ToString());
-
-                dialog.ShowDialog();
+                context.KillSession((int)menuItem.Tag);
+                context.Run();
             }
         }
 
-        private void DescribeStoredProcedure_Click(object sender, RoutedEventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-
-            if (menuItem != null &&
-                menuItem.Tag != null &&
-                String.IsNullOrWhiteSpace(menuItem.Tag.ToString()) == false)
-            {
-                var dialog = new StoredProcedureDescriptionWindow();
-
-                var connectionString = _Context.DatabaseConnections.SelectedItem.ConnectionString;
-
-                dialog.DescribeStoredProcedure(connectionString, menuItem.Tag.ToString());
-
-                dialog.ShowDialog();
-            }
-        }
-
-        private void AddCopyValueToClipboardContextMenu(string valueColumnName)
-        {
-            var selectedItem = _ResultGrid.SelectedItem as TextQueryResultRow;
-
-            if (selectedItem == null)
-            {
-                return;
-            }
-
-            var value = selectedItem.Query;
-
-            var copyToClipboard = new MenuItem();
-
-            copyToClipboard.Header = $"Copy query to clipboard";
-            copyToClipboard.Tag = value;
-            copyToClipboard.Click += (s, e) => { Clipboard.SetText(copyToClipboard.Tag as string); };
-
-            _ResultGrid.ContextMenu.Items.Add(copyToClipboard);
-        }
 
         private void _ResultGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {

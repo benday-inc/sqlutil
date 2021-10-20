@@ -41,6 +41,20 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             IsVisible = true;
         }
 
+        public void KillSession(int sessionId)
+        {
+            using var command = GetKillConnectionCommand(sessionId);
+            _runner.Initialize(ConnectionString);
+            _runner.ExecuteNonQuery(command);
+        }
+
+        private SqlCommand GetKillConnectionCommand(int sessionId)
+        {
+            var command = new SqlCommand($"KILL {sessionId};");
+
+            return command;
+        }
+
         private ObservableCollection<object> ToModels(DataTable dataTable)
         {
             var returnValue = new ObservableCollection<object>();

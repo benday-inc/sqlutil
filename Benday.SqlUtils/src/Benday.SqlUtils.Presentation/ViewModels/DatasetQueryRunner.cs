@@ -36,5 +36,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
             return results;
         }
+
+        public void ExecuteNonQuery(SqlCommand command)
+        {
+            if (string.IsNullOrWhiteSpace(_connectionString) == true)
+            {
+                throw new InvalidOperationException("DatasetQueryRunner not initialized.");
+            }
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }
