@@ -21,6 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -46,8 +47,9 @@
         <Grid x:Name="_SearchGrid" Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Canvas Grid.ColumnSpan="3" Panel.ZIndex="1" 
@@ -63,7 +65,7 @@
       Height="{Binding ElementName=_SearchGrid, Path=ActualHeight}"
                     />
             </Canvas>
-            <GroupBox Grid.Column="1" Header="Search Definition">
+            <Expander Grid.Column="1" Header="Search Filters" IsExpanded="False">
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -90,15 +92,17 @@
                     Grid.Column="0" Grid.Row="2" 
                     LabelText="Status" DataContext="{Binding SearchStatus}" OnEnterKey="TextboxField_OnEnterKey" />
 
-                    <Button Command="{Binding SearchCommand, Mode=OneWay}"
-                        Grid.Row="2" Grid.Column="1" 
+                    
+                </Grid>
+            </Expander>
+        </Grid>
+        <Button Command="{Binding SearchCommand, Mode=OneWay}"
+                        Grid.Row="2" 
                         Content="Search"
+                ToolTip="Get the list of database connections that match the search filters"
                         Margin="{StaticResource SpacedSeparatedControlMargin}"
                         Style="{StaticResource FieldButtonStyle}"/>
-                </Grid>
-            </GroupBox>
-        </Grid>
-        <GroupBox Header="Search Results" Grid.Row="2">
+        <GroupBox Header="Results" Grid.Row="3">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
