@@ -130,6 +130,18 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
         }
 
         [TestMethod]
+        public void WhenInitializedThenSearchCommandIsNotNull()
+        {
+            Assert.IsNotNull(SystemUnderTest.SearchCommand, "SearchCommand is null.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedThenResetFiltersCommandIsNotNull()
+        {
+            Assert.IsNotNull(SystemUnderTest.ResetFiltersCommand, "ResetFiltersCommand is null.");
+        }
+
+        [TestMethod]
         public void WhenInitializedThenFieldPropertiesAreNotNull()
         {
             Assert.IsNotNull(SystemUnderTest.SearchStatus, "SearchStatus is null.");
@@ -173,6 +185,37 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsTrue(SystemUnderTest.SearchBlockedBy.IsValid, "SearchBlockedBy should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchDatabaseName.IsValid, "SearchDatabaseName should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchCommandText.IsValid, "SearchCommandText should be valid.");
+        }
+
+        [TestMethod]
+        public void WhenInitializedThenFieldPropertiesAreEmptyString()
+        {
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchStatus.Value, "SearchStatus should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchLogin.Value, "SearchLogin should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchHostname.Value, "SearchHostname should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchBlockedBy.Value, "SearchBlockedBy should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchDatabaseName.Value, "SearchDatabaseName should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchCommandText.Value, "SearchCommandText should be empty.");
+        }
+
+        [TestMethod]
+        public void WhenResetFiltersIsCalledThenFieldPropertiesAreEmptyString()
+        {
+            SystemUnderTest.SearchStatus.Value = "asdf";
+            SystemUnderTest.SearchLogin.Value = "asdf";
+            SystemUnderTest.SearchHostname.Value = "asdf";
+            SystemUnderTest.SearchBlockedBy.Value = "asdf";
+            SystemUnderTest.SearchDatabaseName.Value = "asdf";
+            SystemUnderTest.SearchCommandText.Value = "asdf";
+
+            SystemUnderTest.ResetFiltersCommand.Execute(null);
+
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchStatus.Value, "SearchStatus should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchLogin.Value, "SearchLogin should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchHostname.Value, "SearchHostname should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchBlockedBy.Value, "SearchBlockedBy should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchDatabaseName.Value, "SearchDatabaseName should be empty.");
+            Assert.AreEqual<string>(String.Empty, SystemUnderTest.SearchCommandText.Value, "SearchCommandText should be empty.");
         }
 
         [TestMethod]

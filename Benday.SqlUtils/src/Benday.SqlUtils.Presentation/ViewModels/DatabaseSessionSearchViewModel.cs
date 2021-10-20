@@ -29,6 +29,8 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             _searchCommandText = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Command));
 
             _Result = null;
+
+            ResetFilters();
         }
 
         private const string SearchStatusPropertyName = "SearchStatus";
@@ -141,6 +143,32 @@ namespace Benday.SqlUtils.Presentation.ViewModels
 
                 return _SearchCommand;
             }
+        }
+
+        private ICommand _ResetFiltersCommand;
+        public ICommand ResetFiltersCommand
+        {
+            get
+            {
+                if (_ResetFiltersCommand == null)
+                {
+                    _ResetFiltersCommand = new ExceptionHandlingRelayCommand(
+                        Messages,
+                        ResetFilters);
+                }
+
+                return _ResetFiltersCommand;
+            }
+        }
+
+        private void ResetFilters()
+        {
+            SearchBlockedBy.Value = string.Empty;
+            SearchDatabaseName.Value = string.Empty;
+            SearchHostname.Value = string.Empty;
+            SearchLogin.Value = string.Empty;
+            SearchStatus.Value = string.Empty;
+            SearchCommandText.Value = string.Empty;
         }
 
         private void AddFilters(DatabaseSessionQueryViewModel query)
