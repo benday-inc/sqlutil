@@ -160,6 +160,8 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
                 SystemUnderTest.SearchBlockedBy, nameof(DatabaseSessionQueryResultRow.BlockedBy));
             AssertSearchFieldArgName(
                 SystemUnderTest.SearchDatabaseName, nameof(DatabaseSessionQueryResultRow.DatabaseName));
+            AssertSearchFieldArgName(
+                SystemUnderTest.SearchCommandText, nameof(DatabaseSessionQueryResultRow.Command));
         }
 
         [TestMethod]
@@ -170,6 +172,7 @@ namespace Benday.SqlUtils.UnitTests.ViewModels
             Assert.IsTrue(SystemUnderTest.SearchHostname.IsValid, "SearchHostname should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchBlockedBy.IsValid, "SearchBlockedBy should be valid.");
             Assert.IsTrue(SystemUnderTest.SearchDatabaseName.IsValid, "SearchDatabaseName should be valid.");
+            Assert.IsTrue(SystemUnderTest.SearchCommandText.IsValid, "SearchCommandText should be valid.");
         }
 
         [TestMethod]

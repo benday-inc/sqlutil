@@ -92,7 +92,9 @@
                     Grid.Column="0" Grid.Row="2" 
                     LabelText="Status" DataContext="{Binding SearchStatus}" OnEnterKey="TextboxField_OnEnterKey" />
 
-                    
+                    <ctrls:SearchField 
+                    Grid.Column="1" Grid.Row="2" 
+                    LabelText="Command Text" DataContext="{Binding SearchCommandText}" OnEnterKey="TextboxField_OnEnterKey" />
                 </Grid>
             </Expander>
         </Grid>

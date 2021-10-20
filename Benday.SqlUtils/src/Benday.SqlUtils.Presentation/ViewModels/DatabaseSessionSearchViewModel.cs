@@ -26,6 +26,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             _searchHostname = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.HostName));
             _searchLogin = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Login));
             _searchStatus = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Status));
+            _searchCommandText = new SearchFieldViewModel(nameof(DatabaseSessionQueryResultRow.Command));
 
             _Result = null;
         }
@@ -43,6 +44,22 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             {
                 _searchStatus = value;
                 RaisePropertyChanged(SearchStatusPropertyName);
+            }
+        }
+
+        private const string SearchCommandTextPropertyName = "SearchCommandText";
+
+        private SearchFieldViewModel _searchCommandText;
+        public SearchFieldViewModel SearchCommandText
+        {
+            get
+            {
+                return _searchCommandText;
+            }
+            set
+            {
+                _searchCommandText = value;
+                RaisePropertyChanged(SearchCommandTextPropertyName);
             }
         }
 
@@ -133,6 +150,7 @@ namespace Benday.SqlUtils.Presentation.ViewModels
             query.SetFilter(_searchHostname);
             query.SetFilter(_searchLogin);
             query.SetFilter(_searchStatus);
+            query.SetFilter(_searchCommandText);
         }
 
         private void Search()
