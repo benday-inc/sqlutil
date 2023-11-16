@@ -1,6 +1,6 @@
 ﻿using Benday.Presentation;
 using Benday.SqlUtils.Api;
-using GalaSoft.MvvmLight.Command;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

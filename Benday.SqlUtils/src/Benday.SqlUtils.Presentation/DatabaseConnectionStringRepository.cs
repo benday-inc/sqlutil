@@ -1,10 +1,10 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Benday.SqlUtils.Api;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace Benday.SqlUtils.Presentation
 {

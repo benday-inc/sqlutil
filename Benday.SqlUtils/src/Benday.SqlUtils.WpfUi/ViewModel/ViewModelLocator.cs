@@ -121,12 +121,12 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             }
         }
 
-        private IMessageManager _messageManagerInstance;
+        private IMessageManager _MessageManagerInstance;
         public IMessageManager MessageManagerInstance
         {
             get
             {
-                if (_messageManagerInstance == null)
+                if (_MessageManagerInstance == null)
                 {
                     const string key = "MessageManagerInstance";
                     var temp = Application.Current.TryFindResource(key);
@@ -137,16 +137,16 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
                             $"Could not locate message manager instance with key '{key}'");
                     }
 
-                    _messageManagerInstance = temp as IMessageManager;
+                    _MessageManagerInstance = temp as IMessageManager;
 
-                    if (_messageManagerInstance == null)
+                    if (_MessageManagerInstance == null)
                     {
                         throw new InvalidOperationException(
                             $"Value for '{key}' is not an instance of '{nameof(IMessageManager)}'");
                     }
                 }
 
-                return _messageManagerInstance;
+                return _MessageManagerInstance;
             }
         }
 
