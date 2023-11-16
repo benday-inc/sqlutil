@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Benday.SqlUtils.Api;
-using GalaSoft.MvvmLight.Ioc;
+//using GalaSoft.MvvmLight.Ioc;
 
 namespace Benday.SqlUtils.Presentation
 {
@@ -18,7 +18,7 @@ namespace Benday.SqlUtils.Presentation
             _ConnectionsFilePath = pathToConnectionsFile;
         }
 
-        [PreferredConstructor]
+        //[PreferredConstructor]
         public DatabaseConnectionStringRepository()
         {
         }

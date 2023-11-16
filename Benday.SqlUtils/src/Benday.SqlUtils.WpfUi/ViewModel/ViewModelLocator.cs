@@ -16,7 +16,7 @@ using Benday.Presentation;
 using Benday.SqlUtils.Api;
 using Benday.SqlUtils.Presentation;
 using Benday.SqlUtils.Presentation.ViewModels;
-using GalaSoft.MvvmLight.Ioc;
+//using GalaSoft.MvvmLight.Ioc;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -55,11 +55,11 @@ namespace Benday.SqlUtils.WpfUi.ViewModel
             
             _AppStartTime = DateTime.UtcNow;
 
-            SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
-            SimpleIoc.Default.Register<SearchViewModel>();
-            SimpleIoc.Default.Register<DatabaseSessionSearchViewModel>();
-            SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
-            SimpleIoc.Default.Register<DataExportViewModel>();
+            //SimpleIoc.Default.Register<DatabaseConnectionsViewModel>();
+            //SimpleIoc.Default.Register<SearchViewModel>();
+            //SimpleIoc.Default.Register<DatabaseSessionSearchViewModel>();
+            //SimpleIoc.Default.Register<DatabaseConnectionStringRepository>();
+            //SimpleIoc.Default.Register<DataExportViewModel>();
         }
 
         private DateTime _AppStartTime;
