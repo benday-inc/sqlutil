@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Benday.CommandsFramework" Version="4.13.*" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
   </ItemGroup>
 
 </Project>

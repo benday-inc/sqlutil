@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
-    <!-- <ProjectReference Include="..\..\src\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" />
-    <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" /> -->
+    <!-- <ProjectReference Include="..\..\src\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" /> -->
+    <!-- <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" /> -->
   </ItemGroup>
 
 </Project>
