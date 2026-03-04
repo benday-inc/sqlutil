@@ -2,13 +2,13 @@ name: Benday.SqlUtil CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'Benday.SqlUtils/src/**'
       - 'Benday.SqlUtils/test/**'
       - '.github/workflows/dotnet.yml'
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'Benday.SqlUtils/src/**'
       - 'Benday.SqlUtils/test/**'
