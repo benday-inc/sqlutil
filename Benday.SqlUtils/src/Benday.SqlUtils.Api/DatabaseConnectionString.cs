@@ -124,6 +124,27 @@ namespace Benday.SqlUtils.Api
                 _UseIntegratedSecurity = value;
             }
         }
+
+        private bool? _TrustServerCertificate;
+        public bool TrustServerCertificate
+        {
+            get
+            {
+                if (_TrustServerCertificate == null)
+                {
+                    var temp = _Parser.GetValue("TrustServerCertificate");
+
+                    _TrustServerCertificate = temp != null && temp.ToLower() == "true";
+                }
+
+                return _TrustServerCertificate.Value;
+            }
+            set
+            {
+                _TrustServerCertificate = value;
+            }
+        }
+
         public string ConnectionString
         {
             get
@@ -143,7 +164,12 @@ namespace Benday.SqlUtils.Api
                     AddToken(builder, "Password", Password);
                 }
 
-                return builder.ToString().Trim();             
+                if (TrustServerCertificate)
+                {
+                    AddToken(builder, "TrustServerCertificate", true.ToString());
+                }
+
+                return builder.ToString().Trim();
             }
         }
         private void AddToken(StringBuilder builder, 

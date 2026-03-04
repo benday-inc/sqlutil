@@ -10,6 +10,7 @@ public abstract class DatabaseCommandBase : SynchronousCommand
     protected const string ArgConnectionName = "connectionname";
     protected const string ArgConnectionString = "connectionstring";
     public const string ConnectionConfigPrefix = "connection:";
+    public const string DefaultConnectionName = "default";
 
     public DatabaseCommandBase(CommandExecutionInfo info, ITextOutputProvider outputProvider)
         : base(info, outputProvider) { }
@@ -53,8 +54,13 @@ public abstract class DatabaseCommandBase : SynchronousCommand
     {
         if (!Arguments.HasValue(ArgConnectionName) && !Arguments.HasValue(ArgConnectionString))
         {
-            throw new KnownException(
-                $"You must provide either /{ArgConnectionName} or /{ArgConnectionString}.");
+            var defaultKey = $"{ConnectionConfigPrefix}{DefaultConnectionName}";
+            if (!ExecutionInfo.Configuration.HasValue(defaultKey))
+            {
+                throw new KnownException(
+                    $"You must provide either /{ArgConnectionName} or /{ArgConnectionString}, " +
+                    $"or set a default connection with 'sqlutil addconnection /default'.");
+            }
         }
     }
 
@@ -65,14 +71,17 @@ public abstract class DatabaseCommandBase : SynchronousCommand
             return Arguments.GetStringValue(ArgConnectionString);
         }
 
-        var connectionName = Arguments.GetStringValue(ArgConnectionName);
+        var connectionName = Arguments.HasValue(ArgConnectionName)
+            ? Arguments.GetStringValue(ArgConnectionName)
+            : DefaultConnectionName;
+
         var configKey = $"{ConnectionConfigPrefix}{connectionName}";
 
         if (!ExecutionInfo.Configuration.HasValue(configKey))
         {
             throw new KnownException(
                 $"No saved connection named '{connectionName}'. " +
-                $"Use 'shovel add-connection' to create one or pass /{ArgConnectionString} directly.");
+                $"Use 'sqlutil addconnection' to create one or pass /{ArgConnectionString} directly.");
         }
 
         return ExecutionInfo.Configuration.GetValue(configKey);
