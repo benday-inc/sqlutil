@@ -1,0 +1,88 @@
+name: Benday.SqlUtil CI
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'Benday.SqlUtils/src/**'
+      - 'Benday.SqlUtils/test/**'
+      - '.github/workflows/dotnet.yml'
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'Benday.SqlUtils/src/**'
+      - 'Benday.SqlUtils/test/**'
+      - '.github/workflows/dotnet.yml'
+  workflow_dispatch:
+
+env:
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore Benday.SqlUtils.Api
+        run: dotnet restore Benday.SqlUtils/src/Benday.SqlUtils.Api/Benday.SqlUtils.Api.csproj
+
+      - name: Restore Benday.SqlUtils.SqlUtilCli
+        run: dotnet restore Benday.SqlUtils/src/Benday.SqlUtils.SqlUtilCli/Benday.SqlUtils.SqlUtilCli.csproj
+
+      - name: Restore Benday.SqlUtils.UnitTests
+        run: dotnet restore Benday.SqlUtils/test/Benday.SqlUtils.UnitTests/Benday.SqlUtils.UnitTests.csproj
+
+      - name: Build Benday.SqlUtils.Api (Release)
+        run: dotnet build Benday.SqlUtils/src/Benday.SqlUtils.Api/Benday.SqlUtils.Api.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Build Benday.SqlUtils.SqlUtilCli (Release)
+        run: dotnet build Benday.SqlUtils/src/Benday.SqlUtils.SqlUtilCli/Benday.SqlUtils.SqlUtilCli.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Build Benday.SqlUtils.UnitTests (Release)
+        run: dotnet build Benday.SqlUtils/test/Benday.SqlUtils.UnitTests/Benday.SqlUtils.UnitTests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Test (Release)
+        run: dotnet test Benday.SqlUtils/test/Benday.SqlUtils.UnitTests/Benday.SqlUtils.UnitTests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --verbosity normal
+
+      - name: Pack Benday.SqlUtil
+        run: dotnet pack Benday.SqlUtils/src/Benday.SqlUtils.SqlUtilCli/Benday.SqlUtils.SqlUtilCli.csproj --no-build --configuration ${{ env.BUILD_CONFIGURATION }} --output ./artifacts
+
+      - name: Upload NuGet packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages-sqlutil
+          path: ./artifacts/*.nupkg
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: nuget-deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-packages-sqlutil
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Push to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "Error: NUGET_API_KEY secret is not set"
+            exit 1
+          fi
+          dotnet nuget push *.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
