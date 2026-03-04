@@ -11,16 +11,28 @@
     <ToolCommandName>sqlutil</ToolCommandName>
     <PackageId>Benday.SqlUtil</PackageId>
     <Authors>Benjamin Day</Authors>
-    <Description>sqlutil: SQL Server database utilities CLI tool</Description>
-    <Copyright>2026</Copyright>
+    <Description>sqlutil: A collection of SQL Server database utilities for the command line. Supports schema introspection, table/column/proc search, data export to INSERT/MERGE scripts, database comparison, connection management, and ad-hoc query execution.</Description>
+    <Copyright>Copyright 2026 Benjamin Day Consulting, Inc.</Copyright>
     <Company>Benjamin Day Consulting, Inc.</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/benday-inc/sqlutil</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/benday-inc/sqlutil</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>sql;sqlserver;mssql;cli;dotnet-tool;dba;database;schema;introspection;export;compare</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
