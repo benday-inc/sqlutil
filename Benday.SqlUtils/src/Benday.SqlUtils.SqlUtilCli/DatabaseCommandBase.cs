@@ -29,10 +29,11 @@ public abstract class DatabaseCommandBase : SynchronousCommand
     protected void AddMatchArgument(ArgumentCollection args)
     {
         args.AddString(ArgMatch)
+            .WithAllowedValues("contains", "exact", "startswith", "endswith")
             .AsNotRequired()
-            .WithDescription("Match method: contains (default), exact, startswith, endswith");
+            .WithDescription("Match method: contains (default), exact, startswith, endswith")
+            .WithDefaultValue("contains");
     }
-
     protected string ApplyMatchMethod(string value)
     {
         var method = Arguments.HasValue(ArgMatch)

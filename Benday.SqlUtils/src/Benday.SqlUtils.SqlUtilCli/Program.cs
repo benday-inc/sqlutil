@@ -8,7 +8,7 @@ class Program
     {
         var options = new DefaultProgramOptions()
         {
-            ApplicationName = "shovel",
+            ApplicationName = "sqlutil",
             Website = "https://github.com/benday-inc/sql-server-utils",
             Version = "1.0.0",
             UsesConfiguration = true
