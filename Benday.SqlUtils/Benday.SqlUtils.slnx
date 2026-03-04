@@ -7,16 +7,16 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/src/">
-    <Project Path="src/Benday.Presentation/Benday.Presentation.csproj" />
+    <!-- <Project Path="src/Benday.Presentation/Benday.Presentation.csproj" /> -->
     <Project Path="src/Benday.SqlUtils.Api/Benday.SqlUtils.Api.csproj" />
-    <Project Path="src/Benday.SqlUtils.Presentation/Benday.SqlUtils.Presentation.csproj" />
+    <!-- <Project Path="src/Benday.SqlUtils.Presentation/Benday.SqlUtils.Presentation.csproj" /> -->
     <Project Path="src/Benday.SqlUtils.SqlUtilCli/Benday.SqlUtils.SqlUtilCli.csproj" />
     <!-- <Project Path="src/Benday.SqlUtils.WpfUi/Benday.SqlUtils.WpfUi.csproj">
       <Platform Solution="*|x86" Project="x86" />
     </Project> -->
   </Folder>
   <Folder Name="/test/">
-    <Project Path="test/Benday.Presentation.UnitTests/Benday.Presentation.UnitTests.csproj" />
+    <!-- <Project Path="test/Benday.Presentation.UnitTests/Benday.Presentation.UnitTests.csproj" /> -->
     <Project Path="test/Benday.SqlUtils.UnitTests/Benday.SqlUtils.UnitTests.csproj" />
   </Folder>
   <!-- <Project Path="ShovelInstaller/ShovelInstaller.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">

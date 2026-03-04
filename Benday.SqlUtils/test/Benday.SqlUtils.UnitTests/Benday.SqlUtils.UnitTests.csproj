@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Benday.SqlUtils.Api\Benday.SqlUtils.Api.csproj" />
-    <ProjectReference Include="..\..\src\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" />
-    <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" />
+    <!-- <ProjectReference Include="..\..\src\Benday.SqlUtils.Presentation\Benday.SqlUtils.Presentation.csproj" />
+    <ProjectReference Include="..\Benday.Presentation.UnitTests\Benday.Presentation.UnitTests.csproj" /> -->
   </ItemGroup>
 
 </Project>
